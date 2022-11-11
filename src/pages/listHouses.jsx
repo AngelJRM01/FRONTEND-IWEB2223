@@ -6,17 +6,14 @@ import { Header } from '../components/header.jsx';
 import { Footer } from '../components/footer.jsx';
 import { setUpHouses } from '../helper/SetUpHouses.js';
 import Swal from 'sweetalert2';
+ 
 
-
-import { Global } from '../helper/Global.js';
 
 const List = () => {
 
   const [houses, setHouses] = useState([]);
   //const { id } = useParams();
-
-  const baseUrl = Global.baseUrl;
-
+ 
   // const URI = `${baseUrl}contentsLists/`;
 
   useEffect( () => {
@@ -25,13 +22,12 @@ const List = () => {
 
     document.title = 'Mis viviendas';
 
-
   }, []);
 
 
   return (
     houses.length === 0
-      ? <div>{Swal.showLoading()}</div>
+      ? <div>{ Swal.showLoading() }</div>
       : <div>
         <Header
           
@@ -40,7 +36,11 @@ const List = () => {
           id="main-content">
           <div className="col-lg-8 list-group"
             data-bs-spy="scroll">
-            { houses }
+            {
+              houses.map( house => (
+                JSON.stringify(house)
+              ))
+            }
           </div>
         </main>
         <Footer/>

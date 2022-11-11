@@ -1,4 +1,3 @@
-import fetch from 'node-fetch';
 import { Global } from './Global';
 import Swal from 'sweetalert2';
 
@@ -8,14 +7,16 @@ export const setUpHouses = ( setHouses ) => {
 
   Swal.showLoading();
 
-  fetch( `${baseUrl}users` )
+  
+  console.log(`${baseUrl}viviendas`);
+  fetch( `${baseUrl}viviendas` )
     .then( res => res.json())
     .then( data => {
+      
       setHouses( data );
-    }).catch( err => {
-      console.log( err );
-    }
-);
+      console.log( data );
+    })
+    
 
   Swal.close();
 
