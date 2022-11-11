@@ -1,21 +1,22 @@
-import fetch from 'node-fetch';
 import { Global } from './Global';
 import Swal from 'sweetalert2';
 
 const baseUrl = Global.baseUrl;
 
-export const setUpHouses = ( setHouses ) => {
+export const setUpHouses = ( propietarioId, setHouses ) => {
 
   Swal.showLoading();
 
-  fetch( `${baseUrl}users` )
+  
+  console.log(`${baseUrl}viviendas/propietario/${propietarioId}`);
+  fetch( `${baseUrl}viviendas/propietario/${propietarioId}` )
     .then( res => res.json())
     .then( data => {
+      
       setHouses( data );
-    }).catch( err => {
-      console.log( err );
-    }
-);
+      console.log( data );
+    })
+    
 
   Swal.close();
 
