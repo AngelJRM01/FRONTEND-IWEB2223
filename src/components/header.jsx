@@ -13,7 +13,7 @@ export const Header = ({ buscado, setBuscado }) => {
         <NavLink className="navbar-brand"
           to="/">
           <img src={logo}
-            width="80px"
+            width="50px"
             height="50px"
             alt="Logo de SwishGames" >
           </img>

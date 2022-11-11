@@ -5,7 +5,7 @@ function AppRouter() {
     return (
         <BrowserRouter>
           <Routes>
-            <Route path="/viviendas/:id"
+            <Route path="viviendas/propietario/:id"
               element={<Houses/>}/>
           </Routes>
         </BrowserRouter>

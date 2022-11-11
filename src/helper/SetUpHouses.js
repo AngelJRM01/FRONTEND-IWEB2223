@@ -3,13 +3,13 @@ import Swal from 'sweetalert2';
 
 const baseUrl = Global.baseUrl;
 
-export const setUpHouses = ( setHouses ) => {
+export const setUpHouses = ( propietarioId, setHouses ) => {
 
   Swal.showLoading();
 
   
-  console.log(`${baseUrl}viviendas`);
-  fetch( `${baseUrl}viviendas` )
+  console.log(`${baseUrl}viviendas/propietario/${propietarioId}`);
+  fetch( `${baseUrl}viviendas/propietario/${propietarioId}` )
     .then( res => res.json())
     .then( data => {
       
