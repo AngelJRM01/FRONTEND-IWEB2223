@@ -9,7 +9,7 @@ export const Footer = () => {
       <footer className="d-flex flex-wrap justify-content-between align-items-center py-1 my-1">
         <div className="col-md-4 d-flex align-items-center px-3">
           <span className="greytext"
-            lang="en">© 2022 SwishHouses, Inc</span>
+            lang="en">© 2022 SwishHouse, Inc</span>
         </div>
         <NavLink to="/"
           className="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
