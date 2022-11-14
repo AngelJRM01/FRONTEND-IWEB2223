@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Header } from '../components/header.jsx';
 import { Footer } from '../components/footer.jsx';
 import { setUpHouses } from '../helper/SetUpHouses.js';
+import { HouseCards } from '../components/houses/houseCard';
 
  
 
@@ -37,9 +38,15 @@ const List = () => {
           <div className="col-lg-8 list-group"
             data-bs-spy="scroll">
             {
-              houses.map( house => (
+              <HouseCards
+                houses={ houses }
+                setHouses={ setHouses }
+                id = { id }
+              />
+
+             /*  houses.map( house => (
                 JSON.stringify(house)
-              ))
+              )) */
             }
           </div>
         </main>
