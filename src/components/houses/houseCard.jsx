@@ -1,66 +1,36 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import { setUpHouses } from '../../helper/SetUpHouses';
-import { Global } from '../../helper/Global';
+import casaImg from '../../static/casa.png';
+import Card from 'react-bootstrap/Card';
 
-
-export const UserCards = ({ houses, setHouses}) => {
-
-  const baseUrl = Global.baseUrl;
-  const URIUsers = `${baseUrl}users/`;
-  const navigate = useNavigate();
+export const HouseCards = ({ houses, setHouses, id }) => {
 
   useEffect( () => {
 
-    buscar();
+    setUpHouses( id, setHouses );
 
-  }, []);
+    document.title = 'Mis viviendas';
 
-  async function buscar() {
+  }, [id,setHouses]);
 
-    
-      fetch( `${URIUsers}viviendas/${buscado}` )
-        .then( res => {
-
-        setUsers( res.data );
-
-    });
-
-    
-
-  };
 
   return (
     <div className="row">
-      {users.length !== 0
-        ? users.filter( user => ( user.nombre !== userAct.nombre ) ).map( ( user, index ) => (
-          <button
-            key = {index}
-            onClick={() => navigate( `/user/${user.nombre}` )}
-            className="botonGameTransparente col-12">
-            <div className="list-group-item list-group-item-action">
-              <div className="d-flex w-100">
-                <img className="img-user"
-                  src={user.imagen}
-                  alt={`#UserImg${user.nombre}`} />
-                <div className="px-2 tamanyoMaxDesc">
-                  <div className="d-flex w-100 pt-1">
-                    <h4 className="mb-0 ttexte"> &nbsp; {user.nombre}</h4>
-                  </div>
-                  <p className="texte">{user.descripcion}</p>
-                </div>
-              </div>
-            </div>
-          </button>
-        ) )
-        : <div className="mt-5 text-dark"><h1><b>Lo sentimos, pero no hemos encontrado el usuario deseado :(</b></h1></div>}
-    </div> );
+      {houses.map(house => (
+        <Card class="px-4" key={house._id} style={{ width: '18rem' }}>
+          <Card.Img class="img-casa pt-2" variant="top" src={casaImg} />
+          <Card.Body>
+            <Card.Title>{house.titulo}</Card.Title>
+            <Card.Text>
+              {house.descripcion}
+            </Card.Text>
+            <a href="/viviendas/" class="stretched-link"> </a>
+          </Card.Body>
+        </Card>
+      ))}
+      
+    </div>
+  );
 
-};
 
-UserCards.propTypes = {
-  users: PropTypes.array.isRequired,
-  setUsers: PropTypes.func.isRequired,
-  userAct: PropTypes.object.isRequired
-};
+}
