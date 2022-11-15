@@ -29,7 +29,7 @@ const List = () => {
 
   return (
     houses.length === 0
-      ? <div>{  }</div>
+      ? <div>{ }</div>
       : <div>
         <Header
         />
