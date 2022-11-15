@@ -9,6 +9,7 @@ export const setUpHouses = ( propietarioId, setHouses ) => {
     .then( data => {
       
       setHouses( data );
+      console.log( data );
     })
     
 };
