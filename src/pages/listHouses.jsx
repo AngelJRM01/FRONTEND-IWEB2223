@@ -43,10 +43,6 @@ const List = () => {
                 setHouses={ setHouses }
                 id = { id }
               />
-
-             /*  houses.map( house => (
-                JSON.stringify(house)
-              )) */
             }
           </div>
         </main>

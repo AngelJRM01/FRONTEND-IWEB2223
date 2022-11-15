@@ -1,7 +1,6 @@
 import React from 'react';
 import logo from '../static/swishHouseLogo.png';
 import { NavLink } from 'react-router-dom';
-import '../styles/Chat.css';
 
 
 export const Header = ({ buscado, setBuscado }) => {
