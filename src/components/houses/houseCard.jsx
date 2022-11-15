@@ -15,20 +15,26 @@ export const HouseCards = ({ houses, setHouses, id }) => {
 
 
   return (
-    <div className="row">
-      {houses.map(house => (
-        <Card class="px-4" key={house._id} style={{ width: '18rem' }}>
-          <Card.Img class="img-casa pt-2" variant="top" src={casaImg} />
-          <Card.Body>
-            <Card.Title>{house.titulo}</Card.Title>
-            <Card.Text>
-              {house.descripcion}
-            </Card.Text>
-            <a href="/viviendas/" class="stretched-link"> </a>
-          </Card.Body>
-        </Card>
-      ))}
-      
+    <div className="container">
+      <div className="row gy-1 my-3">
+        {houses.map(house => (
+          <div key={house._id} className='px-2 col-sm-6 col-md-4'>
+            <Card className="p-0" >
+              <Card.Img  variant="top" src={casaImg} />
+              <Card.Body>
+                <Card.Title>{house.titulo}</Card.Title>
+                <Card.Subtitle>{house.direccion}</Card.Subtitle>
+                <Card.Text>
+                  
+                </Card.Text>
+                <b>{house.precioNoche}€</b> noche
+                <a href="/viviendas/" className="stretched-link"> </a>
+              </Card.Body>
+            </Card>
+          </div>
+        ))}
+        
+      </div>
     </div>
   );
 
