@@ -59,10 +59,10 @@ body {
     border-radius: 5px;
 }
 
-.img-user {
-    border-radius: 100%;
-    width: 8.4vw;
-    height: 8.4vw;
+.leaflet-container {
+    width: 100%;
+    height: 60vh;
+    z-index: 1;
 }
 
 .greytext {
@@ -71,10 +71,6 @@ body {
 
 .ttexte {
     font-weight: bold;
-}
-
-.textoUser {
-
 }
 
 .equis {
