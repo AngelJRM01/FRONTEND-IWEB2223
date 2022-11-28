@@ -8,7 +8,7 @@ body {
     position: relative;
 	width: 100%;
     /*height: 100%;*/
-    height: 50rem; /* Manual height for make scrollbar appear */
+    height: 100%; /* Manual height for make scrollbar appear */
     overflow-y: overlay !important; /* For scrollbar overlay on content */
     overflow-x: hidden !important;
 	font-family: 'Open Sans', sans-serif;
