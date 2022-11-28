@@ -35,7 +35,7 @@ const List = () => {
       : <div>
         <Header
         />
-        <main className="row justify-content-center main"
+        <main className="row justify-content-center"
           id="main-content">
           <div className="col-lg-8 list-group"
             data-bs-spy="scroll">
@@ -56,7 +56,7 @@ const List = () => {
               </MapContainer>
           </div>
         </main>
-        {/* <Footer/> */}
+        { <Footer/> }
       </div>
   );
 
