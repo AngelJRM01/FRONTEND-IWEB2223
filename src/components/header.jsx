@@ -3,9 +3,14 @@ import logo from '../static/swishHouseLogo.png';
 
 export const Header = () => {
 
+  const backgroud = {
+    background: '#f5f5f5'
+  }
+
   return (
 
-    <header className="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-3 border-bottom">
+    <header className="fixed-top d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 px-4 mb-3 border-bottom"
+      style={backgroud}>
       <a href="/home" className="d-flex align-items-center ms-4 col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
         <img src={logo}
           width="50px"

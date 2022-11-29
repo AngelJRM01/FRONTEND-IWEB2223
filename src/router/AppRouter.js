@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import Houses from '../pages/listHouses';
 import CreateHouse from '../pages/createHouse';
 import Home from '../pages/home';
@@ -9,6 +9,7 @@ function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<Navigate to="/home" />} />
         <Route path="viviendas/propietario/:id"
           element={<Houses />} />
         <Route path="viviendas/propietario/:id/nuevaVivienda"
