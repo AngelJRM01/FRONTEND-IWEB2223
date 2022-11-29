@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import '../styles/main.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import "leaflet/dist/leaflet.css";
+import 'leaflet/dist/leaflet.css';
 
 import { Header } from '../components/header.jsx';
 import { Footer } from '../components/footer.jsx';
