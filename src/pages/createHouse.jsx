@@ -47,6 +47,7 @@ const CreateHouse = () => {
   const baseUrl = Global.baseUrl;
   const URI = `${baseUrl}viviendas/`;
   //const URI = `${baseUrl}viviendas/propietario/${id}/nuevaVivienda`;
+  //636a2eba353e6b6d0e281d7a = idPropietario
 
   // useEffect( () => {
   //   document.title = 'Crear vivienda';
