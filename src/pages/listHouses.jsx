@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { MapContainer, TileLayer } from 'react-leaflet'
 import '../styles/main.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import "leaflet/dist/leaflet.css";
 
 import { Header } from '../components/header.jsx';
 import { Footer } from '../components/footer.jsx';
@@ -33,7 +35,7 @@ const List = () => {
       : <div>
         <Header
         />
-        <main className="row justify-content-center main"
+        <main className="row justify-content-center"
           id="main-content">
           <div className="col-lg-8 list-group"
             data-bs-spy="scroll">
@@ -45,8 +47,16 @@ const List = () => {
               />
             }
           </div>
+          <div className='col-lg-8'>
+              <MapContainer center={[40.41831, -3.70275]} zoom={13} >
+                <TileLayer
+                  attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+              </MapContainer>
+          </div>
         </main>
-        <Footer/>
+        { <Footer/> }
       </div>
   );
 
