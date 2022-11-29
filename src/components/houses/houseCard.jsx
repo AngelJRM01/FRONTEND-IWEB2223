@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { setUpHouses } from '../../helper/SetUpHouses';
 import casaImg from '../../static/casa.png';
 import Card from 'react-bootstrap/Card';
+import { Link } from 'react-router-dom';
 
 export const HouseCards = ({ houses, setHouses, id }) => {
 
@@ -28,7 +29,7 @@ export const HouseCards = ({ houses, setHouses, id }) => {
                   
                 </Card.Text>
                 <b>{house.precioNoche}€</b> noche
-                <a href="/viviendas/" className="stretched-link"> </a>
+                <a href={"/vivienda/" + house._id} className="stretched-link"> </a> 
               </Card.Body>
             </Card>
           </div>
