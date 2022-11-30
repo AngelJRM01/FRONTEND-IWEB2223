@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import '../styles/main.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "leaflet/dist/leaflet.css";
@@ -17,7 +17,7 @@ const EditHouse = () => {
   const [direction, setDirection] = useState('');
   const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
-  const [state, setState] = useState('');
+  const [state, setState] = useState('Libre');
   const [dates, setDates] = useState([{fechaInicio: "2022-04-23T18:25:43.511+00:00"}, 
   {fechaInicio: "2010-04-23T18:25:43.511+00:00"}]);
   const [images, setImages] = useState(["image.jpg"]);
@@ -28,7 +28,7 @@ const EditHouse = () => {
 
   const baseUrl = Global.baseUrl;
   const URI = `${baseUrl}viviendas/` + idVivienda;
-  // 6383fd185c003d453b597f3f = idVivienda
+  //6383fd185c003d453b597f3f = idVivienda
   //636a2eba353e6b6d0e281d7a = idPropietario
   const misViviendas = `http://localhost:3000/viviendas/propietario/${id}`;
 
@@ -108,8 +108,8 @@ const EditHouse = () => {
                         type="text" className="form-control" id="description" rows="4"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="exampleFormControlSelect1">Estado</label>
-                        <select class="form-control" id="exampleFormControlSelect1" defaultValue={state}
+                        <label for="state">Estado</label>
+                        <select class="form-control" id="state" defaultValue={state}
                         value={state}
                         onChange={ (e)=> setState(e.target.value)}>
                             <option>Libre</option>
@@ -123,7 +123,7 @@ const EditHouse = () => {
                 </form>
             </div>      
         </main>
-        {/* <Footer/> */}
+        <Footer/>
     </div>
   );
 
