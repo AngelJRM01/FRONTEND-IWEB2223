@@ -31,7 +31,7 @@ const Reservation = () => {
             <Header/>
             <main className="row justify-content-center main">
                 <div>
-                    { reservation === undefined ? <p>Reservation not found.</p> : <p>Reservation found.</p> }
+                    { reservation === undefined ? "Reservation not found." : JSON.stringify(reservation) }
                 </div>
             </main>
             <Footer/>
