@@ -1,14 +1,16 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import Houses from '../pages/listHouses';
 import CreateHouse from '../pages/createHouse';
 import Home from '../pages/home';
 import EditHouse from '../pages/editHouse';
 import House from '../pages/house';
+import Reservation from '../pages/reservation';
 
 function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<Navigate to="/home" />} />
         <Route path="viviendas/propietario/:id"
           element={<Houses />} />
         <Route path="viviendas/propietario/:id/nuevaVivienda"
@@ -19,6 +21,7 @@ function AppRouter() {
               element={<EditHouse/>}/>
         <Route  path='vivienda/:id'
                 element={<House/>} />
+        <Route  path='reservas/:id' element={<Reservation/>} />
       </Routes>
     </BrowserRouter>
 

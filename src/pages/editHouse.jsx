@@ -17,38 +17,21 @@ const EditHouse = () => {
   const [direction, setDirection] = useState('');
   const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
-  const [state, setState] = useState('');
-  const [coordenates, setCoordenates] = useState({latitud: 0,longitud: 0});
+  const [state, setState] = useState('Libre');
   const [dates, setDates] = useState([{fechaInicio: "2022-04-23T18:25:43.511+00:00"}, 
   {fechaInicio: "2010-04-23T18:25:43.511+00:00"}]);
   const [images, setImages] = useState(["image.jpg"]);
-  const [owner, setOwner] = useState({_id: id, nombre:"Pepe", foto:"perfil.png"});
+  // const [coordenates, setCoordenates] = useState({latitud: 0,longitud: 0});
+  // const [owner, setOwner] = useState({_id: id, nombre:"Pepe", foto:"perfil.png"});
 
   document.title = 'Editar vivienda';
 
-  // const [vivienda, setVivienda] = useState({
-  //   titulo: title,
-  //   capacidad: capacity,
-  //   direccion: direction,
-  //   precioNoche: price,
-  //   descripcion: description,
-  //   estado: state,
-  //   coordenadas: coordenates,
-  //   fechasDisponibles: dates,
-  //   imagenes: images,
-  //   valoracion: 0,
-  //   propietario: owner
-  // });
-
-  // const [msg, setMsg] = useState({
-  //   message: "",
-  //   color: "",
-  //   visible: "no",
-  // });
- 
   const baseUrl = Global.baseUrl;
   const URI = `${baseUrl}viviendas/` + idVivienda;
-  // 6383fd185c003d453b597f3f
+  //6383fd185c003d453b597f3f = idVivienda
+  //636a2eba353e6b6d0e281d7a = idPropietario
+  const misViviendas = `http://localhost:3000/viviendas/propietario/${id}`;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -59,11 +42,11 @@ const EditHouse = () => {
       precioNoche: price,
       descripcion: description,
       estado: state,
-      coordenadas: coordenates,
       fechasDisponibles: dates,
       imagenes: images,
-      valoracion: 0,
-      propietario: owner
+      // coordenadas: coordenates,
+      // valoracion: 0,
+      // propietario: owner
     };
 
     const response = await fetch( URI, {
@@ -76,20 +59,8 @@ const EditHouse = () => {
       .then( data => {
         console.log(data)
       }).catch(err => console.log(err));
-    // const content = await response.json();
-    // setMsg(
-    //     content.msg === 1
-    //       ? {
-    //           message: "Se ha creado el producto correctamente",
-    //           color: "success",
-    //           visible: "si",
-    //         }
-    //       : {
-    //           message: "No se ha podido crear el producto",
-    //           color: "danger",
-    //           visible: "si",
-    //         }
-    //   );
+
+    window.location.href = misViviendas;
   }
   
   return (
@@ -100,13 +71,6 @@ const EditHouse = () => {
             <div className="col-lg-8 list-group"
             data-bs-spy="scroll">
                 <h1 align="center">Editar vivienda</h1>
-                {/* {msg.visible === "si" ? (
-                    <div className={"alert alert-" + msg.color} role="alert">
-                        {msg.message}
-                    </div>
-                    ) : (
-                    ``
-                )} */}
                 <form className="form" id ="form" onSubmit={handleSubmit} method="post">
                     <div className="form-group">
                         <label htmlFor="title">T&iacute;tulo</label>
@@ -144,8 +108,8 @@ const EditHouse = () => {
                         type="text" className="form-control" id="description" rows="4"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="exampleFormControlSelect1">Estado</label>
-                        <select class="form-control" id="exampleFormControlSelect1" defaultValue={state}
+                        <label for="state">Estado</label>
+                        <select class="form-control" id="state" defaultValue={state}
                         value={state}
                         onChange={ (e)=> setState(e.target.value)}>
                             <option>Libre</option>
@@ -153,11 +117,13 @@ const EditHouse = () => {
                             <option>No disponible</option>
                         </select>
                     </div>
-                    <button type="submit" className="btn btn-primary">Crear</button>
+                    {/* <Link to={"/viviendas/propietario/636a2eba353e6b6d0e281d7a"} > */}
+                      <button type="submit" className="btn btn-primary">Crear</button>
+                    {/* </Link> */}
                 </form>
             </div>      
         </main>
-        {/* <Footer/> */}
+        <Footer/>
     </div>
   );
 
