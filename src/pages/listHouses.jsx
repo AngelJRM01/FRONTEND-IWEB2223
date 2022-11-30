@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import L from 'leaflet';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
-import iconMarker from '../static/marker.png';
 import '../styles/main.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "leaflet/dist/leaflet.css";
@@ -52,9 +51,9 @@ const List = () => {
       : <div>
         <Header
         />
-        <main className="row justify-content-center"
+        <main className="row justify-content-center main"
           id="main-content">
-          <div className="col-lg-8 list-group"
+          <div className="col-sm-8 list-group"
             data-bs-spy="scroll">
             {
               <HouseCards
