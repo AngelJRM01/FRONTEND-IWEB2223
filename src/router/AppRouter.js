@@ -4,6 +4,7 @@ import CreateHouse from '../pages/createHouse';
 import Home from '../pages/home';
 import EditHouse from '../pages/editHouse';
 import House from '../pages/house';
+import Reservation from '../pages/reservation';
 
 function AppRouter() {
   return (
@@ -20,6 +21,7 @@ function AppRouter() {
               element={<EditHouse/>}/>
         <Route  path='vivienda/:id'
                 element={<House/>} />
+        <Route  path='reservas/:id' element={<Reservation/>} />
       </Routes>
     </BrowserRouter>
 
