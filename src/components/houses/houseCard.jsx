@@ -6,7 +6,7 @@ export const HouseCard = ({ house }) => {
 
   return (
     
-    <div key={house._id} className='px-2 col-lg-3'>
+    <div className='px-2 col-lg-3'>
       <Card className="p-0" >
         <Card.Img  variant="top" src={casaImg} />
         <Card.Body>

@@ -60,10 +60,9 @@ const List = () => {
               <div className="container">
                 <div className="row gy-1 my-3">
                   {houses.map ( house => (
-                    
-                  <HouseCard
-                    house={ house }
-                  />
+                    <HouseCard key={house._id}
+                      house={ house }
+                    />
                   ))}
                 </div>
               </div>
