@@ -6,7 +6,9 @@ import { setUpHouse } from "../helper/SetUpHouse";
 import { Carousel } from "react-bootstrap";
 import '../styles/main.css'
 import '../styles/image.css'
-import '../styles/centrar.css'
+import '../styles/orientacion.css'
+import '../styles/texto.css'
+import '../styles/div.css'
 
 const House = () => {
 
@@ -44,23 +46,44 @@ const House = () => {
                             {house.direccion}
                         </h6>
                         <br/>
-                        <Carousel className="cropped500px">
-                            {
-                                house.imagenes.map( (imagen, index ) => {
-                                    return  <Carousel.Item key={index}>
-                                                <div className="cropped500px contenedor">
-                                                    <img
-                                                        className="card-img-top rounded-2 hijo"
-                                                        src={imagen}
-                                                        alt="Imagen de la casa"/>
-                                                </div>
-                                            </Carousel.Item>
-                                } )
-                            }
-                        </Carousel>
+                        <div className="padre">
+                            <Carousel className="cropped500px inlineBlock">
+                                {
+                                    house.imagenes.map( (imagen, index ) => {
+                                        return  <Carousel.Item key={index}>
+                                                    <div className="cropped500px contenedor">
+                                                        <img
+                                                            className="card-img-top rounded-2 hijo"
+                                                            src={imagen}
+                                                            alt="Imagen de la casa"/>
+                                                    </div>
+                                                </Carousel.Item>
+                                    } )
+                                }
+                            </Carousel>
+                            {/* Mapa */}
+                        </div>
                         <br/>
                         <br/>
-                        <h4>Anfitrión: {house.propietario.nombre}</h4>
+                        <div className="padre">
+                            <div className="inlineBlock breakSpaces">
+                                <h3>Anfitrión: {house.propietario.nombre}</h3>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <h4>Descripción</h4>
+                                <br/>
+                                <h6 className="breakSpaces">
+                                    {house.descripcion}
+                                </h6>                        
+                            </div>
+                            <div className="inlineBlock bordeNegro mx-5">
+                                <h5 className="mx-5 mt-5 mb-2">Precio noche: <strong>{house.precioNoche}€</strong></h5>
+                                <button className="mx-5 mt-4 mb-3 btn btn-outline-primary">
+                                    Hacer reserva
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </main>
                 <Footer/>

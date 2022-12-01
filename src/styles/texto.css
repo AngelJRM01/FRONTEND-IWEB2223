@@ -1,0 +1,9 @@
+/*
+    Poner salto de línea
+    Para poner un tope añadir "width: ..."
+*/
+
+.breakSpaces{
+    width: 700px;
+    white-space: break-spaces;
+}

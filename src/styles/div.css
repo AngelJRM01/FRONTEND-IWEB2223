@@ -1,0 +1,10 @@
+/*
+    Borde 2px con color negro
+*/
+
+.bordeNegro{
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+    border-radius: 5px;
+}
