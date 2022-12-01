@@ -43,7 +43,7 @@ const List = () => {
                 <div className="container">
                   <div className="row gy-1 my-3">
                     {reservations.map(reservation => (
-                      <ReservationCard
+                      <ReservationCard key={reservation._id}
                         reservation={ reservation }
                       />
                     ))}
