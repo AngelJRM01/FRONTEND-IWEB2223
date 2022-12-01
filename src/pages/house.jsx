@@ -5,6 +5,10 @@ import { useParams } from "react-router-dom";
 import { setUpHouse } from "../helper/SetUpHouse";
 import { Carousel } from "react-bootstrap";
 import '../styles/main.css'
+import '../styles/image.css'
+import '../styles/orientacion.css'
+import '../styles/texto.css'
+import '../styles/div.css'
 
 const House = () => {
 
@@ -34,7 +38,7 @@ const House = () => {
                     <div className="col-lg-8">
                         <h1>{house.titulo}</h1>
                         <h6>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill mb-1 mx-2" viewBox="0 0 16 16">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-star-fill mb-1 mx-2" viewBox="0 0 16 16">
                                 <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
                             </svg>
                             {house.valoracion} 
@@ -42,32 +46,44 @@ const House = () => {
                             {house.direccion}
                         </h6>
                         <br/>
-                        <Carousel>
-                            <Carousel.Item>
-                                <img
-                                className="d-block w-100 h-100"
-                                src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.UUgWgET3-FC1qwPpM4mNjAHaCS%26pid%3DApi&f=1"
-                                alt="First slide"
-                                />
-                            </Carousel.Item>
-                            <Carousel.Item>
-                                <img
-                                className="d-block w-100 h-100"
-                                src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.0TIjo19CYVy0yJVRDdF4EQAAAA%26pid%3DApi&f=1"
-                                alt="Second slide"
-                                />
-                            </Carousel.Item>
-                            <Carousel.Item>
-                                <img
-                                className="d-block w-100 h-100"
-                                src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.edf4l0Ca1xEyRlWQioHPIAHaC7%26pid%3DApi&f=1"
-                                alt="Third slide"
-                                />  
-                            </Carousel.Item>
-                        </Carousel>
+                        <div className="padre">
+                            <Carousel className="cropped500px inlineBlock">
+                                {
+                                    house.imagenes.map( (imagen, index ) => {
+                                        return  <Carousel.Item key={index}>
+                                                    <div className="cropped500px contenedor">
+                                                        <img
+                                                            className="card-img-top rounded-2 hijo"
+                                                            src={imagen}
+                                                            alt="Imagen de la casa"/>
+                                                    </div>
+                                                </Carousel.Item>
+                                    } )
+                                }
+                            </Carousel>
+                            {/* Mapa */}
+                        </div>
                         <br/>
                         <br/>
-                        <h4>Anfitrión: {house.propietario.nombre}</h4>
+                        <div className="padre">
+                            <div className="inlineBlock breakSpaces">
+                                <h3>Anfitrión: {house.propietario.nombre}</h3>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <h4>Descripción</h4>
+                                <br/>
+                                <h6 className="breakSpaces">
+                                    {house.descripcion}
+                                </h6>                        
+                            </div>
+                            <div className="inlineBlock bordeNegro mx-5">
+                                <h5 className="mx-5 mt-5 mb-2">Precio noche: <strong>{house.precioNoche}€</strong></h5>
+                                <button className="mx-5 mt-4 mb-3 btn btn-outline-primary">
+                                    Hacer reserva
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </main>
                 <Footer/>

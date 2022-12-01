@@ -4,14 +4,7 @@ import casaImg from '../../static/casa.png';
 import Card from 'react-bootstrap/Card';
 import '../../styles/main.css'; 
 
-export const ReservationCards = ({ reservations, setReservations, userId }) => {
-
-
-  useEffect( () => {
-
-    setUpReservations( userId, setReservations );
-
-  }, [userId,setReservations]);
+export const ReservationCard = ({ reservation }) => {
 
   
   function dateParts(date) {
@@ -22,10 +15,8 @@ export const ReservationCards = ({ reservations, setReservations, userId }) => {
   }
 
   return (
-    <div className="container">
-        <div className="row gy-1 my-3">
-            {reservations.map(reservation => (
-                <div key={reservation._id} className='px-2 col-lg-12'>
+            
+                <div className='px-2 col-lg-12'>
                     
                     <Card>
                         <div className='row pl-2' style={{minHeight: '220px'}}>
@@ -36,12 +27,12 @@ export const ReservationCards = ({ reservations, setReservations, userId }) => {
                                     <Card.Subtitle>{reservation.vivienda.direccion}</Card.Subtitle>
                                     <br/>
                                     <Card.Text>
-                                        <span style={{fontSize: '20px'}}>Fecha: {dateParts(reservation.estancia.fechaInicio)} - {dateParts(reservation.estancia.fechaFin)}</span>
+                                        <span style={{fontSize: '20px'}}>Fecha: {reservation.estancia.fechaInicio !== undefined ? dateParts(reservation.estancia.fechaInicio) : ""} - {reservation.estancia.fechaFinal !== undefined ? dateParts(reservation.estancia.fechaFinal) : ""}</span>
                                     </Card.Text>
                                     <br/>
                                 </Card.Body>
                             </div>
-                            <div className='col-sm-5'  style={{backgroundImage: "url(" +casaImg +")", backgroundRepeat: "no-repeat" , backgroundSize: "cover"}}>
+                            <div className='col-sm-5'  style={{backgroundImage: "url(" +casaImg +")", backgroundRepeat: "no-repeat" , backgroundSize: "cover",  borderTopRightRadius: "5px", borderBottomRightRadius: "5px"}}>
                                 {/* <Card.Img className='left-card-img' src={casaImg} /> */}
                             </div>
 
@@ -50,12 +41,6 @@ export const ReservationCards = ({ reservations, setReservations, userId }) => {
                     </Card>
                 </div>
                
-            ))}
-        </div>
-
-    </div>
-
-    
   );
 }
 
