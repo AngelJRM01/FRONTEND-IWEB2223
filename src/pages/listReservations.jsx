@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Header } from '../components/header.jsx';
 import { Footer } from '../components/footer.jsx';
 import { setUpReservations } from '../helper/SetUpReservations.js';
-import { ReservationCards } from '../components/reservations/reservationCard.jsx';
+import { ReservationCard } from '../components/reservations/reservationCard.jsx';
 
  
 
@@ -40,12 +40,15 @@ const List = () => {
             <div className="col-lg-8 list-group"
               data-bs-spy="scroll">
               {
-                <ReservationCards
-                  reservations={ reservations }
-                  setReservations={ setReservations }
-                  userId = { userId }
-                />
-            
+                <div className="container">
+                  <div className="row gy-1 my-3">
+                    {reservations.map(reservation => (
+                      <ReservationCard
+                        reservation={ reservation }
+                      />
+                    ))}
+                  </div>
+                </div>
               }
             </div>
           </div>

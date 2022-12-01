@@ -4,14 +4,7 @@ import casaImg from '../../static/casa.png';
 import Card from 'react-bootstrap/Card';
 import '../../styles/main.css'; 
 
-export const ReservationCards = ({ reservations, setReservations, userId }) => {
-
-
-  useEffect( () => {
-
-    setUpReservations( userId, setReservations );
-
-  }, [userId,setReservations]);
+export const ReservationCard = ({ reservation }) => {
 
   
   function dateParts(date) {
@@ -22,9 +15,7 @@ export const ReservationCards = ({ reservations, setReservations, userId }) => {
   }
 
   return (
-    <div className="container">
-        <div className="row gy-1 my-3">
-            {reservations.map(reservation => (
+            
                 <div key={reservation._id} className='px-2 col-lg-12'>
                     
                     <Card>
@@ -50,12 +41,6 @@ export const ReservationCards = ({ reservations, setReservations, userId }) => {
                     </Card>
                 </div>
                
-            ))}
-        </div>
-
-    </div>
-
-    
   );
 }
 

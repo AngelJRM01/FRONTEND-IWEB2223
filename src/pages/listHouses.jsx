@@ -9,7 +9,7 @@ import "leaflet/dist/leaflet.css";
 import { Header } from '../components/header.jsx';
 import { Footer } from '../components/footer.jsx';
 import { setUpHouses } from '../helper/SetUpHouses.js';
-import { HouseCards } from '../components/houses/houseCard';
+import { HouseCard } from '../components/houses/houseCard';
 
  
 
@@ -57,11 +57,16 @@ const List = () => {
           <div className="col-sm-8 list-group"
             data-bs-spy="scroll">
             {
-              <HouseCards
-                houses={ houses }
-                setHouses={ setHouses }
-                id = { id }
-              />
+              <div className="container">
+                <div className="row gy-1 my-3">
+                  {houses.map ( house => (
+                    
+                  <HouseCard
+                    house={ house }
+                  />
+                  ))}
+                </div>
+              </div>
             }
           </div>
           <div className='col-sm-8'>
