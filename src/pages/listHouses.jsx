@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { MapContainer, TileLayer } from 'react-leaflet'
+import L from 'leaflet';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import '../styles/main.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "leaflet/dist/leaflet.css";
@@ -17,6 +18,21 @@ const List = () => {
 
   const [houses, setHouses] = useState([]);
   const { id } = useParams();
+
+  const iconMarker = L.icon({
+    iconUrl: require('../static/marker.png'),
+    iconSize: [48,48],
+    iconAnchor: [32, 64],
+});
+
+  const houseMarkers = houses.map((house) => (
+    
+    <Marker position={[house.coordenadas.latitud, house.coordenadas.longitud]} key={house._id} icon={ iconMarker } >
+      <Popup>
+        <span>{house.titulo}</span>
+      </Popup>
+    </Marker>
+  ));
  
   // const URI = `${baseUrl}contentsLists/`;
 
@@ -35,9 +51,10 @@ const List = () => {
       : <div>
         <Header
         />
-        <main className="row justify-content-center"
+        <main className="row justify-content-center main"
           id="main-content">
-          <div className="col-lg-8 list-group"
+          <h1 className='col-sm-8'>Mis viviendas</h1>
+          <div className="col-sm-8 list-group"
             data-bs-spy="scroll">
             {
               <HouseCards
@@ -47,12 +64,13 @@ const List = () => {
               />
             }
           </div>
-          <div className='col-lg-8'>
+          <div className='col-sm-8'>
               <MapContainer center={[40.41831, -3.70275]} zoom={13} >
                 <TileLayer
                   attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
+                { houseMarkers }
               </MapContainer>
           </div>
         </main>

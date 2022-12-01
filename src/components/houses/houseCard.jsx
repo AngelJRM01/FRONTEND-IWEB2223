@@ -9,8 +9,6 @@ export const HouseCards = ({ houses, setHouses, id }) => {
 
     setUpHouses( id, setHouses );
 
-    document.title = 'Mis viviendas';
-
   }, [id,setHouses]);
 
 
@@ -18,7 +16,7 @@ export const HouseCards = ({ houses, setHouses, id }) => {
     <div className="container">
       <div className="row gy-1 my-3">
         {houses.map(house => (
-          <div key={house._id} className='px-2 col-sm-6 col-md-4'>
+          <div key={house._id} className='px-2 col-lg-3'>
             <Card className="p-0" >
               <Card.Img  variant="top" src={casaImg} />
               <Card.Body>
@@ -28,7 +26,7 @@ export const HouseCards = ({ houses, setHouses, id }) => {
                   
                 </Card.Text>
                 <b>{house.precioNoche}€</b> noche
-                <a href="/viviendas/" className="stretched-link"> </a>
+                <a href={"/vivienda/" + house._id} className="stretched-link"> </a> 
               </Card.Body>
             </Card>
           </div>

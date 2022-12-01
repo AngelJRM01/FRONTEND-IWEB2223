@@ -33,19 +33,13 @@ body {
 
 .main { 
     
-	/*position: sticky;/*center;*/
-	/*color: #fff;*/
-	/*font-size: 14px;*/
-	/*top: 25%;
-	left: 25%;
-    margin-left: auto; margin-right: auto;*/
     
     /* centrado vertical */
     position: relative;
     width: auto !important;
     height: auto !important;
 	border-radius: 5px !important;
-    margin-top: 85px !important;
+    margin-top: 120px !important;
     margin-bottom: 85px !important;
 }
 
@@ -57,6 +51,11 @@ body {
 
 .img-casa {
     border-radius: 5px;
+}
+
+.left-card-img {
+    border-top-left-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
 }
 
 .leaflet-container {
