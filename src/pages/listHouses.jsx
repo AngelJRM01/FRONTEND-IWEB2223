@@ -53,6 +53,7 @@ const List = () => {
         />
         <main className="row justify-content-center main"
           id="main-content">
+          <h1 className='col-sm-8'>Mis viviendas</h1>
           <div className="col-sm-8 list-group"
             data-bs-spy="scroll">
             {
@@ -63,7 +64,7 @@ const List = () => {
               />
             }
           </div>
-          <div className='col-lg-8'>
+          <div className='col-sm-8'>
               <MapContainer center={[40.41831, -3.70275]} zoom={13} >
                 <TileLayer
                   attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

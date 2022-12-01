@@ -2,15 +2,12 @@ import { useEffect } from 'react';
 import { setUpHouses } from '../../helper/SetUpHouses';
 import casaImg from '../../static/casa.png';
 import Card from 'react-bootstrap/Card';
-import { Link } from 'react-router-dom';
 
 export const HouseCards = ({ houses, setHouses, id }) => {
 
   useEffect( () => {
 
     setUpHouses( id, setHouses );
-
-    document.title = 'Mis viviendas';
 
   }, [id,setHouses]);
 
@@ -19,7 +16,7 @@ export const HouseCards = ({ houses, setHouses, id }) => {
     <div className="container">
       <div className="row gy-1 my-3">
         {houses.map(house => (
-          <div key={house._id} className='px-2 col-sm-6 col-md-4'>
+          <div key={house._id} className='px-2 col-lg-3'>
             <Card className="p-0" >
               <Card.Img  variant="top" src={casaImg} />
               <Card.Body>

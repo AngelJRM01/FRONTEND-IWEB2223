@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Header } from '../components/header.jsx';
 import { Footer } from '../components/footer.jsx';
 import { setUpReservations } from '../helper/SetUpReservations.js';
-import { HouseCards } from '../components/houses/houseCard';
+import { ReservationCards } from '../components/reservations/reservationCard.jsx';
 
  
 
@@ -21,7 +21,7 @@ const List = () => {
 
     setUpReservations( userId, setReservations );
 
-    document.title = 'Mis viviendas';
+    document.title = 'Mis reservas';
     
   }, [userId]);
 
@@ -29,18 +29,27 @@ const List = () => {
   return (
     
     reservations.length === 0
-      ? <div>{ console.log(reservations) }</div>
+      ? <div> { }</div>
       : <div>
         <Header
         />
         <main className="row justify-content-center main"
           id="main-content">
-          <div className="col-sm-8 list-group"
-            data-bs-spy="scroll">
-            {
-              reservations.persona
-            }
+          <h1 className='col-sm-8'>Mis reservas</h1>
+          <div className="col-md-8 row justify-content-start">
+            <div className="col-lg-8 list-group"
+              data-bs-spy="scroll">
+              {
+                <ReservationCards
+                  reservations={ reservations }
+                  setReservations={ setReservations }
+                  userId = { userId }
+                />
+            
+              }
+            </div>
           </div>
+          
           
         </main>
         { <Footer/> }
