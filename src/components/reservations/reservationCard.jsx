@@ -36,7 +36,7 @@ export const ReservationCards = ({ reservations, setReservations, userId }) => {
                                     <Card.Subtitle>{reservation.vivienda.direccion}</Card.Subtitle>
                                     <br/>
                                     <Card.Text>
-                                        <span style={{fontSize: '20px'}}>Fecha: {dateParts(reservation.estancia.fechaInicio)} - {dateParts(reservation.estancia.fechaFin)}</span>
+                                        <span style={{fontSize: '20px'}}>Fecha: {reservation.estancia.fechaInicio !== undefined ? dateParts(reservation.estancia.fechaInicio) : ""} - {reservation.estancia.fechaFin !== undefined ? dateParts(reservation.estancia.fechaFin) : ""}</span>
                                     </Card.Text>
                                     <br/>
                                 </Card.Body>
