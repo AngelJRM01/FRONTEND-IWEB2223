@@ -22,7 +22,7 @@ export const Header = () => {
       <ul className="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
         <li><a href="/home" className="nav-link px-2 link-secondary">Inicio</a></li>
         <li><a href="/viviendas/propietario/636a2eba353e6b6d0e281d7a" className="nav-link px-2 link-dark">Mis Viviendas</a></li>
-        <li><a href="#" className="nav-link px-2 link-dark">Mis Reservas</a></li>
+        <li><a href="/reservas/usuario/636a2ebb353e6b6d0e281d9c" className="nav-link px-2 link-dark">Mis Reservas</a></li>
       </ul>
 
       <div className="me-4 col-md-3 text-end">
