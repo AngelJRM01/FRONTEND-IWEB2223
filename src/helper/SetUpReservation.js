@@ -6,7 +6,7 @@ export const setUpReservation = (id, setReservation) => {
 
     fetch(`${ baseUrl }reservas/${ id }`)
         .then(res => {
-            if (res.status === 200) {
+            if (res.ok) {
                 res.json().then(data => {
                     setReservation(data);
                 });
