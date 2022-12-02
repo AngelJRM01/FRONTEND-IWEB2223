@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { MapContainer, TileLayer} from 'react-leaflet'
 import '../styles/main.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'leaflet/dist/leaflet.css';
@@ -107,15 +108,23 @@ const CreateHouse = () => {
                             onChange={ (e)=> setDescription(e.target.value)}
                         type="text" className="form-control" id="description" rows="4"></textarea>
                     </div>
-                    <div class="form-group">
+                    <div className="form-group">
                         <label for="state">Estado</label>
-                        <select class="form-control" id="state" defaultValue={state}
+                        <select className="form-control" id="state" defaultValue={state}
                         value={state}
                         onChange={ (e)=> setState(e.target.value)}>
                             <option>Libre</option>
                             <option>Ocupado</option>
                             <option>No disponible</option>
                         </select>
+                    </div>
+                    <div>
+                        <MapContainer center={[40.41831, -3.70275]} zoom={13} >
+                          <TileLayer
+                            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                          />
+                        </MapContainer>
                     </div>
                     <button type="submit" className="btn btn-primary">Crear</button>
                 </form>
