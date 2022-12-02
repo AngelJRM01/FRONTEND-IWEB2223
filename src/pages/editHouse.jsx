@@ -8,21 +8,20 @@ import { Header } from '../components/header.jsx';
 import { Footer } from '../components/footer.jsx';
 import { Global } from '../helper/Global';
 
-const EditHouse = () => {
+const EditHouse = (house) => {
 
   const { id, idVivienda } = useParams();
 
-  const [title, setTitle] = useState('');
-  const [capacity, setCapacity] = useState('');
-  const [direction, setDirection] = useState('');
-  const [price, setPrice] = useState('');
-  const [description, setDescription] = useState('');
-  const [state, setState] = useState('Libre');
-  const [dates, setDates] = useState([{fechaInicio: "2022-04-23T18:25:43.511+00:00"}, 
-  {fechaInicio: "2010-04-23T18:25:43.511+00:00"}]);
-  const [images, setImages] = useState(["image.jpg"]);
-  // const [coordenates, setCoordenates] = useState({latitud: 0,longitud: 0});
-  // const [owner, setOwner] = useState({_id: id, nombre:"Pepe", foto:"perfil.png"});
+  const [title, setTitle] = useState(house.titulo);
+  const [capacity, setCapacity] = useState(house.capacidad);
+  const [direction, setDirection] = useState(house.direccion);
+  const [price, setPrice] = useState(house.precioNoche);
+  const [description, setDescription] = useState(house.descripcion);
+  const [state, setState] = useState(house.estado);
+  const [dates, setDates] = useState(house.fechasDisponibles);
+  const [images, setImages] = useState(house.imagenes);
+  // const [coordenates, setCoordenates] = useState(house.coordenates);
+  // const [owner, setOwner] = useState(house.propietario);
 
   document.title = 'Editar vivienda';
 
