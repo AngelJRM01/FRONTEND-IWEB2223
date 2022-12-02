@@ -22,7 +22,7 @@ export const House = ({ house }) => {
 
                 <p className="card-text mb-1 fw-light">{house.address}</p>
 
-                <p className="card-text">Hasta {house.capacity} personas, <strog className="fw-bold">{house.price} € noche</strog></p>
+                <p className="card-text">Hasta {house.capacity} personas, <strong>{house.price} € noche</strong></p>
             </div>
 
         </a>

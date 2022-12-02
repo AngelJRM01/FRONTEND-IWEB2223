@@ -1,7 +1,9 @@
 import React from 'react';
+import { Filter } from './home/houseFilter';
+
 import logo from '../static/swishHouseLogo.png';
 
-export const Header = () => {
+export const Header = ({ setFilter = 0 }) => {
 
   const backgroud = {
     background: '#f5f5f5'
@@ -11,11 +13,12 @@ export const Header = () => {
 
     <header className="fixed-top d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 px-4 mb-3 border-bottom"
       style={backgroud}>
+
       <a href="/home" className="d-flex align-items-center ms-4 col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
         <img src={logo}
           width="50px"
           height="50px"
-          alt="Logo de SwishGames" >
+          alt="Logo de SwishHouse" >
         </img>
       </a>
 
@@ -29,6 +32,9 @@ export const Header = () => {
         <button type="button" className="btn btn-outline-primary me-2">Login</button>
         <button type="button" className="btn btn-primary">Sign-up</button>
       </div>
+
+      {setFilter ? <Filter setFilter={setFilter} /> : <div className='col-12'></div>}
+
     </header>
 
   );
