@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { setUpHouse } from "../helper/SetUpHouse";
 import { Carousel } from "react-bootstrap";
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import L from 'leaflet';
 import '../styles/main.css'
 import '../styles/image.css'
 import '../styles/orientacion.css'
@@ -28,6 +30,12 @@ const House = () => {
         }
 
     }, [house])
+    
+    const iconMarker = L.icon({
+        iconUrl: require('../static/marker.png'),
+        iconSize: [48,48],
+        iconAnchor: [32, 64],
+    });
 
     return(
         house === undefined
@@ -47,7 +55,7 @@ const House = () => {
                         </h6>
                         <br/>
                         <div className="padre">
-                            <Carousel className="cropped500px inlineBlock">
+                            <Carousel className="cropped500px inlineBlock marginRight250px marginBottom30px">
                                 {
                                     house.imagenes.map( (imagen, index ) => {
                                         return  <Carousel.Item key={index}>
@@ -61,7 +69,17 @@ const House = () => {
                                     } )
                                 }
                             </Carousel>
-                            {/* Mapa */}
+                            <MapContainer center={[house.coordenadas.latitud, house.coordenadas.longitud]} zoom={13} className="cropped500px inlineBlock" >
+                                <TileLayer
+                                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                />
+                                <Marker position={[house.coordenadas.latitud, house.coordenadas.longitud]} icon={ iconMarker } >
+                                    <Popup>
+                                        <span>{house.titulo}</span>
+                                    </Popup>
+                                </Marker>
+                            </MapContainer>
                         </div>
                         <br/>
                         <br/>
