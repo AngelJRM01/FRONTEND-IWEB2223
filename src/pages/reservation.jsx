@@ -18,7 +18,7 @@ const Reservation = () => {
 
     const ReservationDetails = () => {
         return(
-            <div className={styles.row}>
+            <div className={'row ' + styles.row}>
 
                 <div className={"col " + styles.data}>
 
