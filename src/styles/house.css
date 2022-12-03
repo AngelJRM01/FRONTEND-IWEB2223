@@ -1,0 +1,109 @@
+@media only screen and (max-width: 200px) {
+
+    .croppedpx {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+    }
+    
+}
+
+@media only screen and (min-width: 200px) {
+
+    .croppedpx {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+    }
+    
+}
+
+@media only screen and (min-width: 300px) {
+
+    .croppedpx {
+        width: 300px;
+        height: 300px;
+        object-fit: cover;
+    }
+    
+}
+
+@media only screen and (min-width: 400px) {
+
+    .croppedpx {
+        width: 400px;
+        height: 400px;
+        object-fit: cover;
+    }
+    
+}
+
+@media only screen and (min-width: 500px) {
+
+    .croppedpx {
+        width: 500px;
+        height: 500px;
+        object-fit: cover;
+    }
+    
+}
+
+@media only screen and (min-width: 900px) {
+
+    .croppedpx {
+        width: 650px;
+        height: 450px;
+        object-fit: cover;
+    }
+    
+}
+
+@media only screen and (min-width: 1062px) {
+
+    .croppedpx {
+        width: 300px;
+        height: 300px;
+        object-fit: cover;
+    }
+    
+}
+
+@media only screen and (min-width: 1212px) {
+
+    .croppedpx {
+        width: 350px;
+        height: 350px;
+        object-fit: cover;
+    }
+    
+}
+
+@media only screen and (min-width: 1362px) {
+
+    .croppedpx {
+        width: 400px;
+        height: 400px;
+        object-fit: cover;
+    }
+    
+}
+
+@media only screen and (min-width: 1512px) {
+
+    .croppedpx {
+        width: 450px;
+        height: 450px;
+        object-fit: cover;
+    }
+    
+}
+
+@media only screen and (min-width: 1700px) {
+
+    .croppedpx {
+        width: 500px;
+        height: 500px;
+        object-fit: cover;
+    }
+    
+}

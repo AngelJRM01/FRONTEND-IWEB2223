@@ -7,7 +7,7 @@ import { Carousel } from "react-bootstrap";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import L from 'leaflet';
 import '../styles/main.css'
-import '../styles/image.css'
+import '../styles/house.css'
 import '../styles/orientacion.css'
 import '../styles/texto.css'
 import '../styles/div.css'
@@ -55,11 +55,11 @@ const House = () => {
                         </h6>
                         <br/>
                         <div className="padre">
-                            <Carousel className="cropped500px inlineBlock marginRight250px marginBottom30px">
+                            <Carousel className="croppedpx inlineBlock marginRight100px marginBottom30px">
                                 {
                                     house.imagenes.map( (imagen, index ) => {
                                         return  <Carousel.Item key={index}>
-                                                    <div className="cropped500px contenedor">
+                                                    <div className="croppedpx contenedor">
                                                         <img
                                                             className="card-img-top rounded-2 hijo"
                                                             src={imagen}
@@ -69,7 +69,7 @@ const House = () => {
                                     } )
                                 }
                             </Carousel>
-                            <MapContainer center={[house.coordenadas.latitud, house.coordenadas.longitud]} zoom={13} className="cropped500px inlineBlock" >
+                            <MapContainer center={[house.coordenadas.latitud, house.coordenadas.longitud]} zoom={13} className="croppedpx inlineBlock" >
                                 <TileLayer
                                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
