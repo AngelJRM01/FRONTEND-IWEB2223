@@ -75,23 +75,29 @@
     color: grey;
 }
 
+.grey {
+    color: grey;
+}
+
 .firstContainer {
     background-color: white;
     margin-bottom: 10px;
 }
 
 .title {
-    font-weight: 400;
+    font-weight: 500;
+    color: rgb(25 25 25);
 }
 
 .secondContainer {
     display: flex;
     flex-direction: row;
     background-color: white;
+    margin-bottom: 10px;
 }
 
 .auxDiv {
-    flex: 1 1 20px;
+    flex: 0 0 20px;
 }
 
 .arrow {
@@ -106,4 +112,33 @@
 .bottonss {
     border-top: 1px solid;
     border-color: rgb(220, 220, 220);
+}
+
+.secondTable {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+}
+
+.detallesReserva {
+    font-size: 22px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.divTitle {
+    padding-top: 15px;
+}
+
+.boldFont {
+    font-weight: bold;
+}
+
+.imgSize {
+    width: 100%;
+    height: 350px;
+    border-radius: 1%;
+}
+
+.noMarginP {
+    margin-bottom: unset;
 }
