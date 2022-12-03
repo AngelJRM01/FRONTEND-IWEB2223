@@ -5,7 +5,7 @@ import { MapContainer, TileLayer } from 'react-leaflet'
 import { Header } from "../components/header";
 import { Footer } from "../components/footer";
 
-import '../styles/reservation.css';
+import styles from '../styles/reservation.module.css';
 import { setUpReservation } from "../helper/SetUpReservation";
 
 const Reservation = () => {
@@ -18,11 +18,11 @@ const Reservation = () => {
 
     const ReservationDetails = () => {
         return(
-            <div className="row">
+            <div className={styles.row}>
 
-                <div className="col data">
+                <div className={"col " + styles.data}>
 
-                    <div className='firstContainer'>
+                    <div className={styles.firstContainer}>
 
                         <div id="carouselExampleIndicators" className="carousel slide" data-bs-ride="true">
                             <div className="carousel-indicators">
@@ -51,30 +51,30 @@ const Reservation = () => {
                             </button>
                         </div>
 
-                        <div className='flexito1'>
-                            <div className='fl'>
-                                <p className='title'>Llegada:</p>
-                                <p className='date'>&ensp;mié, 11 ene.</p>
-                                <p className='time'>&ensp;14:00</p>
+                        <div className={styles.flexito1}>
+                            <div className={styles.fl}>
+                                <p className={styles.title}>Llegada:</p>
+                                <p className={styles.date}>&ensp;mié, 11 ene.</p>
+                                <p className={styles.time}>&ensp;14:00</p>
                             </div>
-                            <div className='fl salida'>
-                                <p className='title'>Salida:</p>
-                                <p className='date'>&emsp;jue, 12 ene.</p>
-                                <p className='time'>&emsp;11:00</p>
+                            <div className={styles.salida + ' ' + styles.fl}>
+                                <p className={styles.title}>Salida:</p>
+                                <p className={styles.date}>&emsp;jue, 12 ene.</p>
+                                <p className={styles.time}>&emsp;11:00</p>
                             </div>
                         </div>
 
-                        <div className="list-group bottonss">
-                            <a href="http://localhost:3000/vivienda/6371a2d0cbdef810a6e09c83" className="list-group-item list-group-item-action house">
+                        <div className={"list-group " + styles.bottonss}>
+                            <a href="http://localhost:3000/vivienda/6371a2d0cbdef810a6e09c83" className={"list-group-item list-group-item-action " + styles.house}>
                                 <i class="fa-solid fa-pager">
                                 </i>&emsp;Mostrar anuncio
-                                <i class="fa-sharp fa-solid fa-chevron-right arrow"></i>
+                                <i class={"fa-sharp fa-solid fa-chevron-right " + styles.arrow}></i>
                             </a>
                         </div>
                     </div>
 
-                    <div className='secondContainer'>
-                        <div className='auxDiv'></div>
+                    <div className={styles.secondContainer}>
+                        <div className={styles.auxDiv}></div>
                         <table className="table">
                             <tbody>
                                 <tr>
@@ -96,7 +96,7 @@ const Reservation = () => {
                                 </tr>
                             </tbody>
                         </table>
-                        <div className='auxDiv'></div>
+                        <div className={styles.auxDiv}></div>
                     </div>
 
                     <div id="carouselExampleIndicators" className="carousel slide" data-bs-ride="true">
@@ -157,7 +157,7 @@ const Reservation = () => {
 
                 </div>
 
-                <div className="col">
+                <div className={"col " + styles.mapContainer}>
                     <MapContainer center={[40.41831, -3.70275]} zoom={13} >
                         <TileLayer
                             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -172,10 +172,10 @@ const Reservation = () => {
 
     return(
         
-        <div className='reservation-component'>
+        <div className={styles.reservationCcomponent}>
             <Header/>
-            <main className="main">
-                <div className="container-fluid">
+            <main className={styles.main}>
+                <div className={"container-fluid " + styles.containerFluid}>
                     { reservation == null ? "Reservation not found." : <ReservationDetails/> }
                 </div>
             </main>

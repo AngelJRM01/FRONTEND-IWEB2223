@@ -1,11 +1,7 @@
-.reservation-component {
+.reservationCcomponent {
     display: flex;
     flex-direction: column;
     height: 100%;
-}
-
-.reservation-component > .header {
-    flex-shrink: 0;
 }
 
 .main {
@@ -20,48 +16,37 @@
     flex-direction: column;
 }
 
-.reservation-component .container-fluid {
+.reservationComponent .containerFluid {
     flex-grow: 1;
 
     display: flex;
     flex-direction: column;
 }
 
-.reservation-component .container-fluid > .row {
+.reservationComponent .containerFluid > .row {
     flex-grow: 1;
 }
 
-.leaflet-container {
+.mapContainer > * {
     height: 100%;
 }
 
 .data {
-    flex: 0 0 600px;
+    flex: 0 1 600px;
     overflow-y: auto;
     height: 100%;
     width: 600px;
     background-color: ghostwhite;
 }
 
-.container-fluid {
+.containerFluid {
     height: 100%;
 }
 
 .row {
     height: 100%;
-}
-
-.second {
-    border-left: 2px solid;
-    border-color: rgb(216, 216, 216);
-}
-
-.table1 {
-    margin-top: 20px;
-}
-
-.body1 {
-    border-style: hidden;
+    display: flex;
+    flex-direction: row;
 }
 
 .flexito1 {
