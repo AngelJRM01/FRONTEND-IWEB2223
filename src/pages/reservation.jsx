@@ -181,7 +181,7 @@ const Reservation = () => {
         
         <div className='reservation-component'>
             <Header/>
-            <main className="main">
+            <main className="main1">
                 <div className="container-fluid">
                     { reservation == null ? "Reservation not found." : <ReservationDetails/> }
                 </div>
