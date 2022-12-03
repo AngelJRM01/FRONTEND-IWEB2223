@@ -40,6 +40,7 @@
     overflow-y: auto;
     height: 100%;
     width: 600px;
+    background-color: ghostwhite;
 }
 
 .container-fluid {
@@ -48,4 +49,76 @@
 
 .row {
     height: 100%;
+}
+
+.second {
+    border-left: 2px solid;
+    border-color: rgb(216, 216, 216);
+}
+
+.table1 {
+    margin-top: 20px;
+}
+
+.body1 {
+    border-style: hidden;
+}
+
+.flexito1 {
+    display: flex;
+    flex-direction: row;
+    padding-top: 20px;
+    margin-bottom: 20px;
+}
+
+.fl {
+    flex: 1 1 auto;
+    padding-left: 20px;
+}
+
+.salida {
+    border-left: 2px solid;
+    border-color: rgb(220, 220, 220);
+}
+
+.date {
+    font-weight: bold;
+    margin-bottom: unset;
+}
+
+.time {
+    color: grey;
+}
+
+.firstContainer {
+    background-color: white;
+    margin-bottom: 10px;
+}
+
+.title {
+    font-weight: 400;
+}
+
+.secondContainer {
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+}
+
+.auxDiv {
+    flex: 1 1 20px;
+}
+
+.arrow {
+    float: right;
+    padding-top: 4px;
+}
+
+.house {
+    border: none;
+}
+
+.bottonss {
+    border-top: 1px solid;
+    border-color: rgb(220, 220, 220);
 }
