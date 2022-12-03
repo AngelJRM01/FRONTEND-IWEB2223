@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { MapContainer, TileLayer } from 'react-leaflet'
 import '../styles/main.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "leaflet/dist/leaflet.css";
@@ -8,21 +9,20 @@ import { Header } from '../components/header.jsx';
 import { Footer } from '../components/footer.jsx';
 import { Global } from '../helper/Global';
 
-const EditHouse = () => {
+const EditHouse = (house) => {
 
   const { id, idVivienda } = useParams();
 
-  const [title, setTitle] = useState('');
-  const [capacity, setCapacity] = useState('');
-  const [direction, setDirection] = useState('');
-  const [price, setPrice] = useState('');
-  const [description, setDescription] = useState('');
-  const [state, setState] = useState('Libre');
-  const [dates, setDates] = useState([{fechaInicio: "2022-04-23T18:25:43.511+00:00"}, 
-  {fechaInicio: "2010-04-23T18:25:43.511+00:00"}]);
-  const [images, setImages] = useState(["image.jpg"]);
-  // const [coordenates, setCoordenates] = useState({latitud: 0,longitud: 0});
-  // const [owner, setOwner] = useState({_id: id, nombre:"Pepe", foto:"perfil.png"});
+  const [title, setTitle] = useState(house.titulo);
+  const [capacity, setCapacity] = useState(house.capacidad);
+  const [direction, setDirection] = useState(house.direccion);
+  const [price, setPrice] = useState(house.precioNoche);
+  const [description, setDescription] = useState(house.descripcion);
+  const [state, setState] = useState(house.estado);
+  const [dates, setDates] = useState(house.fechasDisponibles);
+  const [images, setImages] = useState(house.imagenes);
+  // const [coordenates, setCoordenates] = useState(house.coordenates);
+  // const [owner, setOwner] = useState(house.propietario);
 
   document.title = 'Editar vivienda';
 
@@ -107,15 +107,23 @@ const EditHouse = () => {
                             onChange={ (e)=> setDescription(e.target.value)}
                         type="text" className="form-control" id="description" rows="4"></textarea>
                     </div>
-                    <div class="form-group">
+                    <div className="form-group">
                         <label for="state">Estado</label>
-                        <select class="form-control" id="state" defaultValue={state}
+                        <select className="form-control" id="state" defaultValue={state}
                         value={state}
                         onChange={ (e)=> setState(e.target.value)}>
                             <option>Libre</option>
                             <option>Ocupado</option>
                             <option>No disponible</option>
                         </select>
+                    </div>
+                    <div>
+                        <MapContainer center={[40.41831, -3.70275]} zoom={13} >
+                          <TileLayer
+                            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                          />
+                        </MapContainer>
                     </div>
                     {/* <Link to={"/viviendas/propietario/636a2eba353e6b6d0e281d7a"} > */}
                       <button type="submit" className="btn btn-primary">Crear</button>
