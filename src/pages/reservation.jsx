@@ -17,11 +17,25 @@ const Reservation = () => {
     useEffect( () => { setUpReservation(id, setReservation); }, [id]);
     useEffect( () => { document.title = "Información general de tu viaje - SwishHouses"; }, [reservation]);
 
+    const Print = () => {     
+        let printContents = document.getElementById('printablediv').innerHTML;
+        let originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+    };
+
     const ReservationDetails = () => {
         return(
             <div className={'row ' + styles.row}>
 
-                <div className={"col " + styles.data}>
+                <div className={"col " + styles.data} id='printablediv'>
+
+                    <style>
+                        {`@media print {
+                            * { overflow: visible !important; } 
+                        }`}
+                    </style>
 
                     <div className={styles.firstContainer}>
 
@@ -69,17 +83,34 @@ const Reservation = () => {
                     </div>
 
                     <div className={styles.secondContainer}>
-                        <div className={styles.auxDiv}></div>
-                        <div className={styles.secondTable}>
-                            <div className={styles.divTitle}>
-                                <p className={styles.detallesReserva}>Detalles de la reserva</p>
+                        <div className={styles.secondContainer2}>
+                            <div className={styles.auxDiv}></div>
+                            <div className={styles.secondTable}>
+                                <div className={styles.divTitle}>
+                                    <p className={styles.detallesReserva}>Detalles de la reserva</p>
+                                </div>
+                                <div>
+                                    <p className={styles.boldFont + ' ' + styles.noMarginP}>&emsp;¿Cuántos vienen?</p>
+                                    <p>&emsp;8 viajeros</p>
+                                </div>
                             </div>
-                            <div>
-                                <p className={styles.boldFont + ' ' + styles.noMarginP}>&emsp;¿Cuántos vienen?</p>
-                                <p>&emsp;8 viajeros</p>
-                            </div>
+                            <div className={styles.auxDiv}></div>
                         </div>
-                        <div className={styles.auxDiv}></div>
+
+                        <div className={"list-group " + styles.bottonss}>
+                            <a href={"http://localhost:3000/reservas/" + reservation._id} className={"list-group-item list-group-item-action " + styles.house}>
+                                <i class="fa-solid fa-ban"></i>
+                                &emsp;Retirar solicitud
+                                <i class={"fa-sharp fa-solid fa-chevron-right " + styles.arrow}></i>
+                            </a>
+                        </div>
+                        <div className={"list-group " + styles.bottonss}>
+                            <button type="button" className={"list-group-item list-group-item-action " + styles.house} onClick={Print}>
+                                <i class="fa-solid fa-print"></i>
+                                &emsp;Imprimir información
+                                <i class={"fa-sharp fa-solid fa-chevron-right " + styles.arrow}></i>
+                            </button>
+                        </div>
                     </div>
 
                     <div id="carouselExampleIndicators" className="carousel slide" data-bs-ride="true">
