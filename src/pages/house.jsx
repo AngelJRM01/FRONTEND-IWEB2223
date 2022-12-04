@@ -1,7 +1,7 @@
 import { Header } from "../components/header";
 import { Footer } from "../components/footer";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { setUpHouse } from "../helper/SetUpHouse";
 import { Carousel, Modal } from "react-bootstrap";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
@@ -20,6 +20,7 @@ const House = () => {
     const [ house, setHouse ] = useState();
     const [ showModal, setShowModal ] = useState(false);
     const [reservations, setReservations] = useState([]);
+    const navigate = useNavigate();
 
     useEffect( () => {
 
@@ -86,7 +87,14 @@ const House = () => {
                                     ))}
                                 </Modal.Body>
                                 <Modal.Footer>
-                                    <button variant="primary" className="btn btn-outline-primary" onClick={modalClose}>Editar Vivienda</button>
+                                    <button variant="primary" 
+                                            className="btn btn-outline-primary" 
+                                            onClick={() => {
+                                                modalClose();
+                                                navigate(`/viviendas/propietario/${house.propietario._id}/vivienda/${house._id}/edit`)
+                                            }}>
+                                                Editar Vivienda
+                                    </button>
                                     <button variant="primary" className="btn btn-outline-primary" onClick={modalClose}>Hacer Reserva</button>
                                     <button variant="primary" className="btn btn-outline-secondary" onClick={modalClose}>Cerrar</button>
                                 </Modal.Footer>
