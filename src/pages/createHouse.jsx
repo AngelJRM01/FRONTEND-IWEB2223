@@ -10,7 +10,7 @@ import { Footer } from '../components/footer.jsx';
 import { Global } from '../helper/Global';
 import { DraggableMarker } from '../helper/draggableMarker';
 // import { Map } from '../helper/map';
-import '../styles/map.css';
+// import '../styles/style.css';
 
 const CreateHouse = () => {
 
@@ -112,14 +112,10 @@ const CreateHouse = () => {
   
   return (
     <html>
-      <head>
-            <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
-            integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
-            crossorigin=""/>
-            <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
-            integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
-            crossorigin=""></script>
-      </head>
+      {/* <head>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"/>
+        <link rel="stylesheet" href="https://unpkg.com/@geoapify/leaflet-address-search-plugin@^1/dist/L.Control.GeoapifyAddressSearch.min.css"/>
+      </head> */}
     <div>
         <Header/>
         <main className="row justify-content-center main"
@@ -188,7 +184,6 @@ const CreateHouse = () => {
                         <script src="https://unpkg.com/@geoapify/leaflet-address-search-plugin@^1/dist/L.Control.GeoapifyAddressSearch.min.js"></script>
                         <script src="map.js"></script> */}
                         {/* {getDirection} */}
-
                     </div>
                     <button type="submit" className="btn btn-primary">Crear</button>
                 </form>
