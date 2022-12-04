@@ -9,6 +9,8 @@ import { Header } from '../components/header.jsx';
 import { Footer } from '../components/footer.jsx';
 import { Global } from '../helper/Global';
 import { DraggableMarker } from '../helper/draggableMarker';
+// import { Map } from '../helper/map';
+import '../styles/map.css';
 
 const CreateHouse = () => {
 
@@ -39,6 +41,8 @@ const CreateHouse = () => {
   //636a2eba353e6b6d0e281d7a = idPropietario
   const misViviendas = `http://localhost:3000/viviendas/propietario/${id}`;
 
+  const apiKey = "0ab94b07fa6043a491f0050f801c58c2";
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -51,7 +55,7 @@ const CreateHouse = () => {
       estado: state,
       fechasDisponibles: dates,
       imagenes: images,
-      coordenadas: center,
+      coordenadas: coordenates,
       valoracion: 0,
       propietario: owner
     };
@@ -72,11 +76,50 @@ const CreateHouse = () => {
 
   const center = {
     lat: coordenates.latitud,
-    lng: coordenates.longitud,
+    lon: coordenates.longitud,
+  }
+
+  const getDirection = async (e) => {
+    e.preventDefault();
+
+    const textDir = encodeURIComponent(direction);
+    const geocodingURL = `https://api.geoapify.com/v1/geocode/search?text=${textDir}&format=json&apiKey=${apiKey}`
+
+    const response = await fetch(geocodingURL);
+    const data = await response.json();
+    const dataJSON = data.results;
+    
+    console.log(dataJSON);
+
+    center.lat = 0;
+    center.lon = 0;
+    
+
+    for(let i = 0; i < dataJSON.length; i++){
+        center.lat += dataJSON[i].lat;
+        center.lon += dataJSON[i].lon;
+    }
+      
+    center.lat /= dataJSON.length;
+    center.lon /= dataJSON.length;
+    console.log(center);
+
+    // const map = document.getElementById('map');
+
+    // Map(dataJSON, center);
+
   }
   
-  
   return (
+    <html>
+      <head>
+            <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+            integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+            crossorigin=""/>
+            <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+            integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+            crossorigin=""></script>
+      </head>
     <div>
         <Header/>
         <main className="row justify-content-center main"
@@ -105,6 +148,7 @@ const CreateHouse = () => {
                             value={direction}
                             onChange={ (e)=> setDirection(e.target.value)}
                         type="text" className="form-control" id="direction"></input>
+                        <input type="button" value="Buscar" onClick={getDirection}></input>
                     </div>
                     <div className="form-group">
                         <label htmlFor="price">Precio por noche (€)</label>
@@ -131,13 +175,20 @@ const CreateHouse = () => {
                         </select>
                     </div>
                     <div>
-                        <MapContainer center={center} zoom={13} >
+                        <MapContainer id='map' center={center} zoom={13} >
                           <TileLayer
                             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                           />
                           {DraggableMarker(center)}
                         </MapContainer>
+                        {/* {Map(center)} */}
+                        {/* <div id="map"></div>
+                        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+                        <script src="https://unpkg.com/@geoapify/leaflet-address-search-plugin@^1/dist/L.Control.GeoapifyAddressSearch.min.js"></script>
+                        <script src="map.js"></script> */}
+                        {/* {getDirection} */}
+
                     </div>
                     <button type="submit" className="btn btn-primary">Crear</button>
                 </form>
@@ -145,6 +196,7 @@ const CreateHouse = () => {
         </main>
         <Footer/>
     </div>
+    </html>
   );
 
 };
