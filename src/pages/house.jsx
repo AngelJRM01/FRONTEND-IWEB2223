@@ -1,26 +1,27 @@
 import { Header } from "../components/header";
 import { Footer } from "../components/footer";
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { setUpHouse } from "../helper/SetUpHouse";
-import { Carousel, Modal } from "react-bootstrap";
+import { Carousel } from "react-bootstrap";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
-import { setUpReservations } from '../helper/SetUpReservations.js';
-import { ReservationCard } from '../components/reservations/reservationCard.jsx';
 import L from 'leaflet';
 import '../styles/main.css'
 import '../styles/house.css'
 import '../styles/orientacion.css'
 import '../styles/texto.css'
 import '../styles/div.css'
+import ModalPanelConfiguracion from "../components/house/modalPanelConfiguracion";
+import { setUpReservations } from '../helper/SetUpReservations.js';
+import { setUpGasStation } from "../helper/SetUpGasStation";
 
 const House = () => {
 
     const { id } = useParams();
     const [ house, setHouse ] = useState();
     const [ showModal, setShowModal ] = useState(false);
-    const [reservations, setReservations] = useState([]);
-    const navigate = useNavigate();
+    const [ reservations, setReservations ] = useState([]);
+    const [ gasStation, setGasStation ] = useState([]);
 
     useEffect( () => {
 
@@ -33,18 +34,28 @@ const House = () => {
         if(house !== undefined){
             document.title = house.titulo
             setUpReservations( house.propietario._id, setReservations );
+            setUpGasStation(house.coordenadas.latitud, house.coordenadas.longitud, 20, setGasStation)
         }
 
     }, [house])
 
-    const modalClose = () => setShowModal(false);
-    const modalShow = () => setShowModal(true);
-    
     const iconMarker = L.icon({
         iconUrl: require('../static/marker.png'),
         iconSize: [48,48],
         iconAnchor: [32, 64],
     });
+
+    const modalShow = () => setShowModal(true);
+
+    const marcadoresGasolineras = gasStation.map((gas, index) => {
+        const latitudGas = Number(gas["Latitud"].replace(',', '.'));
+        const longitudGas = Number(gas["Longitud"].replace(',', '.'));
+        return <Marker position={[latitudGas, longitudGas]} key={index} icon={ iconMarker } >
+                    <Popup>
+                        <span>{gas["Dirección"]}</span>
+                    </Popup>
+                </Marker>
+    })
 
     return(
         house === undefined
@@ -54,8 +65,8 @@ const House = () => {
                 <main className="row justify-content-center main">
                     <div className="col-lg-8">
                         <h1>{house.titulo}</h1>
-                        <div className="padre">
-                            <h6 className="inlineBlock me-5">
+                        <div className="padreInlineBlock">
+                            <h6 className="hijoInlineBlock me-5">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-star-fill mb-1 mx-2" viewBox="0 0 16 16">
                                     <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
                                 </svg>
@@ -66,49 +77,22 @@ const House = () => {
                                 <strong>Precio noche: {house.precioNoche}€</strong>
                             </h6>
                             <button variant="primary" className="btn btn-outline-primary" onClick={modalShow}>Panel de Configuración</button>
-                            <Modal
-                                show={showModal}
-                                onHide={modalClose}
-                                backdrop="static"
-                                keyboard={false}
-                                size="lg"
-                                aria-labelledby="contained-modal-title-vcenter"
-                                centered
-                            >
-                                <Modal.Header closeButton>
-                                    <Modal.Title id="contained-modal-title-vcenter">Panel de Configuración</Modal.Title>
-                                </Modal.Header>
-                                <Modal.Body>
-                                    <h5 className="mb-4">Lista de Reservas hechas por mis clientes:</h5>
-                                    {reservations.map((reservation, index) => (
-                                    <ReservationCard key={index}
-                                        reservation={ reservation }
-                                    />
-                                    ))}
-                                </Modal.Body>
-                                <Modal.Footer>
-                                    <button variant="primary" 
-                                            className="btn btn-outline-primary" 
-                                            onClick={() => {
-                                                modalClose();
-                                                navigate(`/viviendas/propietario/${house.propietario._id}/vivienda/${house._id}/edit`)
-                                            }}>
-                                                Editar Vivienda
-                                    </button>
-                                    <button variant="primary" className="btn btn-outline-primary" onClick={modalClose}>Hacer Reserva</button>
-                                    <button variant="primary" className="btn btn-outline-secondary" onClick={modalClose}>Cerrar</button>
-                                </Modal.Footer>
-                            </Modal>
+                            <ModalPanelConfiguracion
+                                house = {house}
+                                setShowModal = {setShowModal}
+                                showModal = {showModal}
+                                reservations = {reservations}
+                            />
                         </div>
                         <br/>
-                        <div className="padre">
-                            <Carousel className="croppedpx inlineBlock marginRight100px marginBottom30px">
+                        <div className="padreInlineBlock">
+                            <Carousel className="croppedpx hijoInlineBlock marginRight100px marginBottom30px">
                                 {
                                     house.imagenes.map( (imagen, index ) => {
                                         return  <Carousel.Item key={index}>
-                                                    <div className="croppedpx contenedor">
+                                                    <div className="croppedpx padreCentrar">
                                                         <img
-                                                            className="card-img-top rounded-2 hijo"
+                                                            className="card-img-top rounded-2 hijoCentrar"
                                                             src={imagen}
                                                             alt="Imagen de la casa"/>
                                                     </div>
@@ -116,7 +100,7 @@ const House = () => {
                                     } )
                                 }
                             </Carousel>
-                            <MapContainer center={[house.coordenadas.latitud, house.coordenadas.longitud]} zoom={13} className="croppedpx inlineBlock" >
+                            <MapContainer center={[house.coordenadas.latitud, house.coordenadas.longitud]} zoom={13} className="croppedpx hijoInlineBlock" >
                                 <TileLayer
                                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -141,6 +125,28 @@ const House = () => {
                                 {house.descripcion}
                             </h6>                        
                         </div>
+                        <br/>
+                        <br/>
+                        <h4>Mapa de las 20 gasolineras más cercanas</h4>
+                        <br/>
+                        <MapContainer center={[house.coordenadas.latitud, house.coordenadas.longitud]} zoom={13} >
+                            <TileLayer
+                            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            />
+                            {marcadoresGasolineras}
+                        </MapContainer>
+                        <br/>
+                        <div className="breakSpaces">
+                            {gasStation.map((gas, index) => {
+                                return (
+                                    <p>
+                                        · La gasolinera con la dirección <strong className="breakSpaces">{gas["Dirección"]}</strong> tiene de precio la Gasolina 95 E5 a <strong className="breakSpaces">{gas["Precio Gasolina 95 E5"]}€</strong> y está a <strong className="breakSpaces">{gas["Distancia"]} km</strong>
+                                    </p>
+                                )
+                            })}
+                        </div>
+
                     </div>
                 </main>
                 <Footer/>
