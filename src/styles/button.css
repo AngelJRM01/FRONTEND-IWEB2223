@@ -1,5 +1,5 @@
 .float {
-    position: fixed;
+    position: absolute;
     width: 60px;
     height: 60px;
     bottom: 10%;
@@ -7,4 +7,5 @@
     border-radius: 50px;
     text-align: center;
     box-shadow: 2px 2px 3px #999;
+    z-index: 1;
 }
