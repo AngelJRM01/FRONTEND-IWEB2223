@@ -12,7 +12,7 @@ export const Footer = () => {
       style={backgroud}>
       <p className="col-md-4 ms-4 mb-0 text-muted">© 2022 SwishHouse, Inc</p>
 
-      <ul className="nav col-md-4 me-4 justify-content-end">
+      <ul className="nav d-none d-sm-flex col-4 me-4 d-flex justify-content-end">
         <li className="nav-item"><a href="/home" className="nav-link px-2 text-muted">Inicio</a></li>
         <li className="nav-item"><a href="#" className="nav-link px-2 text-muted">Acerca de</a></li>
       </ul>
