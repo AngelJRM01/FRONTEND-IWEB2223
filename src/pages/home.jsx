@@ -5,6 +5,7 @@ import { HouseList } from '../components/home/houseList';
 import { HouseMap } from '../components/home/houseMap';
 import { setUpHome } from '../helper/setUpHome';
 import '../styles/button.css'
+import '../styles/map.css'
 
 const Home = () => {
 
@@ -23,8 +24,8 @@ const Home = () => {
     }, [filter]);
 
     const margin = {
-        'marginTop': '10em',
-        'marginBottom': '7em'
+        'marginTop': '8em',
+        'marginBottom': (map ? '0em' : '7em')
     }
 
     return (
@@ -32,13 +33,13 @@ const Home = () => {
         <div>
             <Header setFilter={setFilter} />
 
-            <main className='container-fluid mx-0' style={margin}>
-
-                <button type="button" class="btn btn-primary float" onClick={() => { setMap(!map) }}>
-                    {map ? <i class="fas fa-list"></i> : <i class="fas fa-map"></i>}
-                </button>
+            <main className='container-fluid px-0' style={margin}>
 
                 {map ? <HouseMap houses={houses} /> : <HouseList houses={houses} />}
+
+                <button type="button" className="btn btn-primary float" onClick={() => { setMap(!map) }}>
+                    {map ? <i className="fas fa-list"></i> : <i className="fas fa-map"></i>}
+                </button>
 
             </main>
 
