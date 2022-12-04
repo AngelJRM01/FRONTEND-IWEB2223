@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { MapContainer, TileLayer} from 'react-leaflet'
+import { MapContainer, TileLayer } from 'react-leaflet'
 import '../styles/main.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'leaflet/dist/leaflet.css';
@@ -8,6 +8,7 @@ import 'leaflet/dist/leaflet.css';
 import { Header } from '../components/header.jsx';
 import { Footer } from '../components/footer.jsx';
 import { Global } from '../helper/Global';
+import { DraggableMarker } from '../helper/draggableMarker';
 
 const CreateHouse = () => {
 
@@ -19,10 +20,15 @@ const CreateHouse = () => {
   const [price, setPrice] = useState('0');
   const [description, setDescription] = useState('');
   const [state, setState] = useState('Libre');
-  const [dates, setDates] = useState([{fechaInicio: "2022-04-23T18:25:43.511+00:00"}, 
-  {fechaInicio: "2010-04-23T18:25:43.511+00:00"}]);
+  const [dates, setDates] = useState([
+    {fechaInicio: "2022-04-23T18:25:43.511+00:00"}, 
+  {fechaInicio: "2010-04-23T18:25:43.511+00:00"}
+  ]);
   const [images, setImages] = useState(["terrazaDeJuan.jpg"]);
-  const [coordenates, setCoordenates] = useState({latitud: 0,longitud: 0});
+  const [coordenates, setCoordenates] = useState({
+    latitud: 40.41831,
+    longitud: -3.70275,
+  });
   const [owner, setOwner] = useState({_id: id, nombre:"Pepe", foto:"perfil.png"});
 
   document.title = 'Crear vivienda';
@@ -45,7 +51,7 @@ const CreateHouse = () => {
       estado: state,
       fechasDisponibles: dates,
       imagenes: images,
-      coordenadas: coordenates,
+      coordenadas: center,
       valoracion: 0,
       propietario: owner
     };
@@ -63,6 +69,12 @@ const CreateHouse = () => {
 
     window.location.href = misViviendas;
   }
+
+  const center = {
+    lat: coordenates.latitud,
+    lng: coordenates.longitud,
+  }
+  
   
   return (
     <div>
@@ -119,11 +131,12 @@ const CreateHouse = () => {
                         </select>
                     </div>
                     <div>
-                        <MapContainer center={[40.41831, -3.70275]} zoom={13} >
+                        <MapContainer center={center} zoom={13} >
                           <TileLayer
                             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                           />
+                          {DraggableMarker(center)}
                         </MapContainer>
                     </div>
                     <button type="submit" className="btn btn-primary">Crear</button>
