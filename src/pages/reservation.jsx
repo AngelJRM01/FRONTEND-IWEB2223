@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { MapContainer, TileLayer } from 'react-leaflet'
+import { Carousel } from "react-bootstrap";
 
 import { Header } from "../components/header";
 import { Footer } from "../components/footer";
@@ -24,31 +25,25 @@ const Reservation = () => {
 
                     <div className={styles.firstContainer}>
 
-                        <div id="carouselExampleIndicators" className="carousel slide" data-bs-ride="true">
-                            <div className="carousel-indicators">
-                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
-                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                            </div>
-                            <div className="carousel-inner">
-                                <div className="carousel-item active">
-                                    <img src="https://top-mmo.fr/wp-content/uploads/2022/11/l-intro-1667494654.jpg" className="d-block w-100" alt="..."/>
-                                </div>
-                                <div className="carousel-item">
-                                    <img src="..." className="d-block w-100" alt="..."/>
-                                </div>
-                                <div className="carousel-item">
-                                    <img src="..." className="d-block w-100" alt="..."/>
-                                </div>
-                            </div>
-                            <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                                <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span className="visually-hidden">Previous</span>
-                            </button>
-                            <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                                <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span className="visually-hidden">Next</span>
-                            </button>
+                        <div className='carrusel'>
+                            <Carousel>
+                                <Carousel.Item>
+                                    <div>
+                                        <img
+                                            className={styles.imgSize}
+                                            src='https://www.cultture.com/pics/2021/05/hunter-x-hunter-10-cosas-que-solo-los-fans-del-manga-saben-de-gon.jpg'
+                                            alt="Imagen 1"/>
+                                    </div>
+                                </Carousel.Item>
+                                <Carousel.Item>
+                                    <div>
+                                        <img
+                                            className={styles.imgSize}
+                                            src='https://top-mmo.fr/wp-content/uploads/2022/11/l-intro-1667494654.jpg'
+                                            alt="Imagen 2"/>
+                                    </div>
+                                </Carousel.Item>
+                            </Carousel>
                         </div>
 
                         <div className={styles.flexito1}>
@@ -75,27 +70,15 @@ const Reservation = () => {
 
                     <div className={styles.secondContainer}>
                         <div className={styles.auxDiv}></div>
-                        <table className="table">
-                            <tbody>
-                                <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                </tr>
-                                <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                                </tr>
-                                <tr>
-                                <th scope="row">3</th>
-                                <td colspan="2">Larry the Bird</td>
-                                <td>@twitter</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div className={styles.secondTable}>
+                            <div className={styles.divTitle}>
+                                <p className={styles.detallesReserva}>Detalles de la reserva</p>
+                            </div>
+                            <div>
+                                <p className={styles.boldFont + ' ' + styles.noMarginP}>&emsp;¿Cuántos vienen?</p>
+                                <p>&emsp;8 viajeros</p>
+                            </div>
+                        </div>
                         <div className={styles.auxDiv}></div>
                     </div>
 
