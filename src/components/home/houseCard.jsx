@@ -5,7 +5,8 @@ export const House = ({ house }) => {
 
     return (
 
-        <a href={house.link} className="card col-2 mx-2 px-0 mb-4 bg-transparent border-0 text-decoration-none text-bg-info">
+        <a href={house.link} className="card col-xxl-2 col-lg-3 col-md-5 col-sm-5 col-10 
+        mx-2 px-0 mb-4 bg-transparent border-0 text-decoration-none text-bg-info">
 
             <img src={house.img} className="card-img-top rounded-4 cropped" alt={house.title} />
             <div className="card-body pt-2 px-1">
