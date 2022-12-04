@@ -1,11 +1,11 @@
 /*
     Centrar
 */
-.contenedor {
+.padreCentrar {
     position: relative;
 }
 
-.hijo {
+.hijoCentrar {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -16,10 +16,10 @@
     Alinear horizontalmente
 */
 
-.padre{
+.padreInlineBlock{
     width: 100%;
 }
 
-.inlineBlock{
+.hijoInlineBlock{
     display: inline-block;
 }
