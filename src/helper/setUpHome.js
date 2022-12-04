@@ -27,7 +27,9 @@ export const setUpHome = async (filter, setHouses) => {
             rating: house.valoracion,
             address: house.direccion,
             capacity: house.capacidad,
-            price: house.precioNoche
+            price: house.precioNoche,
+            lat: house.coordenadas.latitud,
+            lon: house.coordenadas.longitud
         };
     });
 
