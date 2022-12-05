@@ -57,7 +57,10 @@ const List = () => {
         />
         <main className="row justify-content-center main"
           id="main-content">
-          <h1 className='col-sm-8'>Mis viviendas</h1>
+          <h1 className='col-sm-6'>Mis viviendas</h1>
+          <a className='col-sm-2'>
+              <button type="button" onClick={createHouse} className="btn btn-primary">Crear vivienda</button>
+            </a>
           <div className="col-sm-8 list-group"
             data-bs-spy="scroll">
             {
@@ -71,9 +74,6 @@ const List = () => {
                 </div>
               </div>
             }
-            <a>
-              <button type="button" onClick={createHouse} className="btn btn-primary">Crear vivienda</button>
-            </a>
           </div>
           <div className='col-sm-8'>
               <MapContainer center={[40.41831, -3.70275]} zoom={13} >
