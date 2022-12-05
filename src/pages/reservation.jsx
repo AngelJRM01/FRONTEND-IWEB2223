@@ -5,6 +5,7 @@ import { Carousel } from "react-bootstrap";
 
 import { Header } from "../components/header";
 import { Footer } from "../components/footer";
+import ModalRemoveReservation from "../components/reservation/modalRemoveReservation";
 
 import styles from '../styles/reservation.module.css';
 import { setUpReservation } from "../helper/SetUpReservation";
@@ -23,6 +24,19 @@ const Reservation = () => {
         document.body.innerHTML = printContents;
         window.print();
         document.body.innerHTML = originalContents;
+    };
+
+    const RemoveButton = () => {
+        return(
+            <div className={"list-group " + styles.bottonss}>
+                <button type="button" className={"list-group-item list-group-item-action " + styles.house} 
+                onClick={<ModalRemoveReservation id={reservation._id}/>}>
+                    <i class="fa-solid fa-ban"></i>
+                    &emsp;Retirar solicitud
+                    <i class={"fa-sharp fa-solid fa-chevron-right " + styles.arrow}></i>
+                </button>
+            </div>
+        );
     };
 
     const ReservationDetails = () => {
@@ -97,13 +111,8 @@ const Reservation = () => {
                             <div className={styles.auxDiv}></div>
                         </div>
 
-                        <div className={"list-group " + styles.bottonss}>
-                            <a href={"http://localhost:3000/reservas/" + reservation._id} className={"list-group-item list-group-item-action " + styles.house}>
-                                <i class="fa-solid fa-ban"></i>
-                                &emsp;Retirar solicitud
-                                <i class={"fa-sharp fa-solid fa-chevron-right " + styles.arrow}></i>
-                            </a>
-                        </div>
+                        { Date.parse(reservation.estancia.fechaInicio) >= Date.now() ? <RemoveButton/> : null }
+
                         <div className={"list-group " + styles.bottonss}>
                             <button type="button" className={"list-group-item list-group-item-action " + styles.house} onClick={Print}>
                                 <i class="fa-solid fa-print"></i>
