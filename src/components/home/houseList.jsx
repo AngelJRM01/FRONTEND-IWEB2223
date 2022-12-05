@@ -7,7 +7,7 @@ export const HouseList = ({ houses }) => {
 
         <div className='row d-flex justify-content-center pt-3'>
             {houses.length === 0 ?
-                <div className='col-4 text-center'>
+                <div className='col-8 text-center'>
                     <h2>No se han encontrado resultados para su búsqueda</h2>
                     <p>Por favor, pruebe a introducir otros parámetros</p>
                 </div> :

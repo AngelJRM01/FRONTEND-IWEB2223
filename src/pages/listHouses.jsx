@@ -45,6 +45,9 @@ const List = () => {
 
   }, [id]);
 
+  function createHouse () {
+    window.location.href = crearViviendaURL;
+  }
 
   return (
     houses.length === 0
@@ -68,8 +71,8 @@ const List = () => {
                 </div>
               </div>
             }
-            <a href={crearViviendaURL}>
-              <button type="button" className="btn btn-primary">Crear vivienda</button>
+            <a>
+              <button type="button" onClick={createHouse} className="btn btn-primary">Crear vivienda</button>
             </a>
           </div>
           <div className='col-sm-8'>
