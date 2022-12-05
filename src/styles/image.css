@@ -4,8 +4,9 @@
     object-fit: cover;
 }
 
-.cropped500px {
-    width: 500px;
-    height: 500px;
+.cropped-marker {
+    width: 100%;
+    min-width: 200px;
+    height: 200px;
     object-fit: cover;
 }

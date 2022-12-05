@@ -1,0 +1,26 @@
+/*
+    Borde 2px con color negro
+*/
+
+.bordeNegro{
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+    border-radius: 5px;
+}
+
+/*
+    Margen derecha de 100px
+*/
+
+.marginRight100px{
+    margin-right: 100px;
+}
+
+/*
+    Margen abajo de 30px
+*/
+
+.marginBottom30px{
+    margin-bottom: 30px;
+}

@@ -35,6 +35,7 @@ const List = () => {
   ));
  
   // const URI = `${baseUrl}contentsLists/`;
+  const crearViviendaURL = `http://localhost:3000/viviendas/propietario/${id}/nuevaVivienda`;  
 
   useEffect( () => {
 
@@ -44,6 +45,9 @@ const List = () => {
 
   }, [id]);
 
+  function createHouse () {
+    window.location.href = crearViviendaURL;
+  }
 
   return (
     houses.length === 0
@@ -67,6 +71,9 @@ const List = () => {
                 </div>
               </div>
             }
+            <a>
+              <button type="button" onClick={createHouse} className="btn btn-primary">Crear vivienda</button>
+            </a>
           </div>
           <div className='col-sm-8'>
               <MapContainer center={[40.41831, -3.70275]} zoom={13} >

@@ -1,0 +1,25 @@
+/*
+    Centrar
+*/
+.padreCentrar {
+    position: relative;
+}
+
+.hijoCentrar {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/*
+    Alinear horizontalmente
+*/
+
+.padreInlineBlock{
+    width: 100%;
+}
+
+.hijoInlineBlock{
+    display: inline-block;
+}
