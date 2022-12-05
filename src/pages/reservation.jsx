@@ -113,58 +113,60 @@ const Reservation = () => {
                         </div>
                     </div>
 
-                    <div id="carouselExampleIndicators" className="carousel slide" data-bs-ride="true">
-                        <div className="carousel-indicators">
-                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
-                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    <div className={styles.secondContainer}>
+                        <div className={styles.secondContainer2}>
+                            <div className={styles.auxDiv}></div>
+                            <div className={styles.secondTable}>
+                                <div className={styles.divTitle}>
+                                    <p className={styles.detallesReserva}>Cómo llegar</p>
+                                </div>
+                                <div>
+                                    <p className={styles.boldFont + ' ' + styles.noMarginP}>&emsp;Dirección</p>
+                                    <p>&emsp;Calle Benitez Rosa de María, 52</p>
+                                </div>
+                            </div>
+                            <div className={styles.auxDiv}></div>
                         </div>
-                        <div className="carousel-inner">
-                            <div className="carousel-item active">
-                                <img src="https://a0.muscache.com/im/pictures/43a44c04-8eb5-4cd3-a930-397d7276d03c.jpg" className="d-block w-100" alt="..."/>
-                            </div>
-                            <div className="carousel-item">
-                                <img src="..." className="d-block w-100" alt="..."/>
-                            </div>
-                            <div className="carousel-item">
-                                <img src="..." className="d-block w-100" alt="..."/>
-                            </div>
-                        </div>
-                        <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span className="visually-hidden">Previous</span>
-                        </button>
-                        <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                            <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span className="visually-hidden">Next</span>
-                        </button>
                     </div>
 
-                    <div id="carouselExampleIndicators" className="carousel slide" data-bs-ride="true">
-                        <div className="carousel-indicators">
-                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
-                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    <div className={styles.secondContainer}>
+                        <div className={styles.secondContainer2}>
+                            <div className={styles.auxDiv}></div>
+                            <div className={styles.secondTable}>
+                                <div className={styles.divTitle}>
+                                    <div className={styles.anfitrion}>
+                                        <p className={styles.detallesReserva}>Anfitrión: Pepito</p>
+                                        <a href={"http://localhost:3000/reservas/" + reservation._id}>
+                                            <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" class={styles.avatar}></img>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p className={styles.boldFont + ' ' + styles.noMarginP}>&emsp;Acerca de tu anfitrión</p>
+                                    <p className={styles.paragraph}>
+                                        ewf f ewf wefwef we fwe  fwe  f ew f e f we f  ewfewfw ewfwef we fewfefew efwef vg fbg trhr dsfwsfwef wegerg eer
+                                         ewgfweg wegwegwegew wefgwe gwerg wegwerg w grgergergrfeger gfregerg ergerger g ergerg erg.
+                                    </p>
+                                </div>
+                            </div>
+                            <div className={styles.auxDiv}></div>
                         </div>
-                        <div className="carousel-inner">
-                            <div className="carousel-item active">
-                                <img src="https://a0.muscache.com/im/pictures/43a44c04-8eb5-4cd3-a930-397d7276d03c.jpg" className="d-block w-100" alt="..."/>
+                    </div>
+
+                    <div className={styles.secondContainer}>
+                        <div className={styles.secondContainer2}>
+                            <div className={styles.auxDiv}></div>
+                            <div className={styles.secondTable}>
+                                <div className={styles.divTitle}>
+                                    <p className={styles.detallesReserva}>Información del pago</p>
+                                </div>
+                                <div>
+                                    <p className={styles.boldFont + ' ' + styles.noMarginP}>&emsp;Detalles del pago</p>
+                                    <p>&emsp;Coste total: 29,27 € EUR</p>
+                                </div>
                             </div>
-                            <div className="carousel-item">
-                                <img src="..." className="d-block w-100" alt="..."/>
-                            </div>
-                            <div className="carousel-item">
-                                <img src="..." className="d-block w-100" alt="..."/>
-                            </div>
+                            <div className={styles.auxDiv}></div>
                         </div>
-                        <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span className="visually-hidden">Previous</span>
-                        </button>
-                        <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                            <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span className="visually-hidden">Next</span>
-                        </button>
                     </div>
 
 
