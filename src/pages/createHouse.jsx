@@ -161,11 +161,11 @@ const CreateHouse = () => {
   
   return (
     <html>
-      <head>
+      {/* <head>
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"/>
         <link rel="stylesheet" href="https://unpkg.com/@geoapify/leaflet-address-search-plugin@^1/dist/L.Control.GeoapifyAddressSearch.min.css"/>
         <link rel="stylesheet" href="style.css"/>
-      </head>
+      </head> */}
     <div>
         <Header/>
         <main className="row justify-content-center main"
