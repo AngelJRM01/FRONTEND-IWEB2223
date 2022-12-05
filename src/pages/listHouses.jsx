@@ -26,15 +26,18 @@ const List = () => {
 });
 
   const houseMarkers = houses.map((house) => (
-    
-    <Marker position={[house.coordenadas.latitud, house.coordenadas.longitud]} key={house._id} icon={ iconMarker } >
-      <Popup>
-        <span>{house.titulo}</span>
-      </Popup>
-    </Marker>
+    <Marker position={[house.coordenadas.latitud, house.coordenadas.longitud]} key={house._id} icon={iconMarker}>
+            <Popup>
+                  <img src={house.imagenes[0]} className="card-img-top mb-2 rounded-4 cropped-marker" alt={house.titulo} />
+                  <div className="card-body py-0">
+                      <p className="card-text my-0 fw-bold fs-6">{house.titulo}</p>
+                      <p className="card-text my-1 fw-bold">{house.precioNoche} € noche</p>
+                      <p className="card-text my-0 fst-italic">{house.direccion}</p>
+                  </div>
+            </Popup>
+        </Marker>
   ));
  
-  // const URI = `${baseUrl}contentsLists/`;
   const crearViviendaURL = `http://localhost:3000/viviendas/propietario/${id}/nuevaVivienda`;  
 
   useEffect( () => {
@@ -57,7 +60,10 @@ const List = () => {
         />
         <main className="row justify-content-center main"
           id="main-content">
-          <h1 className='col-sm-8'>Mis viviendas</h1>
+          <h1 className='col-sm-6'>Mis viviendas</h1>
+          <a className='col-sm-2'>
+              <button type="button" onClick={createHouse} className="btn btn-primary">Crear vivienda</button>
+            </a>
           <div className="col-sm-8 list-group"
             data-bs-spy="scroll">
             {
@@ -71,9 +77,6 @@ const List = () => {
                 </div>
               </div>
             }
-            <a>
-              <button type="button" onClick={createHouse} className="btn btn-primary">Crear vivienda</button>
-            </a>
           </div>
           <div className='col-sm-8'>
               <MapContainer center={[40.41831, -3.70275]} zoom={13} >
