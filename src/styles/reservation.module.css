@@ -165,3 +165,11 @@
     flex-direction: row;
     justify-content: space-between;
 }
+
+.modalCentered {
+    justify-content: center;
+}
+
+.modalTextCentered {
+    text-align: center;
+}

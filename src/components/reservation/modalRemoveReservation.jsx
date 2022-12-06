@@ -1,34 +1,31 @@
-import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-const ModalRemoveReservation = ({id}) => {
-  const [show, setShow] = useState(false);
+import styles from '../../styles/reservation.module.css';
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+const ModalRemoveReservation = ({id, setShowModal, showModal, modalShow2}) => {
+  const handleClose = () => setShowModal(false);
+
+  const cancelReservation = () => {
+    handleClose();
+    modalShow2();
+  };
 
   return (
-    <>
-      <Button variant="primary" onClick={handleShow}>
-        Launch demo modal
-      </Button>
-
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+      <Modal show={showModal} onHide={handleClose} size="lg" centered>
+        <Modal.Header className={styles.modalCentered}>
+          <Modal.Title>¿Estás seguro de que quieres cancelar tu reserva?</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-        <Modal.Footer>
+        <Modal.Body className={styles.modalTextCentered}>Al hacerlo, no podrás revertir los cambios y el pago ya realizado no será reembolsado.</Modal.Body>
+        <Modal.Footer className={styles.modalCentered}>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            Volver atrás
           </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
+          <Button variant="primary" className='btn btn-danger' onClick={cancelReservation}>
+            Cancelar reserva
           </Button>
         </Modal.Footer>
       </Modal>
-    </>
   );
 };
 

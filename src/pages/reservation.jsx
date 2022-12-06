@@ -6,6 +6,7 @@ import { Carousel } from "react-bootstrap";
 import { Header } from "../components/header";
 import { Footer } from "../components/footer";
 import ModalRemoveReservation from "../components/reservation/modalRemoveReservation";
+import ModalReservationRemoved from "../components/reservation/modalReservationRemoved";
 
 import styles from '../styles/reservation.module.css';
 import { setUpReservation } from "../helper/SetUpReservation";
@@ -14,9 +15,14 @@ const Reservation = () => {
 
     const { id } = useParams();
     const [ reservation, setReservation ] = useState();
+    const [ showModal, setShowModal ] = useState(false);
+    const [ showModal2, setShowModal2 ] = useState(false);
 
     useEffect( () => { setUpReservation(id, setReservation); }, [id]);
     useEffect( () => { document.title = "Información general de tu viaje - SwishHouses"; }, [reservation]);
+
+    const modalShow = () => setShowModal(true);
+    const modalShow2 = () => setShowModal2(true);
 
     const Print = () => {     
         let printContents = document.getElementById('printablediv').innerHTML;
@@ -29,12 +35,13 @@ const Reservation = () => {
     const RemoveButton = () => {
         return(
             <div className={"list-group " + styles.bottonss}>
-                <button type="button" className={"list-group-item list-group-item-action " + styles.house} 
-                onClick={<ModalRemoveReservation id={reservation._id}/>}>
+                <button type="button" className={"list-group-item list-group-item-action " + styles.house} onClick={modalShow}>
                     <i class="fa-solid fa-ban"></i>
                     &emsp;Retirar solicitud
                     <i class={"fa-sharp fa-solid fa-chevron-right " + styles.arrow}></i>
                 </button>
+                <ModalRemoveReservation id={reservation._id} setShowModal={setShowModal} showModal={showModal} modalShow2={modalShow2}/>
+                <ModalReservationRemoved setShowModal={setShowModal2} showModal={showModal2}/>
             </div>
         );
     };
@@ -145,9 +152,7 @@ const Reservation = () => {
                                 <div className={styles.divTitle}>
                                     <div className={styles.anfitrion}>
                                         <p className={styles.detallesReserva}>Anfitrión: Pepito</p>
-                                        <a href={"http://localhost:3000/reservas/" + reservation._id}>
-                                            <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" class={styles.avatar}></img>
-                                        </a>
+                                        <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" class={styles.avatar}></img>
                                     </div>
                                 </div>
                                 <div>
