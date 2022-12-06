@@ -135,8 +135,9 @@
 }
 
 .imgSize {
+    max-height:350px;
     width: 100%;
-    height: 350px;
+    height: auto;
     border-radius: 1%;
 }
 
@@ -172,4 +173,10 @@
 
 .modalTextCentered {
     text-align: center;
+}
+
+.mapText {
+    font-weight: bold;
+    font-size: medium;
+    text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
 }

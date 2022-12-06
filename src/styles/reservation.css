@@ -1,0 +1,23 @@
+.mapita .leaflet-container .leaflet-pane .leaflet-tooltip-pane .leaflet-tooltip {
+    background: transparent;
+    box-shadow: unset;
+    border: unset;
+}
+
+@media only screen and (max-width: 800px) {
+    .mapitaCont {
+        display: none;
+    }
+
+    .filaReserva {
+        justify-content: center;
+    }
+
+    .colaReserva {
+        overflow-y: unset !important;
+    }
+
+    .pagoContainer {
+        padding-bottom: 50px;
+    }
+}

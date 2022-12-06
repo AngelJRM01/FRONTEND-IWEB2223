@@ -2,11 +2,13 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
 import styles from '../../styles/reservation.module.css';
+import { removeReservation } from "../../helper/RemoveReservation";
 
 const ModalRemoveReservation = ({id, setShowModal, showModal, modalShow2}) => {
   const handleClose = () => setShowModal(false);
 
   const cancelReservation = () => {
+    removeReservation(id);
     handleClose();
     modalShow2();
   };
