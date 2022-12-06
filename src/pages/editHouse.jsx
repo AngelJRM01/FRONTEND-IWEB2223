@@ -9,6 +9,7 @@ import { Header } from '../components/header.jsx';
 import { Footer } from '../components/footer.jsx';
 import { Global } from '../helper/Global';
 import { setUpHouse } from '../helper/SetUpHouse.js';
+import { uploadImage } from "../helper/uploadImage.js"
 
 const EditHouse = () => {
 
@@ -30,19 +31,20 @@ const EditHouse = () => {
     longitud: -3.70275,
   });
 
+  let src = "";
+
   const baseUrl = Global.baseUrl;
   const URI = `${baseUrl}viviendas/` + idVivienda;
   //6383fd185c003d453b597f3f = idVivienda
   //636a2eba353e6b6d0e281d7a = idPropietario
   const misViviendas = `http://localhost:3000/viviendas/propietario/${id}`;
-
-  document.title = 'Editar vivienda';
+  // let misViviendas = "";
 
   useEffect( () => {
 
-    //El setUpHouse no elije la casa
     setUpHouse( idVivienda, setHouse );
-    console.log(id);
+
+    document.title = 'Editar vivienda';
 
   }, [idVivienda]);
 
@@ -90,6 +92,10 @@ const EditHouse = () => {
       // // propietario: owner
     };
 
+    let imagenes = vivienda.imagenes;
+    imagenes.push(src);
+    vivienda.imagenes = imagenes;
+
     const response = await fetch( URI, {
       method: "PUT",
       headers: {
@@ -99,6 +105,7 @@ const EditHouse = () => {
     }).then( res => res.json())
       .then( data => {
         console.log(data)
+        // misViviendas = `http://localhost:3000/vivienda/${idVivienda}`;
       }).catch(err => console.log(err));
 
     window.location.href = misViviendas;
@@ -128,13 +135,6 @@ const EditHouse = () => {
                         type="number" className="form-control" id="capacity"></input>
                     </div>
                     <div className="form-group">
-                        <label htmlFor="direction">Direcci&oacute;n</label>
-                        <input name="direction"
-                            value={direction}
-                            onChange={ (e)=> setDirection(e.target.value)}
-                        type="text" className="form-control" id="direction"></input>
-                    </div>
-                    <div className="form-group">
                         <label htmlFor="price">Precio por noche (€)</label>
                         <input name="price"
                             value={price}
@@ -158,6 +158,13 @@ const EditHouse = () => {
                             <option>No disponible</option>
                         </select>
                     </div>
+                    {/* <div className="form-group">
+                        <label htmlFor="direction">Direcci&oacute;n</label>
+                        <input name="direction"
+                            value={direction}
+                            onChange={ (e)=> setDirection(e.target.value)}
+                        type="text" className="form-control" id="direction"></input>
+                    </div>
                     <div>
                         <MapContainer center={[40, -3]} zoom={13} >
                           <TileLayer
@@ -165,6 +172,20 @@ const EditHouse = () => {
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                           />
                         </MapContainer>
+                    </div> */}
+                    <div>
+                      <label htmlFor="image">Añadir imagen</label><br/>
+                          <input accept="image/*" type="file" id="imagen-edit" onChange={
+                              (e) => {
+                                  uploadImage(e.target.files)
+                                      .then((result) => {
+                                          src = result
+                                          console.log(src)
+                                      })
+                              }
+                          }/>
+                          <img name="img-photo-edit" id="img-photo-edit" className="align-self-center m-3" alt="" src={src}/>
+                      <br/>
                     </div>
                     {/* <Link to={"/viviendas/propietario/636a2eba353e6b6d0e281d7a"} > */}
                       <button type="submit" className="btn btn-primary">Actualizar</button>
