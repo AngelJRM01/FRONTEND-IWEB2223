@@ -27,7 +27,7 @@ const CreateHouse = () => {
     {fechaInicio: "2022-04-23T18:25:43.511+00:00"}, 
   {fechaInicio: "2010-04-23T18:25:43.511+00:00"}
   ]);
-  const [images, setImages] = useState(["terrazaDeJuan.jpg"]);
+  const [images, setImages] = useState([]);
   const [coordenates, setCoordenates] = useState({
     latitud: 40.41831,
     longitud: -3.70275,

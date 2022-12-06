@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { MapContainer, TileLayer } from 'react-leaflet'
 import '../styles/main.css';
@@ -8,29 +8,58 @@ import "leaflet/dist/leaflet.css";
 import { Header } from '../components/header.jsx';
 import { Footer } from '../components/footer.jsx';
 import { Global } from '../helper/Global';
+import { setUpHouse } from '../helper/SetUpHouse.js';
 
-const EditHouse = (house) => {
+const EditHouse = () => {
 
   const { id, idVivienda } = useParams();
-
-  const [title, setTitle] = useState(house.titulo);
-  const [capacity, setCapacity] = useState(house.capacidad);
-  const [direction, setDirection] = useState(house.direccion);
-  const [price, setPrice] = useState(house.precioNoche);
-  const [description, setDescription] = useState(house.descripcion);
-  const [state, setState] = useState(house.estado);
-  const [dates, setDates] = useState(house.fechasDisponibles);
-  const [images, setImages] = useState(house.imagenes);
-  // const [coordenates, setCoordenates] = useState(house.coordenates);
-  // const [owner, setOwner] = useState(house.propietario);
-
-  document.title = 'Editar vivienda';
+  const [ house, setHouse ] = useState();
+  const [title, setTitle] = useState('');
+  const [capacity, setCapacity] = useState('0');
+  const [direction, setDirection] = useState('');
+  const [price, setPrice] = useState('0');
+  const [description, setDescription] = useState('');
+  const [state, setState] = useState('Libre');
+  const [dates, setDates] = useState([
+    {fechaInicio: "2022-04-23T18:25:43.511+00:00"}, 
+  {fechaInicio: "2010-04-23T18:25:43.511+00:00"}
+  ]);
+  const [images, setImages] = useState([]);
+  const [coordenates, setCoordenates] = useState({
+    latitud: 40.41831,
+    longitud: -3.70275,
+  });
 
   const baseUrl = Global.baseUrl;
   const URI = `${baseUrl}viviendas/` + idVivienda;
   //6383fd185c003d453b597f3f = idVivienda
   //636a2eba353e6b6d0e281d7a = idPropietario
   const misViviendas = `http://localhost:3000/viviendas/propietario/${id}`;
+
+  document.title = 'Editar vivienda';
+
+  useEffect( () => {
+
+    //El setUpHouse no elije la casa
+    setUpHouse( idVivienda, setHouse );
+    console.log(id);
+
+  }, [idVivienda]);
+
+  useEffect( () => {
+        
+    if(house !== undefined){
+      setTitle(house.titulo);
+      setCapacity(house.capacidad);
+      setDirection(house.direccion);
+      setPrice(house.precioNoche);
+      setDescription(house.descripcion);
+      setState(house.estado);
+      setImages(house.imagenes);
+      setCoordenates(house.coordenadas);
+    }
+
+  }, [house])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -47,6 +76,18 @@ const EditHouse = (house) => {
       // coordenadas: coordenates,
       // valoracion: 0,
       // propietario: owner
+
+      // titulo: house.titulo,
+      // capacidad: house.capacidad,
+      // direccion: house.direccion,
+      // precioNoche: house.precioNoche,
+      // descripcion: house.descripcion,
+      // estado: house.estado,
+      // fechasDisponibles: house.fechasDisponibles,
+      // imagenes: house.imagenes,
+      // // coordenadas: coordenates,
+      // // valoracion: 0,
+      // // propietario: owner
     };
 
     const response = await fetch( URI, {
@@ -118,7 +159,7 @@ const EditHouse = (house) => {
                         </select>
                     </div>
                     <div>
-                        <MapContainer center={[40.41831, -3.70275]} zoom={13} >
+                        <MapContainer center={[40, -3]} zoom={13} >
                           <TileLayer
                             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -126,7 +167,7 @@ const EditHouse = (house) => {
                         </MapContainer>
                     </div>
                     {/* <Link to={"/viviendas/propietario/636a2eba353e6b6d0e281d7a"} > */}
-                      <button type="submit" className="btn btn-primary">Crear</button>
+                      <button type="submit" className="btn btn-primary">Actualizar</button>
                     {/* </Link> */}
                 </form>
             </div>      
