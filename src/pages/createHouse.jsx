@@ -44,8 +44,8 @@ const CreateHouse = () => {
   const URI = `${baseUrl}viviendas/`;
   //const URI = `${baseUrl}viviendas/propietario/${id}/nuevaVivienda`;
   //636a2eba353e6b6d0e281d7a = idPropietario
-  const misViviendas = `http://localhost:3000/viviendas/propietario/${id}`;
-  // let misViviendas = "";
+  // const misViviendas = `http://localhost:3000/viviendas/propietario/${id}`;
+  let misViviendas = "";
   const apiKey = "0ab94b07fa6043a491f0050f801c58c2";
 
   const handleSubmit = async (e) => {
@@ -73,10 +73,12 @@ const CreateHouse = () => {
       valoracion: 0,
       propietario: owner
     };
-
-    let imagenes = vivienda.imagenes;
-    imagenes.push(src);
-    vivienda.imagenes = imagenes;
+    
+    if(src !== "") {
+      let imagenes = vivienda.imagenes;
+      imagenes.push(src);
+      vivienda.imagenes = imagenes;
+    }
 
     const response = await fetch( URI, {
       method: "POST",
@@ -87,7 +89,7 @@ const CreateHouse = () => {
     }).then( res => res.json())
       .then( data => {
         console.log(data);
-        // misViviendas = `http://localhost:3000/vivienda/${data._id}`;
+        misViviendas = `http://localhost:3000/vivienda/${data._id}`;
         //no se porque no funciona la imagen si se va a la pagina de la propia vivienda
       }).catch(err => console.log(err));
 
@@ -252,7 +254,9 @@ const CreateHouse = () => {
                               (e) => {
                                   uploadImage(e.target.files)
                                       .then((result) => {
-                                          src = result
+                                          src = result;
+                                          console.log(src)
+                                          //Por algún motivo, sin mostrarlo por consola no funciona
                                       })
                               }
                           }/>

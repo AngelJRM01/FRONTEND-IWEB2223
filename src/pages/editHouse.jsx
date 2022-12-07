@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { MapContainer, TileLayer } from 'react-leaflet'
+import { Carousel } from "react-bootstrap";
 import '../styles/main.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "leaflet/dist/leaflet.css";
@@ -37,8 +38,8 @@ const EditHouse = () => {
   const URI = `${baseUrl}viviendas/` + idVivienda;
   //6383fd185c003d453b597f3f = idVivienda
   //636a2eba353e6b6d0e281d7a = idPropietario
-  const misViviendas = `http://localhost:3000/viviendas/propietario/${id}`;
-  // let misViviendas = "";
+  // const misViviendas = `http://localhost:3000/viviendas/propietario/${id}`;
+  let misViviendas = `http://localhost:3000/vivienda/${idVivienda}`;
 
   useEffect( () => {
 
@@ -69,6 +70,58 @@ const EditHouse = () => {
     const vivienda = {
       titulo: title,
       capacidad: capacity,
+      // direccion: direction,
+      precioNoche: price,
+      descripcion: description,
+      estado: state,
+      fechasDisponibles: dates,
+      imagenes: images,
+      // coordenadas: coordenates,
+      // valoracion: 0,
+      // propietario: owner
+
+      // titulo: house.titulo,
+      // capacidad: house.capacidad,
+      // direccion: house.direccion,
+      // precioNoche: house.precioNoche,
+      // descripcion: house.descripcion,
+      // estado: house.estado,
+      // fechasDisponibles: house.fechasDisponibles,
+      // imagenes: house.imagenes,
+      // // coordenadas: coordenates,
+      // // valoracion: 0,
+      // // propietario: owner
+    };
+
+    if(src !== "") {
+      let imagenes = vivienda.imagenes;
+      imagenes.push(src);
+      vivienda.imagenes = imagenes;
+    }
+
+    const response = await fetch( URI, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "Application/json",
+      },
+      body: JSON.stringify(vivienda),
+    }).then( res => res.json())
+      .then( data => {
+        console.log(data)
+      }).catch(err => console.log(err));
+
+    window.location.href = misViviendas;
+  }
+
+  const URL = `http://localhost:3000/viviendas/propietario/${id}/vivienda/${idVivienda}/edit`;
+  // const URL = `http://localhost:3000/vivienda/${idVivienda}`;
+
+  const deleteImage = async (e, image) => {
+    e.preventDefault();
+
+    const vivienda = {
+      titulo: title,
+      capacidad: capacity,
       direccion: direction,
       precioNoche: price,
       descripcion: description,
@@ -92,11 +145,15 @@ const EditHouse = () => {
       // // propietario: owner
     };
 
-    let imagenes = vivienda.imagenes;
-    imagenes.push(src);
-    vivienda.imagenes = imagenes;
+    console.log(image);
+    if(image !== "") {
+      let imagenes = vivienda.imagenes;
+      imagenes = imagenes.filter((imagen) => imagen !== image);
+      vivienda.imagenes = imagenes;
+    }
 
-    const response = await fetch( URI, {
+    
+    const response = fetch( URI, {
       method: "PUT",
       headers: {
         "Content-Type": "Application/json",
@@ -105,12 +162,11 @@ const EditHouse = () => {
     }).then( res => res.json())
       .then( data => {
         console.log(data)
-        // misViviendas = `http://localhost:3000/vivienda/${idVivienda}`;
       }).catch(err => console.log(err));
 
-    window.location.href = misViviendas;
+    window.location.href = URL;
   }
-  
+
   return (
     <div>
         <Header/>
@@ -186,6 +242,25 @@ const EditHouse = () => {
                           }/>
                           <img name="img-photo-edit" id="img-photo-edit" className="align-self-center m-3" alt="" src={src}/>
                       <br/>
+                    </div>
+                    <div>
+                        {/* habria que comprobar si tiene alguna imagen */}
+                        <Carousel className="croppedpx hijoInlineBlock marginRight100px marginBottom30px">
+                                {
+                                    images.map( (imagen, index ) => {
+                                      return  <Carousel.Item key={index}>
+                                      <div className="croppedpx padreCentrar">
+                                          <img
+                                              className="card-img-top rounded-2 hijoCentrar"
+                                              src={imagen}
+                                              alt="Imagen de la casa"
+                                              id='img'/>
+                                      </div>
+                                      <button onClick={(e)=>deleteImage(e,imagen)}>Borrar Imagen</button>
+                                  </Carousel.Item>
+                                    } )
+                                }
+                        </Carousel>
                     </div>
                     {/* <Link to={"/viviendas/propietario/636a2eba353e6b6d0e281d7a"} > */}
                       <button type="submit" className="btn btn-primary">Actualizar</button>
