@@ -34,7 +34,7 @@ const CreateHouse = () => {
     latitud: 40.41831,
     longitud: -3.70275,
   });
-  const [owner, setOwner] = useState({_id: id, nombre:"Pepe", foto:"perfil.png"});
+  const [owner, setOwner] = useState({_id: id, nombre:"Pepe", foto:"https://www.w3schools.com/howto/img_avatar.png"});
 
   let src = "";
 
