@@ -1,4 +1,4 @@
-.mapita .leaflet-container .leaflet-pane .leaflet-tooltip-pane .leaflet-tooltip {
+.leaflet-tooltip {
     background: transparent;
     box-shadow: unset;
     border: unset;
@@ -19,5 +19,13 @@
 
     .pagoContainer {
         padding-bottom: 50px;
+    }
+
+    .mapsColumn {
+        display: block !important;
+    }
+
+    .leaflet-tooltip {
+        display: none;
     }
 }

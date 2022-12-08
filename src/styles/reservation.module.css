@@ -1,4 +1,4 @@
-.reservationCcomponent {
+.reservationComponent {
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -153,6 +153,7 @@
 
 .paragraph {
     padding-left: 15px;
+    text-align: justify;
 }
 
 .avatar {
@@ -179,4 +180,13 @@
     font-weight: bold;
     font-size: medium;
     text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+}
+
+.mapColumn {
+    margin-bottom: 15px;
+    display: none;
+}
+
+.mapColumn > * {
+    max-height: 200px;
 }

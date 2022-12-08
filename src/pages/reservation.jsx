@@ -2,17 +2,18 @@ import '../styles/reservation.css'
 
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { MapContainer, TileLayer, Marker, Tooltip } from 'react-leaflet'
-import L from 'leaflet';
 import { Carousel } from "react-bootstrap";
 
 import { Header } from "../components/header";
 import { Footer } from "../components/footer";
 import ModalRemoveReservation from "../components/reservation/modalRemoveReservation";
 import ModalReservationRemoved from "../components/reservation/modalReservationRemoved";
+import ReservationMap from "../components/reservation/reservationMap";
+import CarouselItem from "../components/reservation/carouselItem";
 
 import styles from '../styles/reservation.module.css';
 import { setUpReservation } from "../helper/SetUpReservation";
+import { print } from "../helper/Print";
 
 const Reservation = () => {
 
@@ -34,45 +35,17 @@ const Reservation = () => {
     const modalShow = () => setShowModal(true);
     const modalShow2 = () => setShowModal2(true);
 
-    const iconMarker = L.icon({
-        iconUrl: require('../static/houseMarker.png'),
-        iconSize: [48, 48],
-        iconAnchor: [24, 48]
-    });
-
-    const Print = () => {     
-        let printContents = document.getElementById('printablediv').innerHTML;
-        let originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
-        document.body.innerHTML = originalContents;
-    };
-
     const RemoveButton = () => {
         return(
             <div className={"list-group " + styles.bottonss}>
                 <button type="button" className={"list-group-item list-group-item-action " + styles.house} onClick={modalShow}>
-                    <i class="fa-solid fa-ban"></i>
+                    <i className="fa-solid fa-ban"></i>
                     &emsp;Retirar solicitud
-                    <i class={"fa-sharp fa-solid fa-chevron-right " + styles.arrow}></i>
+                    <i className={"fa-sharp fa-solid fa-chevron-right " + styles.arrow}></i>
                 </button>
                 <ModalRemoveReservation id={reservation._id} setShowModal={setShowModal} showModal={showModal} modalShow2={modalShow2}/>
                 <ModalReservationRemoved setShowModal={setShowModal2} showModal={showModal2}/>
             </div>
-        );
-    };
-
-    const CarouselItem = (link) => {
-        console.log(link);
-        return(
-            <Carousel.Item>
-                <div>
-                    <img
-                        className={styles.imgSize}
-                        src={link}
-                        alt="Imagen vivienda"/>
-                </div>
-            </Carousel.Item>
         );
     };
 
@@ -93,8 +66,8 @@ const Reservation = () => {
                         <div className='carrusel'>
                             <Carousel>
                                 { 
-                                    reservation.vivienda.imagenes.map((link) => {
-                                        return CarouselItem(link);
+                                    reservation.vivienda.imagenes.map((link, index) => {
+                                        return CarouselItem(link, index);
                                     })
                                 }
                             </Carousel>
@@ -115,9 +88,9 @@ const Reservation = () => {
 
                         <div className={"list-group " + styles.bottonss}>
                             <a href={"http://localhost:3000/vivienda/" + reservation.vivienda._id} className={"list-group-item list-group-item-action " + styles.house}>
-                                <i class="fa-solid fa-pager">
+                                <i className="fa-solid fa-pager">
                                 </i>&emsp;Mostrar anuncio
-                                <i class={"fa-sharp fa-solid fa-chevron-right " + styles.arrow}></i>
+                                <i className={"fa-sharp fa-solid fa-chevron-right " + styles.arrow}></i>
                             </a>
                         </div>
                     </div>
@@ -140,10 +113,10 @@ const Reservation = () => {
                         { Date.parse(reservation.estancia.fechaInicio) >= Date.now() ? <RemoveButton/> : null }
 
                         <div className={"list-group " + styles.bottonss}>
-                            <button type="button" className={"list-group-item list-group-item-action " + styles.house} onClick={Print}>
-                                <i class="fa-solid fa-print"></i>
+                            <button type="button" className={"list-group-item list-group-item-action " + styles.house} onClick={print}>
+                                <i className="fa-solid fa-print"></i>
                                 &emsp;Imprimir información
-                                <i class={"fa-sharp fa-solid fa-chevron-right " + styles.arrow}></i>
+                                <i className={"fa-sharp fa-solid fa-chevron-right " + styles.arrow}></i>
                             </button>
                         </div>
                     </div>
@@ -154,6 +127,9 @@ const Reservation = () => {
                             <div className={styles.secondTable}>
                                 <div className={styles.divTitle}>
                                     <p className={styles.detallesReserva}>Cómo llegar</p>
+                                </div>
+                                <div className={styles.mapColumn + " mapsColumn"}>
+                                    <ReservationMap position={position}/>
                                 </div>
                                 <div>
                                     <p className={styles.boldFont + ' ' + styles.noMarginP}>&emsp;Dirección</p>
@@ -171,7 +147,7 @@ const Reservation = () => {
                                 <div className={styles.divTitle}>
                                     <div className={styles.anfitrion}>
                                         <p className={styles.detallesReserva}>Anfitrión: {reservation.vivienda.propietario.nombre}</p>
-                                        <img src={reservation.vivienda.propietario.foto} alt="Avatar" class={styles.avatar}></img>
+                                        <img src={reservation.vivienda.propietario.foto} alt="Avatar" className={styles.avatar}></img>
                                     </div>
                                 </div>
                                 <div>
@@ -204,17 +180,7 @@ const Reservation = () => {
                 </div>
 
                 <div className={"col mapitaCont " + styles.mapContainer}>
-                    <MapContainer center={position} zoom={15} scrollWheelZoom={false}>
-                        <TileLayer
-                            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                        />
-                        <Marker position={position} icon={iconMarker}>
-                            <Tooltip direction="bottom" opacity={1} offset={[0, -5]} permanent>
-                                <p className={styles.mapText}>Donde te alojarás</p>
-                            </Tooltip>
-                        </Marker>
-                    </MapContainer>
+                    <ReservationMap position={position}/>
                 </div>
 
             </div>
@@ -223,7 +189,7 @@ const Reservation = () => {
 
     return(
         
-        <div className={styles.reservationCcomponent + " mapita"}>
+        <div className={styles.reservationComponent + " mapita"}>
             <Header/>
             <main className={styles.main}>
                 <div className={"container-fluid " + styles.containerFluid}>
