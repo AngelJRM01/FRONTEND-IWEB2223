@@ -9,6 +9,8 @@ import '../styles/map.css'
 
 const Home = () => {
 
+    document.title = 'Inicio'
+
     const [filter, setFilter] = useState({
         value: 0,
         type: ""
