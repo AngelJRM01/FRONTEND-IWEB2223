@@ -12,6 +12,7 @@ import '../styles/orientacion.css'
 import '../styles/texto.css'
 import '../styles/div.css'
 import ModalPanelConfiguracion from "../components/house/modalPanelConfiguracion";
+import ModalNewReservation from "../components/house/modalNewReservation";
 import { setUpReservations } from '../helper/SetUpReservations.js';
 import { setUpGasStation } from "../helper/SetUpGasStation";
 import { setUpTourist } from "../helper/setUpTourist";
@@ -21,6 +22,7 @@ const House = () => {
     const { id } = useParams();
     const [ house, setHouse ] = useState();
     const [ showModal, setShowModal ] = useState(false);
+    const [ showNewReservationModal, setShowNewReservationModal ] = useState(false);
     const [ reservations, setReservations ] = useState([]);
     const [ gasStation, setGasStation ] = useState([]);
     const [ tourist, setTourist ] = useState([]);
@@ -49,6 +51,8 @@ const House = () => {
     });
 
     const modalShow = () => setShowModal(true);
+
+    const modalShowNewReservation = () => setShowNewReservationModal(true);
 
     const marcadoresGasolineras = gasStation.map((gas, index) => {
         const latitudGas = Number(gas["Latitud"].replace(',', '.'));
@@ -103,6 +107,12 @@ const House = () => {
                                 setShowModal = {setShowModal}
                                 showModal = {showModal}
                                 reservations = {reservations}
+                                modalShowNewReservation = {modalShowNewReservation}
+                            />
+                            <ModalNewReservation
+                                house = {house}
+                                setShowNewReservationModal = {setShowNewReservationModal}
+                                showNewReservationModal = {showNewReservationModal}
                             />
                         </div>
                         <br/>
