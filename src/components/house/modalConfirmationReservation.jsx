@@ -2,8 +2,9 @@ import { Modal } from "react-bootstrap";
 import 'react-datepicker/dist/react-datepicker.css';
 import { Global } from '../../helper/Global';
 import { useState } from "react";
+import { setUpHouse } from "../../helper/SetUpHouse";
 
-const ModalConfirmationReservation = ({house, confirmationReservationModal, setConfirmationReservationModal, startDate, endDate, valueCapacity, setStartDate, setEndDate, setValueCapacity}) => {
+const ModalConfirmationReservation = ({house, confirmationReservationModal, setConfirmationReservationModal, startDate, endDate, valueCapacity, setStartDate, setEndDate, setValueCapacity, setHouse}) => {
 
     const modalClose = () => setConfirmationReservationModal(false);
     const doReservationModalClose = () => setDoReservationModal(false);
@@ -28,7 +29,8 @@ const ModalConfirmationReservation = ({house, confirmationReservationModal, setC
                 direccion: house.direccion,
                 imagenes: house.imagenes,
                 propietario: house.propietario,
-                coordenadas: house.coordenadas
+                coordenadas: house.coordenadas,
+                _id: house._id
             },
             precio: Number(valueCapacity.value) * Number(house.precioNoche),
             fecha: new Date()
@@ -73,6 +75,7 @@ const ModalConfirmationReservation = ({house, confirmationReservationModal, setC
         setStartDate(null)
         setEndDate(null)
         setValueCapacity({value: 1, label: 1})
+        setUpHouse(house._id, setHouse);
 
     }
 

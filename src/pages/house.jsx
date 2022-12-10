@@ -13,7 +13,7 @@ import '../styles/texto.css'
 import '../styles/div.css'
 import ModalPanelConfiguracion from "../components/house/modalPanelConfiguracion";
 import ModalNewReservation from "../components/house/modalNewReservation";
-import { setUpReservations } from '../helper/SetUpReservations.js';
+import { setUpReservationsOfAHouse } from '../helper/setUpReservationOfAHouse.js';
 import { setUpGasStation } from "../helper/SetUpGasStation";
 import { setUpTourist } from "../helper/setUpTourist";
 import ModalConfirmationReservation from "../components/house/modalConfirmationReservation";
@@ -43,7 +43,7 @@ const House = () => {
         
         if(house !== undefined){
             document.title = house.titulo
-            setUpReservations( house.propietario._id, setReservations );
+            setUpReservationsOfAHouse( house._id, setReservations );
             setUpGasStation(house.coordenadas.latitud, house.coordenadas.longitud, 20, setGasStation)
             setUpTourist(house.coordenadas.latitud, house.coordenadas.longitud, setTourist)
         }
@@ -140,6 +140,7 @@ const House = () => {
                                 setStartDate = {setStartDate}
                                 setEndDate = {setEndDate}
                                 setValueCapacity = {setValueCapacity}
+                                setHouse = {setHouse}
                             />
                         </div>
                         <br/>
