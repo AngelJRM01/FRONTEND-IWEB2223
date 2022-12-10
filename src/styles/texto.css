@@ -6,3 +6,11 @@
 .breakSpaces{
     white-space: break-spaces;
 }
+
+/*
+    Color rojo
+*/
+
+.textRed{
+    color: red;
+}

@@ -12,18 +12,26 @@ import '../styles/orientacion.css'
 import '../styles/texto.css'
 import '../styles/div.css'
 import ModalPanelConfiguracion from "../components/house/modalPanelConfiguracion";
+import ModalNewReservation from "../components/house/modalNewReservation";
 import { setUpReservations } from '../helper/SetUpReservations.js';
 import { setUpGasStation } from "../helper/SetUpGasStation";
 import { setUpTourist } from "../helper/setUpTourist";
+import ModalConfirmationReservation from "../components/house/modalConfirmationReservation";
 
 const House = () => {
 
     const { id } = useParams();
     const [ house, setHouse ] = useState();
     const [ showModal, setShowModal ] = useState(false);
+    const [ showNewReservationModal, setShowNewReservationModal ] = useState(false);
+    const [ confirmationReservationModal, setConfirmationReservationModal ] = useState(false);
     const [ reservations, setReservations ] = useState([]);
     const [ gasStation, setGasStation ] = useState([]);
     const [ tourist, setTourist ] = useState([]);
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+
+    const [valueCapacity, setValueCapacity] = useState({value: 1, label: 1});
 
     useEffect( () => {
 
@@ -49,6 +57,10 @@ const House = () => {
     });
 
     const modalShow = () => setShowModal(true);
+
+    const modalShowNewReservation = () => setShowNewReservationModal(true);
+
+    const modalConfirmationReservationModal = () => setConfirmationReservationModal(true);
 
     const marcadoresGasolineras = gasStation.map((gas, index) => {
         const latitudGas = Number(gas["Latitud"].replace(',', '.'));
@@ -103,6 +115,31 @@ const House = () => {
                                 setShowModal = {setShowModal}
                                 showModal = {showModal}
                                 reservations = {reservations}
+                                modalShowNewReservation = {modalShowNewReservation}
+                                setConfirmationReservationModal = {setConfirmationReservationModal}
+                            />
+                            <ModalNewReservation
+                                house = {house}
+                                setShowNewReservationModal = {setShowNewReservationModal}
+                                showNewReservationModal = {showNewReservationModal}
+                                modalConfirmationReservationModal = {modalConfirmationReservationModal}
+                                startDate = {startDate}
+                                setStartDate = {setStartDate}
+                                endDate = {endDate}
+                                setEndDate = {setEndDate}
+                                valueCapacity = {valueCapacity}
+                                setValueCapacity = {setValueCapacity}
+                            />
+                            <ModalConfirmationReservation
+                                house = {house}
+                                setConfirmationReservationModal = {setConfirmationReservationModal}
+                                confirmationReservationModal = {confirmationReservationModal}
+                                startDate = {startDate}
+                                endDate = {endDate}
+                                valueCapacity = {valueCapacity}
+                                setStartDate = {setStartDate}
+                                setEndDate = {setEndDate}
+                                setValueCapacity = {setValueCapacity}
                             />
                         </div>
                         <br/>

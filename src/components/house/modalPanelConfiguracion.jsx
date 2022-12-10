@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Modal } from "react-bootstrap";
 import { ReservationCard } from '../reservations/reservationCard.jsx';
 
-const ModalPanelConfiguracion = ({house, setShowModal, showModal, reservations}) => {
+const ModalPanelConfiguracion = ({house, setShowModal, showModal, reservations, modalShowNewReservation}) => {
 
     const navigate = useNavigate();
 
@@ -38,7 +38,11 @@ const ModalPanelConfiguracion = ({house, setShowModal, showModal, reservations})
                         }}>
                             Editar Vivienda
                 </button>
-                <button variant="primary" className="btn btn-outline-primary" onClick={modalClose}>Hacer Reserva</button>
+                <button variant="primary" className="btn btn-outline-primary" 
+                        onClick={() => {
+                                            modalClose(); 
+                                            modalShowNewReservation()
+                                        }}>Hacer Reserva</button>
                 <button variant="primary" className="btn btn-outline-secondary" onClick={modalClose}>Cerrar</button>
             </Modal.Footer>
         </Modal>
