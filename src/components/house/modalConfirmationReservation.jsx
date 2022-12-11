@@ -32,7 +32,7 @@ const ModalConfirmationReservation = ({house, confirmationReservationModal, setC
                 coordenadas: house.coordenadas,
                 _id: house._id
             },
-            precio: Number(valueCapacity.value) * Number(house.precioNoche),
+            precio: Number(valueCapacity.value) * Number(house.precioNoche) * Math.max(Math.round((new Date(endDate).getTime() - new Date(startDate).getTime())/ (1000*60*60*24)) + 1,1),
             fecha: new Date()
         }
 
@@ -100,7 +100,7 @@ const ModalConfirmationReservation = ({house, confirmationReservationModal, setC
                     <br/>
                     <h6>Número de huéspedes: <strong>{Number(valueCapacity.value)}</strong></h6>
                     <br/>
-                    <h6>Cantidad a pagar: <strong>{Number(valueCapacity.value) * Number(house.precioNoche)}€</strong></h6>
+                    <h6>Cantidad a pagar: <strong>{Number(valueCapacity.value) * Number(house.precioNoche) * Math.max(Math.round((new Date(endDate).getTime() - new Date(startDate).getTime())/ (1000*60*60*24)) + 1,1)}€</strong></h6>
                 </Modal.Body>
                 <Modal.Footer>
                     <button variant="primary" className="btn btn-outline-primary" onClick={() => hacerReserva()}>Hacer Reserva</button>

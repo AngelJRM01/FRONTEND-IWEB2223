@@ -95,7 +95,6 @@ const ModalNewReservation = ({house, setShowNewReservationModal, showNewReservat
         })
 
         if(puedeReservar){
-            setError("Puede reservar")
             modalClose()
             modalConfirmationReservationModal()
         }
@@ -141,7 +140,7 @@ const ModalNewReservation = ({house, setShowNewReservationModal, showNewReservat
                     onChange={e => setValueCapacity(e)}
                 />
                 <br/>
-                <h6>Cantidad a pagar: <strong>{Number(valueCapacity.value) * Number(house.precioNoche)}€</strong></h6>
+                <h6>Cantidad a pagar: <strong>{Number(valueCapacity.value) * Number(house.precioNoche) * Math.max(Math.round((new Date(endDate).getTime() - new Date(startDate).getTime())/ (1000*60*60*24)) + 1,1)}€</strong></h6>
                 <br/>
                 <h6 className="textRed">{error}</h6>
             </Modal.Body>
