@@ -28,7 +28,7 @@ const CreateHouse = () => {
   const [price, setPrice] = useState('0');
   const [description, setDescription] = useState('');
   const [state, setState] = useState('Libre');
-  const [dates, setDates] = useState([{fechaInicio: fechaInicio}]);
+  const [dates, setDates] = useState([]);
   const [images, setImages] = useState([]);
   const [coordenates, setCoordenates] = useState({
     latitud: 40.41831,
@@ -67,7 +67,7 @@ const CreateHouse = () => {
       precioNoche: price,
       descripcion: description,
       estado: state,
-      fechasDisponibles: dates,
+      fechasNoDisponibles: dates,
       imagenes: images,
       coordenadas: coordenates,
       valoracion: 0,
@@ -190,43 +190,35 @@ const CreateHouse = () => {
             data-bs-spy="scroll">
                 <h1 align="center">Añadir vivienda</h1>
                 <form className="form" id ="form" onSubmit={handleSubmit} method="post">
-                <div className="form-group">
+                    <p className="form-group">
                         <label htmlFor="title">T&iacute;tulo</label>
                         <input name="titleInput"
                             value={title}
                             onChange={ (e)=> setTitle(e.target.value)}
                         type="text" className="form-control" id="titleInput"></input>
-                    </div>
-                    <div className="form-group">
+                    </p>
+                    <p className="form-group">
                         <label htmlFor="capacity">Capacidad</label>
                         <input name="capacityInput"
                             value={capacity}
                             onChange={ (e)=> setCapacity(e.target.value)}
                         type="number" className="form-control" id="capacityInput"></input>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="direction">Direcci&oacute;n</label>
-                        <input name="directionInput"
-                            value={direction}
-                            onChange={ (e)=> setDirection(e.target.value)}
-                        type="text" className="form-control" id="directionInput"></input>
-                        <input type="button" value="Buscar" onClick={getDirCoordenates}></input>
-                    </div>
-                    <div className="form-group">
+                    </p>
+                    <p className="form-group">
                         <label htmlFor="price">Precio por noche (€)</label>
                         <input name="priceInput"
                             value={price}
                             onChange={ (e)=> setPrice(e.target.value)}
                         type="number" className="form-control" id="price"></input>
-                    </div>
-                    <div className="form-group">
+                    </p>
+                    <p className="form-group">
                         <label htmlFor="description">Descripción</label>
                         <textarea name="descriptionInput"
                             value={description}
                             onChange={ (e)=> setDescription(e.target.value)}
                         type="text" className="form-control" id="descriptionInput" rows="4"></textarea>
-                    </div>
-                    <div className="form-group">
+                    </p>
+                    <p className="form-group">
                         <label for="state">Estado</label>
                         <select className="form-control" name="stateInput" id="stateInput" defaultValue={state}
                         value={state}
@@ -235,10 +227,26 @@ const CreateHouse = () => {
                             {/* <option>Ocupado</option> */}
                             <option>No disponible</option>
                         </select>
-                    </div>
-                    <div>
-                    </div>
-                    <div>
+                    </p>
+                    <p className="form-group">
+                        <label htmlFor="direction">Direcci&oacute;n</label>
+                        <input name="directionInput"
+                            value={direction}
+                            onChange={ (e)=> setDirection(e.target.value)}
+                        type="text" className="form-control" id="directionInput"></input>
+                        <input type="button" value="Buscar" onClick={getDirCoordenates}></input>
+                    </p>
+                    {/* <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <label for="inputEmail4">Email</label>
+                          <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="inputPassword4">Password</label>
+                          <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+                        </div>
+                    </div> */}
+                    <p>
                         <MapContainer id='map' center={center} zoom={13} >
                           <TileLayer
                             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -247,8 +255,8 @@ const CreateHouse = () => {
                           <LocationMarker />
                           {/* {DraggableMarker(center)} */}
                         </MapContainer>
-                    </div>
-                    <div>
+                    </p>
+                    <p>
                       <label htmlFor="image">Añadir imagen principal</label><br/>
                           <input accept="image/*" type="file" id="imagen-edit" onChange={
                               (e) => {
@@ -262,7 +270,7 @@ const CreateHouse = () => {
                           }/>
                           <img name="img-photo-edit" id="img-photo-edit" className="align-self-center m-3" alt="" src={src}/>
                       <br/>
-                    </div>
+                    </p>
                     <button type="submit" className="btn btn-primary">Crear</button>
                 </form>
             </div>      
