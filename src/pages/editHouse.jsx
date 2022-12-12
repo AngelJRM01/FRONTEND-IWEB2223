@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { MapContainer, TileLayer } from 'react-leaflet'
+//import { MapContainer, TileLayer } from 'react-leaflet'
 import { Carousel } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import '../styles/main.css';
@@ -9,7 +9,7 @@ import "leaflet/dist/leaflet.css";
 
 import { Header } from '../components/header.jsx';
 import { Footer } from '../components/footer.jsx';
-import { Global } from '../helper/Global';
+//import { Global } from '../helper/Global';
 import { setUpHouse } from '../helper/SetUpHouse.js';
 import { uploadImage } from "../helper/uploadImage.js"
 
@@ -34,8 +34,8 @@ const EditHouse = () => {
 
   let src = "";
 
-  const baseUrl = Global.baseUrl;
-  const URI = `${baseUrl}viviendas/` + idVivienda;
+  //const baseUrl = Global.baseUrl;
+  //const URI = `${baseUrl}viviendas/` + idVivienda;
   //6383fd185c003d453b597f3f = idVivienda
   //636a2eba353e6b6d0e281d7a = idPropietario
   // const misViviendas = `http://localhost:3000/viviendas/propietario/${id}`;
@@ -128,6 +128,7 @@ const EditHouse = () => {
         vivienda.imagenes = imagenes;
       }
   
+      /*
       const response = await fetch( URI, {
         method: "PUT",
         headers: {
@@ -137,7 +138,7 @@ const EditHouse = () => {
       }).then( res => res.json())
         .then( data => {
           console.log(data)
-        }).catch(err => console.log(err));
+        }).catch(err => console.log(err));*/
   
       window.location.href = misViviendas;
     }
@@ -184,7 +185,7 @@ const EditHouse = () => {
       vivienda.imagenes = imagenes;
     }
 
-    
+    /*
     const response = fetch( URI, {
       method: "PUT",
       headers: {
@@ -194,7 +195,7 @@ const EditHouse = () => {
     }).then( res => res.json())
       .then( data => {
         console.log(data)
-      }).catch(err => console.log(err));
+      }).catch(err => console.log(err));*/
 
     window.location.href = URL;
   }
@@ -202,7 +203,7 @@ const EditHouse = () => {
 
   const now = Date.now();
   const today = new Date (now);
-  const fechaInicio = today.toISOString();
+  //const fechaInicio = today.toISOString();
   const [error, setError] = useState("")
 
   const onChange = (dates) => {
