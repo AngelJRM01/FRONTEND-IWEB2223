@@ -8,7 +8,7 @@ import 'leaflet/dist/leaflet.css';
 
 import { Header } from '../components/header.jsx';
 import { Footer } from '../components/footer.jsx';
-//import { Global } from '../helper/Global';
+import { Global } from '../helper/Global';
 import { uploadImage } from "../helper/uploadImage.js"
 // import { DraggableMarker } from '../helper/draggableMarker';
 // import { Map } from '../helper/map';
@@ -40,8 +40,8 @@ const CreateHouse = () => {
 
   document.title = 'Crear vivienda';
 
-  //const baseUrl = Global.baseUrl;
-  //const URI = `${baseUrl}viviendas/`;
+  const baseUrl = Global.baseUrl;
+  const URI = `${baseUrl}viviendas/`;
   //const URI = `${baseUrl}viviendas/propietario/${id}/nuevaVivienda`;
   //636a2eba353e6b6d0e281d7a = idPropietario
   // const misViviendas = `http://localhost:3000/viviendas/propietario/${id}`;
@@ -80,7 +80,7 @@ const CreateHouse = () => {
       vivienda.imagenes = imagenes;
     }
 
-    /*
+    
     const response = await fetch( URI, {
       method: "POST",
       headers: {
@@ -92,7 +92,7 @@ const CreateHouse = () => {
         console.log(data);
         misViviendas = `http://localhost:3000/vivienda/${data._id}`;
         //no se porque no funciona la imagen si se va a la pagina de la propia vivienda
-      }).catch(err => console.log(err));*/
+      }).catch(err => console.log(err));
 
     window.location.href = misViviendas;
   }
@@ -105,7 +105,7 @@ const CreateHouse = () => {
 
   // function getDirCoordenates () {
   const getDirCoordenates = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
 
     const textDir = encodeURIComponent(direction);
     const geocodingURL = `https://api.geoapify.com/v1/geocode/search?text=${textDir}&format=json&apiKey=${apiKey}`

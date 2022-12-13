@@ -9,7 +9,7 @@ import "leaflet/dist/leaflet.css";
 
 import { Header } from '../components/header.jsx';
 import { Footer } from '../components/footer.jsx';
-//import { Global } from '../helper/Global';
+import { Global } from '../helper/Global';
 import { setUpHouse } from '../helper/SetUpHouse.js';
 import { uploadImage } from "../helper/uploadImage.js"
 
@@ -34,8 +34,8 @@ const EditHouse = () => {
 
   let src = "";
 
-  //const baseUrl = Global.baseUrl;
-  //const URI = `${baseUrl}viviendas/` + idVivienda;
+  const baseUrl = Global.baseUrl;
+  const URI = `${baseUrl}viviendas/` + idVivienda;
   //6383fd185c003d453b597f3f = idVivienda
   //636a2eba353e6b6d0e281d7a = idPropietario
   // const misViviendas = `http://localhost:3000/viviendas/propietario/${id}`;
@@ -65,7 +65,7 @@ const EditHouse = () => {
 
   }, [house])
 
-  
+  let [imageSrc, setImageSrc] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -85,6 +85,12 @@ const EditHouse = () => {
     
     let fechas = dates;
     console.log(fechas);
+
+    if(src !== ""){
+      imageSrc = src;
+      setImageSrc(src);
+    }
+    console.log(imageSrc);
     
     if(puedeReservar){
       const fI = new Date(startDate);
@@ -122,13 +128,13 @@ const EditHouse = () => {
         // // propietario: owner
       };
   
-      if(src !== "") {
+      if(imageSrc !== "") {
         let imagenes = vivienda.imagenes;
-        imagenes.push(src);
+        imagenes.push(imageSrc);
         vivienda.imagenes = imagenes;
       }
   
-      /*
+      
       const response = await fetch( URI, {
         method: "PUT",
         headers: {
@@ -138,7 +144,7 @@ const EditHouse = () => {
       }).then( res => res.json())
         .then( data => {
           console.log(data)
-        }).catch(err => console.log(err));*/
+        }).catch(err => console.log(err));
   
       window.location.href = misViviendas;
     }
@@ -179,13 +185,13 @@ const EditHouse = () => {
     };
 
     console.log(image);
-    if(image !== "") {
-      let imagenes = vivienda.imagenes;
-      imagenes = imagenes.filter((imagen) => imagen !== image);
-      vivienda.imagenes = imagenes;
-    }
+    // if(image !== "") {
+    let imagenes = vivienda.imagenes;
+    imagenes = imagenes.filter((imagen) => imagen !== image);
+    vivienda.imagenes = imagenes;
+    // }
 
-    /*
+    
     const response = fetch( URI, {
       method: "PUT",
       headers: {
@@ -195,7 +201,7 @@ const EditHouse = () => {
     }).then( res => res.json())
       .then( data => {
         console.log(data)
-      }).catch(err => console.log(err));*/
+      }).catch(err => console.log(err));
 
     window.location.href = URL;
   }
