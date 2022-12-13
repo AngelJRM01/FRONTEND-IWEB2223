@@ -3,11 +3,13 @@ import Modal from 'react-bootstrap/Modal';
 
 import styles from '../../styles/reservation.module.css';
 import { removeReservation } from "../../helper/RemoveReservation";
+import { removeNotAvalaibleDates } from "../../helper/RemoveNotAvalaibleDates";
 
-const ModalRemoveReservation = ({id, setShowModal, showModal, modalShow2}) => {
+const ModalRemoveReservation = ({id, idVivienda, fechaInicio, setShowModal, showModal, modalShow2}) => {
   const handleClose = () => setShowModal(false);
 
   const cancelReservation = () => {
+    removeNotAvalaibleDates(idVivienda, fechaInicio);
     removeReservation(id);
     handleClose();
     modalShow2();
