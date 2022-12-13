@@ -12,16 +12,26 @@ import '../styles/orientacion.css'
 import '../styles/texto.css'
 import '../styles/div.css'
 import ModalPanelConfiguracion from "../components/house/modalPanelConfiguracion";
-import { setUpReservations } from '../helper/SetUpReservations.js';
+import ModalNewReservation from "../components/house/modalNewReservation";
+import { setUpReservationsOfAHouse } from '../helper/setUpReservationOfAHouse.js';
 import { setUpGasStation } from "../helper/SetUpGasStation";
+import { setUpTourist } from "../helper/setUpTourist";
+import ModalConfirmationReservation from "../components/house/modalConfirmationReservation";
 
 const House = () => {
 
     const { id } = useParams();
     const [ house, setHouse ] = useState();
     const [ showModal, setShowModal ] = useState(false);
+    const [ showNewReservationModal, setShowNewReservationModal ] = useState(false);
+    const [ confirmationReservationModal, setConfirmationReservationModal ] = useState(false);
     const [ reservations, setReservations ] = useState([]);
     const [ gasStation, setGasStation ] = useState([]);
+    const [ tourist, setTourist ] = useState([]);
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+
+    const [valueCapacity, setValueCapacity] = useState({value: 1, label: 1});
 
     useEffect( () => {
 
@@ -33,8 +43,9 @@ const House = () => {
         
         if(house !== undefined){
             document.title = house.titulo
-            setUpReservations( house.propietario._id, setReservations );
+            setUpReservationsOfAHouse( house._id, setReservations );
             setUpGasStation(house.coordenadas.latitud, house.coordenadas.longitud, 20, setGasStation)
+            setUpTourist(house.coordenadas.latitud, house.coordenadas.longitud, setTourist)
         }
 
     }, [house])
@@ -47,6 +58,10 @@ const House = () => {
 
     const modalShow = () => setShowModal(true);
 
+    const modalShowNewReservation = () => setShowNewReservationModal(true);
+
+    const modalConfirmationReservationModal = () => setConfirmationReservationModal(true);
+
     const marcadoresGasolineras = gasStation.map((gas, index) => {
         const latitudGas = Number(gas["Latitud"].replace(',', '.'));
         const longitudGas = Number(gas["Longitud"].replace(',', '.'));
@@ -56,6 +71,24 @@ const House = () => {
                     </Popup>
                 </Marker>
     })
+
+    const conversionMes = (mes) => {
+        switch(mes){
+            case 'M01' : return "enero"
+            case 'M02' : return "febrero"
+            case 'M03' : return "marzo"
+            case 'M04' : return "abril"
+            case 'M05' : return "mayo"
+            case 'M06' : return "junio"
+            case 'M07' : return "julio"
+            case 'M08' : return "agosto"
+            case 'M09' : return "septiembre"
+            case 'M10' : return "octubre"
+            case 'M11' : return "noviembre"
+            case 'M12' : return "diciembre"
+            default : return "mes no válido"
+        }
+    }
 
     return(
         house === undefined
@@ -82,6 +115,32 @@ const House = () => {
                                 setShowModal = {setShowModal}
                                 showModal = {showModal}
                                 reservations = {reservations}
+                                modalShowNewReservation = {modalShowNewReservation}
+                                setConfirmationReservationModal = {setConfirmationReservationModal}
+                            />
+                            <ModalNewReservation
+                                house = {house}
+                                setShowNewReservationModal = {setShowNewReservationModal}
+                                showNewReservationModal = {showNewReservationModal}
+                                modalConfirmationReservationModal = {modalConfirmationReservationModal}
+                                startDate = {startDate}
+                                setStartDate = {setStartDate}
+                                endDate = {endDate}
+                                setEndDate = {setEndDate}
+                                valueCapacity = {valueCapacity}
+                                setValueCapacity = {setValueCapacity}
+                            />
+                            <ModalConfirmationReservation
+                                house = {house}
+                                setConfirmationReservationModal = {setConfirmationReservationModal}
+                                confirmationReservationModal = {confirmationReservationModal}
+                                startDate = {startDate}
+                                endDate = {endDate}
+                                valueCapacity = {valueCapacity}
+                                setStartDate = {setStartDate}
+                                setEndDate = {setEndDate}
+                                setValueCapacity = {setValueCapacity}
+                                setHouse = {setHouse}
                             />
                         </div>
                         <br/>
@@ -140,13 +199,29 @@ const House = () => {
                         <div className="breakSpaces">
                             {gasStation.map((gas, index) => {
                                 return (
-                                    <p>
+                                    <p key={index}>
                                         · La gasolinera con la dirección <strong className="breakSpaces">{gas["Dirección"]}</strong> tiene de precio la Gasolina 95 E5 a <strong className="breakSpaces">{gas["Precio Gasolina 95 E5"]}€</strong> y está a <strong className="breakSpaces">{gas["Distancia"]} km</strong>
                                     </p>
                                 )
                             })}
                         </div>
-
+                        {tourist.length === 0 ?
+                            <div>
+                                <br/>
+                                <br/>
+                                <h5>Con respecto a los turistas, no hemos podido obtener datos :(</h5>
+                            </div> 
+                            :   
+                            <div>
+                                <br/>
+                                <br/>
+                                <h5>Con respecto a los turistas, estos son los datos obtenidos: </h5>
+                                <br/>
+                                <p>El mes de <strong className="breakSpaces">{conversionMes(tourist["0"].month)}</strong> ha sido en el que más turistas han venido a esta comunidad autónoma con un total de <strong className="breakSpaces">{tourist["0"].value}</strong> turistas.</p>
+                                <p>El mes de <strong className="breakSpaces">{conversionMes(tourist["1"].month)}</strong> ha sido el segundo mes en el que más turistas han venido a esta comunidad autónoma con un total de <strong className="breakSpaces">{tourist["1"].value}</strong> turistas.</p>
+                                <p>El mes de <strong className="breakSpaces">{conversionMes(tourist["2"].month)}</strong> ha sido en el que menos turistas han venido a esta comunidad autónoma con un total de <strong className="breakSpaces">{tourist["2"].value}</strong> turistas.</p>
+                                <p>El mes de <strong className="breakSpaces">{conversionMes(tourist["3"].month)}</strong> ha sido el segundo mes en el que menos turistas han venido a esta comunidad autónoma con un total de <strong className="breakSpaces">{tourist["3"].value}</strong> turistas.</p>
+                            </div>}
                     </div>
                 </main>
                 <Footer/>

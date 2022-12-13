@@ -1,35 +1,59 @@
+import '../styles/reservation.css'
+
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { MapContainer, TileLayer } from 'react-leaflet'
 import { Carousel } from "react-bootstrap";
 
 import { Header } from "../components/header";
 import { Footer } from "../components/footer";
+import ModalRemoveReservation from "../components/reservation/modalRemoveReservation";
+import ModalReservationRemoved from "../components/reservation/modalReservationRemoved";
+import ReservationMap from "../components/reservation/reservationMap";
+import CarouselItem from "../components/reservation/carouselItem";
 
 import styles from '../styles/reservation.module.css';
 import { setUpReservation } from "../helper/SetUpReservation";
+import { print } from "../helper/Print";
 
 const Reservation = () => {
 
     const { id } = useParams();
     const [ reservation, setReservation ] = useState();
+    const [ position, setPosition ] = useState();
+    const [ showModal, setShowModal ] = useState(false);
+    const [ showModal2, setShowModal2 ] = useState(false);
 
     useEffect( () => { setUpReservation(id, setReservation); }, [id]);
-    useEffect( () => { document.title = "Información general de tu viaje - SwishHouses"; }, [reservation]);
+    
+    useEffect( () => { 
+        document.title = "Información general de tu viaje - SwishHouses"; 
+        if (reservation != null) {
+            setPosition([reservation.vivienda.coordenadas.latitud, reservation.vivienda.coordenadas.longitud]);
+        }
+    }, [reservation]);
 
-    const Print = () => {     
-        let printContents = document.getElementById('printablediv').innerHTML;
-        let originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
-        document.body.innerHTML = originalContents;
+    const modalShow = () => setShowModal(true);
+    const modalShow2 = () => setShowModal2(true);
+
+    const RemoveButton = () => {
+        return(
+            <div className={"list-group " + styles.bottonss}>
+                <button type="button" className={"list-group-item list-group-item-action " + styles.house} onClick={modalShow}>
+                    <i className="fa-solid fa-ban"></i>
+                    &emsp;Retirar solicitud
+                    <i className={"fa-sharp fa-solid fa-chevron-right " + styles.arrow}></i>
+                </button>
+                <ModalRemoveReservation id={reservation._id} setShowModal={setShowModal} showModal={showModal} modalShow2={modalShow2}/>
+                <ModalReservationRemoved setShowModal={setShowModal2} showModal={showModal2}/>
+            </div>
+        );
     };
 
     const ReservationDetails = () => {
         return(
-            <div className={'row ' + styles.row}>
+            <div className={'row filaReserva ' + styles.row}>
 
-                <div className={"col " + styles.data} id='printablediv'>
+                <div className={"col colaReserva " + styles.data} id='printablediv'>
 
                     <style>
                         {`@media print {
@@ -41,43 +65,32 @@ const Reservation = () => {
 
                         <div className='carrusel'>
                             <Carousel>
-                                <Carousel.Item>
-                                    <div>
-                                        <img
-                                            className={styles.imgSize}
-                                            src='https://www.cultture.com/pics/2021/05/hunter-x-hunter-10-cosas-que-solo-los-fans-del-manga-saben-de-gon.jpg'
-                                            alt="Imagen 1"/>
-                                    </div>
-                                </Carousel.Item>
-                                <Carousel.Item>
-                                    <div>
-                                        <img
-                                            className={styles.imgSize}
-                                            src='https://top-mmo.fr/wp-content/uploads/2022/11/l-intro-1667494654.jpg'
-                                            alt="Imagen 2"/>
-                                    </div>
-                                </Carousel.Item>
+                                { 
+                                    reservation.vivienda.imagenes.map((link, index) => {
+                                        return CarouselItem(link, index);
+                                    })
+                                }
                             </Carousel>
                         </div>
 
                         <div className={styles.flexito1}>
                             <div className={styles.fl}>
                                 <p className={styles.title}>Llegada:</p>
-                                <p className={styles.date}>&ensp;mié, 11 ene.</p>
-                                <p className={styles.time}>&ensp;14:00</p>
+                                <p className={styles.date}>&ensp;{new Intl.DateTimeFormat('es-ES', {weekday: 'short', month: 'short', day: 'numeric'}).format(Date.parse(reservation.estancia.fechaInicio))}</p>
+                                <p className={styles.time}>&ensp;{new Intl.DateTimeFormat('es-ES', {hour: 'numeric', minute: 'numeric'}).format(Date.parse(reservation.estancia.fechaInicio))}</p>
                             </div>
                             <div className={styles.salida + ' ' + styles.fl}>
                                 <p className={styles.title}>Salida:</p>
-                                <p className={styles.date}>&emsp;jue, 12 ene.</p>
-                                <p className={styles.time}>&emsp;11:00</p>
+                                <p className={styles.date}>&emsp;{new Intl.DateTimeFormat('es-ES', {weekday: 'short', month: 'short', day: 'numeric'}).format(Date.parse(reservation.estancia.fechaFinal))}</p>
+                                <p className={styles.time}>&emsp;{new Intl.DateTimeFormat('es-ES', {hour: 'numeric', minute: 'numeric'}).format(Date.parse(reservation.estancia.fechaFinal))}</p>
                             </div>
                         </div>
 
                         <div className={"list-group " + styles.bottonss}>
-                            <a href="http://localhost:3000/vivienda/6371a2d0cbdef810a6e09c83" className={"list-group-item list-group-item-action " + styles.house}>
-                                <i class="fa-solid fa-pager">
+                            <a href={"http://localhost:3000/vivienda/" + reservation.vivienda._id} className={"list-group-item list-group-item-action " + styles.house}>
+                                <i className="fa-solid fa-pager">
                                 </i>&emsp;Mostrar anuncio
-                                <i class={"fa-sharp fa-solid fa-chevron-right " + styles.arrow}></i>
+                                <i className={"fa-sharp fa-solid fa-chevron-right " + styles.arrow}></i>
                             </a>
                         </div>
                     </div>
@@ -91,24 +104,19 @@ const Reservation = () => {
                                 </div>
                                 <div>
                                     <p className={styles.boldFont + ' ' + styles.noMarginP}>&emsp;¿Cuántos vienen?</p>
-                                    <p>&emsp;8 viajeros</p>
+                                    <p>&emsp;{reservation.ocupantes} viajeros</p>
                                 </div>
                             </div>
                             <div className={styles.auxDiv}></div>
                         </div>
 
+                        { Date.parse(reservation.estancia.fechaInicio) >= Date.now() ? <RemoveButton/> : null }
+
                         <div className={"list-group " + styles.bottonss}>
-                            <a href={"http://localhost:3000/reservas/" + reservation._id} className={"list-group-item list-group-item-action " + styles.house}>
-                                <i class="fa-solid fa-ban"></i>
-                                &emsp;Retirar solicitud
-                                <i class={"fa-sharp fa-solid fa-chevron-right " + styles.arrow}></i>
-                            </a>
-                        </div>
-                        <div className={"list-group " + styles.bottonss}>
-                            <button type="button" className={"list-group-item list-group-item-action " + styles.house} onClick={Print}>
-                                <i class="fa-solid fa-print"></i>
+                            <button type="button" className={"list-group-item list-group-item-action " + styles.house} onClick={print}>
+                                <i className="fa-solid fa-print"></i>
                                 &emsp;Imprimir información
-                                <i class={"fa-sharp fa-solid fa-chevron-right " + styles.arrow}></i>
+                                <i className={"fa-sharp fa-solid fa-chevron-right " + styles.arrow}></i>
                             </button>
                         </div>
                     </div>
@@ -120,9 +128,12 @@ const Reservation = () => {
                                 <div className={styles.divTitle}>
                                     <p className={styles.detallesReserva}>Cómo llegar</p>
                                 </div>
+                                <div className={styles.mapColumn + " mapsColumn"}>
+                                    <ReservationMap position={position}/>
+                                </div>
                                 <div>
                                     <p className={styles.boldFont + ' ' + styles.noMarginP}>&emsp;Dirección</p>
-                                    <p>&emsp;Calle Benitez Rosa de María, 52</p>
+                                    <p>&emsp;{reservation.vivienda.direccion}</p>
                                 </div>
                             </div>
                             <div className={styles.auxDiv}></div>
@@ -135,25 +146,20 @@ const Reservation = () => {
                             <div className={styles.secondTable}>
                                 <div className={styles.divTitle}>
                                     <div className={styles.anfitrion}>
-                                        <p className={styles.detallesReserva}>Anfitrión: Pepito</p>
-                                        <a href={"http://localhost:3000/reservas/" + reservation._id}>
-                                            <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" class={styles.avatar}></img>
-                                        </a>
+                                        <p className={styles.detallesReserva}>Anfitrión: {reservation.vivienda.propietario.nombre}</p>
+                                        <img src={reservation.vivienda.propietario.foto} alt="Avatar" className={styles.avatar}></img>
                                     </div>
                                 </div>
                                 <div>
                                     <p className={styles.boldFont + ' ' + styles.noMarginP}>&emsp;Acerca de tu anfitrión</p>
-                                    <p className={styles.paragraph}>
-                                        ewf f ewf wefwef we fwe  fwe  f ew f e f we f  ewfewfw ewfwef we fewfefew efwef vg fbg trhr dsfwsfwef wegerg eer
-                                         ewgfweg wegwegwegew wefgwe gwerg wegwerg w grgergergrfeger gfregerg ergerger g ergerg erg.
-                                    </p>
+                                    <p className={styles.paragraph}>{reservation.vivienda.propietario.descripcion}</p>
                                 </div>
                             </div>
                             <div className={styles.auxDiv}></div>
                         </div>
                     </div>
 
-                    <div className={styles.secondContainer}>
+                    <div className={styles.secondContainer + " pagoContainer"}>
                         <div className={styles.secondContainer2}>
                             <div className={styles.auxDiv}></div>
                             <div className={styles.secondTable}>
@@ -162,7 +168,7 @@ const Reservation = () => {
                                 </div>
                                 <div>
                                     <p className={styles.boldFont + ' ' + styles.noMarginP}>&emsp;Detalles del pago</p>
-                                    <p>&emsp;Coste total: 29,27 € EUR</p>
+                                    <p>&emsp;Coste total: {reservation.precio} € EUR</p>
                                 </div>
                             </div>
                             <div className={styles.auxDiv}></div>
@@ -173,13 +179,8 @@ const Reservation = () => {
 
                 </div>
 
-                <div className={"col " + styles.mapContainer}>
-                    <MapContainer center={[40.41831, -3.70275]} zoom={13} >
-                        <TileLayer
-                            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                            />
-                    </MapContainer>
+                <div className={"col mapitaCont " + styles.mapContainer}>
+                    <ReservationMap position={position}/>
                 </div>
 
             </div>
@@ -188,7 +189,7 @@ const Reservation = () => {
 
     return(
         
-        <div className={styles.reservationCcomponent}>
+        <div className={styles.reservationComponent + " mapita"}>
             <Header/>
             <main className={styles.main}>
                 <div className={"container-fluid " + styles.containerFluid}>

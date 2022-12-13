@@ -1,6 +1,3 @@
-import { useEffect } from 'react';
-import { setUpReservations } from '../../helper/SetUpReservations';
-import casaImg from '../../static/casa.png';
 import Card from 'react-bootstrap/Card';
 import '../../styles/main.css'; 
 
@@ -30,9 +27,10 @@ export const ReservationCard = ({ reservation }) => {
                                         <span style={{fontSize: '20px'}}>Fecha: {reservation.estancia.fechaInicio !== undefined ? dateParts(reservation.estancia.fechaInicio) : ""} - {reservation.estancia.fechaFinal !== undefined ? dateParts(reservation.estancia.fechaFinal) : ""}</span>
                                     </Card.Text>
                                     <br/>
+                                    <a href={"/reservas/" + reservation._id} className="stretched-link"> </a> 
                                 </Card.Body>
                             </div>
-                            <div className='col-sm-5'  style={{backgroundImage: "url(" +casaImg +")", backgroundRepeat: "no-repeat" , backgroundSize: "cover",  borderTopRightRadius: "5px", borderBottomRightRadius: "5px"}}>
+                            <div className='col-sm-5'  style={{backgroundImage: "url(" +reservation.vivienda.imagenes[0] +")", backgroundRepeat: "no-repeat" , backgroundSize: "cover",  borderTopRightRadius: "5px", borderBottomRightRadius: "5px"}}>
                                 {/* <Card.Img className='left-card-img' src={casaImg} /> */}
                             </div>
 

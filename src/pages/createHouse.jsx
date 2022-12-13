@@ -9,7 +9,8 @@ import 'leaflet/dist/leaflet.css';
 import { Header } from '../components/header.jsx';
 import { Footer } from '../components/footer.jsx';
 import { Global } from '../helper/Global';
-import { DraggableMarker } from '../helper/draggableMarker';
+import { uploadImage } from "../helper/uploadImage.js"
+// import { DraggableMarker } from '../helper/draggableMarker';
 // import { Map } from '../helper/map';
 // import '../styles/style.css';
 
@@ -17,22 +18,25 @@ const CreateHouse = () => {
 
   const { id } = useParams();
 
+  //const now = Date.now();
+  //const today = new Date (now);
+  //const fechaInicio = today.toISOString();
+
   const [title, setTitle] = useState('');
   const [capacity, setCapacity] = useState('0');
   const [direction, setDirection] = useState('');
   const [price, setPrice] = useState('0');
   const [description, setDescription] = useState('');
   const [state, setState] = useState('Libre');
-  const [dates, setDates] = useState([
-    {fechaInicio: "2022-04-23T18:25:43.511+00:00"}, 
-  {fechaInicio: "2010-04-23T18:25:43.511+00:00"}
-  ]);
-  const [images, setImages] = useState(["terrazaDeJuan.jpg"]);
+  const [dates, setDates] = useState([]);
+  const [images, setImages] = useState([]);
   const [coordenates, setCoordenates] = useState({
     latitud: 40.41831,
     longitud: -3.70275,
   });
-  const [owner, setOwner] = useState({_id: id, nombre:"Pepe", foto:"perfil.png"});
+  const [owner, setOwner] = useState({_id: id, nombre:"Pepe", foto:"https://www.w3schools.com/howto/img_avatar.png"});
+
+  let src = "";
 
   document.title = 'Crear vivienda';
 
@@ -40,12 +44,21 @@ const CreateHouse = () => {
   const URI = `${baseUrl}viviendas/`;
   //const URI = `${baseUrl}viviendas/propietario/${id}/nuevaVivienda`;
   //636a2eba353e6b6d0e281d7a = idPropietario
-  const misViviendas = `http://localhost:3000/viviendas/propietario/${id}`;
-
+  // const misViviendas = `http://localhost:3000/viviendas/propietario/${id}`;
+  let misViviendas = "";
   const apiKey = "0ab94b07fa6043a491f0050f801c58c2";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // if(state === 'Libre'){
+    //   const now = Date.now();
+    //   const today = new Date (now);
+    //   const fechaInicio = today.toISOString();
+    //   dates = [
+    //     {fechaInicio: fechaInicio}
+    //   ]
+    // }
 
     const vivienda = {
       titulo: title,
@@ -54,13 +67,20 @@ const CreateHouse = () => {
       precioNoche: price,
       descripcion: description,
       estado: state,
-      fechasDisponibles: dates,
+      fechasNoDisponibles: dates,
       imagenes: images,
       coordenadas: coordenates,
       valoracion: 0,
       propietario: owner
     };
+    
+    if(src !== "") {
+      let imagenes = vivienda.imagenes;
+      imagenes.push(src);
+      vivienda.imagenes = imagenes;
+    }
 
+    
     const response = await fetch( URI, {
       method: "POST",
       headers: {
@@ -69,7 +89,9 @@ const CreateHouse = () => {
       body: JSON.stringify(vivienda),
     }).then( res => res.json())
       .then( data => {
-        console.log(data)
+        console.log(data);
+        misViviendas = `http://localhost:3000/vivienda/${data._id}`;
+        //no se porque no funciona la imagen si se va a la pagina de la propia vivienda
       }).catch(err => console.log(err));
 
     window.location.href = misViviendas;
@@ -83,7 +105,7 @@ const CreateHouse = () => {
 
   // function getDirCoordenates () {
   const getDirCoordenates = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
 
     const textDir = encodeURIComponent(direction);
     const geocodingURL = `https://api.geoapify.com/v1/geocode/search?text=${textDir}&format=json&apiKey=${apiKey}`
@@ -161,11 +183,6 @@ const CreateHouse = () => {
   
   return (
     <html>
-      {/* <head>
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"/>
-        <link rel="stylesheet" href="https://unpkg.com/@geoapify/leaflet-address-search-plugin@^1/dist/L.Control.GeoapifyAddressSearch.min.css"/>
-        <link rel="stylesheet" href="style.css"/>
-      </head> */}
     <div>
         <Header/>
         <main className="row justify-content-center main"
@@ -174,53 +191,63 @@ const CreateHouse = () => {
             data-bs-spy="scroll">
                 <h1 align="center">Añadir vivienda</h1>
                 <form className="form" id ="form" onSubmit={handleSubmit} method="post">
-                <div className="form-group">
+                    <p className="form-group">
                         <label htmlFor="title">T&iacute;tulo</label>
                         <input name="titleInput"
                             value={title}
                             onChange={ (e)=> setTitle(e.target.value)}
                         type="text" className="form-control" id="titleInput"></input>
-                    </div>
-                    <div className="form-group">
+                    </p>
+                    <p className="form-group">
                         <label htmlFor="capacity">Capacidad</label>
                         <input name="capacityInput"
                             value={capacity}
                             onChange={ (e)=> setCapacity(e.target.value)}
                         type="number" className="form-control" id="capacityInput"></input>
-                    </div>
-                    <div className="form-group">
+                    </p>
+                    <p className="form-group">
+                        <label htmlFor="price">Precio por noche (€)</label>
+                        <input name="priceInput"
+                            value={price}
+                            onChange={ (e)=> setPrice(e.target.value)}
+                        type="number" className="form-control" id="price"></input>
+                    </p>
+                    <p className="form-group">
+                        <label htmlFor="description">Descripción</label>
+                        <textarea name="descriptionInput"
+                            value={description}
+                            onChange={ (e)=> setDescription(e.target.value)}
+                        type="text" className="form-control" id="descriptionInput" rows="4"></textarea>
+                    </p>
+                    <p className="form-group">
+                        <label for="state">Estado</label>
+                        <select className="form-control" name="stateInput" id="stateInput" defaultValue={state}
+                        value={state}
+                        onChange={ (e)=> setState(e.target.value)}>
+                            <option>Libre</option>
+                            {/* <option>Ocupado</option> */}
+                            <option>No disponible</option>
+                        </select>
+                    </p>
+                    <p className="form-group">
                         <label htmlFor="direction">Direcci&oacute;n</label>
                         <input name="directionInput"
                             value={direction}
                             onChange={ (e)=> setDirection(e.target.value)}
                         type="text" className="form-control" id="directionInput"></input>
                         <input type="button" value="Buscar" onClick={getDirCoordenates}></input>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="price">Precio por noche (€)</label>
-                        <input name="priceInput"
-                            value={price}
-                            onChange={ (e)=> setPrice(e.target.value)}
-                        type="number" className="form-control" id="price"></input>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="description">Descripción</label>
-                        <textarea name="descriptionInput"
-                            value={description}
-                            onChange={ (e)=> setDescription(e.target.value)}
-                        type="text" className="form-control" id="descriptionInput" rows="4"></textarea>
-                    </div>
-                    <div className="form-group">
-                        <label for="state">Estado</label>
-                        <select className="form-control" name="stateInput" id="stateInput" defaultValue={state}
-                        value={state}
-                        onChange={ (e)=> setState(e.target.value)}>
-                            <option>Libre</option>
-                            <option>Ocupado</option>
-                            <option>No disponible</option>
-                        </select>
-                    </div>
-                    <div>
+                    </p>
+                    {/* <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <label for="inputEmail4">Email</label>
+                          <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="inputPassword4">Password</label>
+                          <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+                        </div>
+                    </div> */}
+                    <p>
                         <MapContainer id='map' center={center} zoom={13} >
                           <TileLayer
                             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -229,50 +256,22 @@ const CreateHouse = () => {
                           <LocationMarker />
                           {/* {DraggableMarker(center)} */}
                         </MapContainer>
-                        {/* {Map(center)} */}
-                        {/* <div id="map"></div>
-                        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-                        <script src="https://unpkg.com/@geoapify/leaflet-address-search-plugin@^1/dist/L.Control.GeoapifyAddressSearch.min.js"></script>
-                        <script src="map.js"></script> */}
-                        {/* <script>
-                          const apiKey = "0ab94b07fa6043a491f0050f801c58c2";
-
-                          center = {
-                              // @ts-ignore
-                              latitud : 40,
-                              longitud : -3
-                          }
-
-                          let mapOptions = {
-                              center:[center.latitud, center.longitud],
-                              zoom:13
-                          }
-
-                          let map = new L.map('map', mapOptions);
-                          let marker = null;
-
-                          let layer = new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
-                          map.addLayer(layer);
-
-                          const addressSearchControl = L.control.addressSearch(apiKey, {
-                              position:"topleft",
-                              placeholder:"Introduce una dirección",
-                              resultCallback : (address) => {
-                                  if(marker !== null){
-                                      map.removeLayer(marker);
-                                  }
-                                  marker = L.marker([address.lat, address.lon]).addTo(map);
-                                  map.setView([address.lat, address.lon], 17);
-                                  center.latitud = address.lat;
-                                  center.longitud = address.lon;
-                                  // console.log(center);
+                    </p>
+                    <p>
+                      <label htmlFor="image">Añadir imagen principal</label><br/>
+                          <input accept="image/*" type="file" id="imagen-edit" onChange={
+                              (e) => {
+                                  uploadImage(e.target.files)
+                                      .then((result) => {
+                                          src = result;
+                                          console.log(src)
+                                          //Por algún motivo, sin mostrarlo por consola no funciona
+                                      })
                               }
-                          });
-
-                          map.addControl(addressSearchControl);
-                      </script> */}
-                        {/* {getDirCoordenates} */}
-                    </div>
+                          }/>
+                          <img name="img-photo-edit" id="img-photo-edit" className="align-self-center m-3" alt="" src={src}/>
+                      <br/>
+                    </p>
                     <button type="submit" className="btn btn-primary">Crear</button>
                 </form>
             </div>      
