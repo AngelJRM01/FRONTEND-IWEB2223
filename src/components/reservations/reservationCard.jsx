@@ -5,10 +5,9 @@ export const ReservationCard = ({ reservation }) => {
 
   
   function dateParts(date) {
-    var part = date.split('T');
-    var parts =part[0].split('-');
-    
-    return parts[2]+"/"+parts[1]+"/"+parts[0];
+    date = new Date(date);
+   
+    return date.getDate() +"/"+date.getMonth()+"/"+date.getFullYear();
   }
 
   return (
