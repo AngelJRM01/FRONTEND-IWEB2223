@@ -43,7 +43,8 @@ const Reservation = () => {
                     &emsp;Retirar solicitud
                     <i className={"fa-sharp fa-solid fa-chevron-right " + styles.arrow}></i>
                 </button>
-                <ModalRemoveReservation id={reservation._id} setShowModal={setShowModal} showModal={showModal} modalShow2={modalShow2}/>
+                <ModalRemoveReservation id={reservation._id} idVivienda={reservation.vivienda._id} fechaInicio={reservation.estancia.fechaInicio} 
+                                        setShowModal={setShowModal} showModal={showModal} modalShow2={modalShow2}/>
                 <ModalReservationRemoved setShowModal={setShowModal2} showModal={showModal2}/>
             </div>
         );
