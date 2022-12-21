@@ -30,8 +30,10 @@ const EditHouse = () => {
   });
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-
-  let src = [];
+  const [src, setSrc] = useState([]);
+  let aux = [];
+  const [done, setDone] = useState(false);
+  const [cargando, setCargando] = useState(false);
 
   const baseUrl = Global.baseUrl;
   const URI = `${baseUrl}viviendas/` + idVivienda;
@@ -65,7 +67,11 @@ const EditHouse = () => {
   }, [house])
 
   function addFiles(files) {
-    src= [];
+    aux = [];
+    setSrc([]);
+    setDone(false);
+    setCargando(true);
+    let cnt=0;
     
     for(let i = 0; i < files.length; i++) {
         console.log(files[i])
@@ -77,11 +83,18 @@ const EditHouse = () => {
         })
         .then(res => res.json())
         .then(data => {
-            src.push(data.url);
+            aux.push(data.url);
+            cnt++;
+            if(cnt === files.length) {
+                setDone(true);
+                setCargando(false);
+            }
+            console.log(aux);
         });
-        console.log(src);
     }
-
+    setSrc(aux);
+    console.log(src);
+    
   }
 
   const handleSubmit = async (e) => {
@@ -394,9 +407,8 @@ const EditHouse = () => {
                                 }
                         </Carousel>
                     </div>
-                    {/* <Link to={"/viviendas/propietario/636a2eba353e6b6d0e281d7a"} > */}
-                      <button type="submit" className="btn btn-primary">Actualizar</button>
-                    {/* </Link> */}
+                      {cargando ? <p>Cargando...</p> : <p></p>}
+                      <button type="submit" disabled={!done} className="btn btn-primary">Actualizar</button>
                 </form>
             </div>      
         </main>

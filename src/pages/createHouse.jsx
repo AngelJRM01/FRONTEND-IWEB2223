@@ -34,8 +34,10 @@ const CreateHouse = () => {
     longitud: -3.70275,
   });
   const [owner, setOwner] = useState({_id: id, nombre:"Pepe", foto:"https://www.w3schools.com/howto/img_avatar.png"});
-
-  let src = [];
+  const [src, setSrc] = useState([]);
+  let aux = [];
+  const [done, setDone] = useState(false);
+  const [cargando, setCargando] = useState(false);
 
   document.title = 'Crear vivienda';
 
@@ -49,7 +51,11 @@ const CreateHouse = () => {
 
 
   function addFiles(files) {
-    src= [];
+    aux = [];
+    setSrc([]);
+    setDone(false);
+    setCargando(true);
+    let cnt=0;
     
     for(let i = 0; i < files.length; i++) {
         console.log(files[i])
@@ -61,12 +67,18 @@ const CreateHouse = () => {
         })
         .then(res => res.json())
         .then(data => {
-            src.push(data.url);
-            console.log(src);
+            aux.push(data.url);
+            cnt++;
+            if(cnt === files.length) {
+                setDone(true);
+                setCargando(false);
+            }
+            console.log(aux);
         });
     }
-    console.log("src: " + src);
-
+    setSrc(aux);
+    console.log(src);
+    
   }
 
   const handleSubmit = async (e) => {
@@ -94,14 +106,13 @@ const CreateHouse = () => {
       valoracion: 0,
       propietario: owner
     };
-    
+
     if(src !== []) {
       let imagenes = vivienda.imagenes;
       src.map((s) => {
         return imagenes.push(s);
       });
       vivienda.imagenes = imagenes;
-      console.log(vivienda.imagenes)
     }
 
     
@@ -292,7 +303,8 @@ const CreateHouse = () => {
                           <img name="img-photo-edit" id="img-photo-edit" className="align-self-center m-3" alt="" src={src}/>
                       <br/>
                     </p>
-                    <button type="submit" className="btn btn-primary">Crear</button>
+                    {cargando ? <p>Cargando...</p> : <p> </p>}
+                    <button type="submit" disabled={!done} className="btn btn-primary">Crear</button>
                 </form>
             </div>      
         </main>
