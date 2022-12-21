@@ -9,7 +9,6 @@ import 'leaflet/dist/leaflet.css';
 import { Header } from '../components/header.jsx';
 import { Footer } from '../components/footer.jsx';
 import { Global } from '../helper/Global';
-import { uploadImage } from "../helper/uploadImage.js"
 // import { DraggableMarker } from '../helper/draggableMarker';
 // import { Map } from '../helper/map';
 // import '../styles/style.css';
@@ -63,9 +62,10 @@ const CreateHouse = () => {
         .then(res => res.json())
         .then(data => {
             src.push(data.url);
+            console.log(src);
         });
-        console.log(src);
     }
+    console.log("src: " + src);
 
   }
 
@@ -286,13 +286,7 @@ const CreateHouse = () => {
                       <label htmlFor="image">Añadir imagen principal</label><br/>
                           <input accept="image/*" type="file" id="imagen-edit" multiple onChange={
                               (e) => {
-                                  /* uploadImage(e.target.files)
-                                      .then((result) => {
-                                          src = result;
-                                          console.log(src)
-                                          //Por algún motivo, sin mostrarlo por consola no funciona
-                                      }) */
-                                    addFiles(e.target.files);
+                                  addFiles(e.target.files);
                               }
                           }/>
                           <img name="img-photo-edit" id="img-photo-edit" className="align-self-center m-3" alt="" src={src}/>
