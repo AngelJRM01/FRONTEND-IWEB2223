@@ -36,7 +36,7 @@ const CreateHouse = () => {
   });
   const [owner, setOwner] = useState({_id: id, nombre:"Pepe", foto:"https://www.w3schools.com/howto/img_avatar.png"});
 
-  let src = "";
+  let src = [];
 
   document.title = 'Crear vivienda';
 
@@ -47,6 +47,27 @@ const CreateHouse = () => {
   // const misViviendas = `http://localhost:3000/viviendas/propietario/${id}`;
   let misViviendas = "";
   const apiKey = "0ab94b07fa6043a491f0050f801c58c2";
+
+
+  function addFiles(files) {
+    src= [];
+    
+    for(let i = 0; i < files.length; i++) {
+        console.log(files[i])
+        const formData = new FormData();
+        formData.append('image', files[i]);
+        fetch(`${baseUrl}images/uploadImage`, {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            src.push(data.url);
+        });
+        console.log(src);
+    }
+
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -74,10 +95,13 @@ const CreateHouse = () => {
       propietario: owner
     };
     
-    if(src !== "") {
+    if(src !== []) {
       let imagenes = vivienda.imagenes;
-      imagenes.push(src);
+      src.map((s) => {
+        return imagenes.push(s);
+      });
       vivienda.imagenes = imagenes;
+      console.log(vivienda.imagenes)
     }
 
     
@@ -151,6 +175,7 @@ const CreateHouse = () => {
     iconAnchor: [32, 64],
   });
 
+
   function LocationMarker() {
     // const [position, setPosition] = useState(null)
     const map = useMapEvents({
@@ -169,8 +194,8 @@ const CreateHouse = () => {
         // console.log(direction)
       },
     })
-  
-    
+
+
     return direction === null ? null : (
       <Marker position={[coordenates.latitud, coordenates.longitud]} icon={ iconMarker } >
         <Popup>
@@ -259,14 +284,15 @@ const CreateHouse = () => {
                     </p>
                     <p>
                       <label htmlFor="image">Añadir imagen principal</label><br/>
-                          <input accept="image/*" type="file" id="imagen-edit" onChange={
+                          <input accept="image/*" type="file" id="imagen-edit" multiple onChange={
                               (e) => {
-                                  uploadImage(e.target.files)
+                                  /* uploadImage(e.target.files)
                                       .then((result) => {
                                           src = result;
                                           console.log(src)
                                           //Por algún motivo, sin mostrarlo por consola no funciona
-                                      })
+                                      }) */
+                                    addFiles(e.target.files);
                               }
                           }/>
                           <img name="img-photo-edit" id="img-photo-edit" className="align-self-center m-3" alt="" src={src}/>
