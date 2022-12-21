@@ -11,7 +11,6 @@ import { Header } from '../components/header.jsx';
 import { Footer } from '../components/footer.jsx';
 import { Global } from '../helper/Global';
 import { setUpHouse } from '../helper/SetUpHouse.js';
-import { uploadImage } from "../helper/uploadImage.js"
 
 const EditHouse = () => {
 
@@ -32,7 +31,7 @@ const EditHouse = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
-  let src = "";
+  let src = [];
 
   const baseUrl = Global.baseUrl;
   const URI = `${baseUrl}viviendas/` + idVivienda;
@@ -65,7 +64,25 @@ const EditHouse = () => {
 
   }, [house])
 
-  let [imageSrc, setImageSrc] = useState("");
+  function addFiles(files) {
+    src= [];
+    
+    for(let i = 0; i < files.length; i++) {
+        console.log(files[i])
+        const formData = new FormData();
+        formData.append('image', files[i]);
+        fetch(`${baseUrl}images/uploadImage`, {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            src.push(data.url);
+        });
+        console.log(src);
+    }
+
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -85,12 +102,6 @@ const EditHouse = () => {
     
     let fechas = dates;
     console.log(fechas);
-
-    if(src !== ""){
-      imageSrc = src;
-      setImageSrc(src);
-    }
-    console.log(imageSrc);
     
     if(puedeReservar){
       const fI = new Date(startDate);
@@ -128,10 +139,13 @@ const EditHouse = () => {
         // // propietario: owner
       };
   
-      if(imageSrc !== "") {
+      if(src !== []) {
         let imagenes = vivienda.imagenes;
-        imagenes.push(imageSrc);
+        src.map((s) => {
+          return imagenes.push(s);
+        });
         vivienda.imagenes = imagenes;
+        console.log("a insertar: " + vivienda.imagenes)
       }
   
       
@@ -354,13 +368,9 @@ const EditHouse = () => {
                     <h6 className="textRed">{error}</h6>
                     <div>
                       <label htmlFor="image">Añadir imagen</label><br/>
-                          <input accept="image/*" type="file" id="imagen-edit" onChange={
+                          <input accept="image/*" type="file" id="imagen-edit" multiple onChange={
                               (e) => {
-                                  uploadImage(e.target.files)
-                                      .then((result) => {
-                                          src = result
-                                          console.log(src)
-                                      })
+                                addFiles(e.target.files);
                               }
                           }/>
                           <img name="img-photo-edit" id="img-photo-edit" className="align-self-center m-3" alt="" src={src}/>
