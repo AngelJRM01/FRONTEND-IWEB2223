@@ -3,7 +3,9 @@ import DatePicker from "react-datepicker";
 import { useState } from "react";
 import 'react-datepicker/dist/react-datepicker.css';
 import Select from 'react-select';
-import '../../styles/texto.css'
+import '../../styles/texto.css';
+import PaypalButton from "../paypal/paypalButton";
+
 
 const ModalNewReservation = ({house, setShowNewReservationModal, showNewReservationModal, modalConfirmationReservationModal, startDate, setStartDate, endDate, setEndDate, valueCapacity, setValueCapacity}) => {
 
@@ -143,6 +145,7 @@ const ModalNewReservation = ({house, setShowNewReservationModal, showNewReservat
                 <h6>Cantidad a pagar: <strong>{Number(valueCapacity.value) * Number(house.precioNoche) * Math.max(Math.round((new Date(endDate).getTime() - new Date(startDate).getTime())/ (1000*60*60*24)) + 1,1)}€</strong></h6>
                 <br/>
                 <h6 className="textRed">{error}</h6>
+                <PaypalButton precio={Number(valueCapacity.value) * Number(house.precioNoche) * Math.max(Math.round((new Date(endDate).getTime() - new Date(startDate).getTime())/ (1000*60*60*24)) + 1,1)}/>
             </Modal.Body>
             <Modal.Footer>
                 <button variant="primary" className="btn btn-outline-primary" onClick={comprobarReserva}>Confirmar Reserva</button>

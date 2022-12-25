@@ -4,7 +4,9 @@ import { Global } from '../../helper/Global';
 import { useState } from "react";
 import { setUpHouse } from "../../helper/SetUpHouse";
 
+
 const ModalConfirmationReservation = ({house, confirmationReservationModal, setConfirmationReservationModal, startDate, endDate, valueCapacity, setStartDate, setEndDate, setValueCapacity, setHouse}) => {
+
 
     const modalClose = () => setConfirmationReservationModal(false);
     const doReservationModalClose = () => setDoReservationModal(false);
@@ -103,6 +105,7 @@ const ModalConfirmationReservation = ({house, confirmationReservationModal, setC
                     <h6>Cantidad a pagar: <strong>{Number(valueCapacity.value) * Number(house.precioNoche) * Math.max(Math.round((new Date(endDate).getTime() - new Date(startDate).getTime())/ (1000*60*60*24)) + 1,1)}€</strong></h6>
                 </Modal.Body>
                 <Modal.Footer>
+                    
                     <button variant="primary" className="btn btn-outline-primary" onClick={() => hacerReserva()}>Hacer Reserva</button>
                     <button variant="primary" className="btn btn-outline-secondary" onClick={modalClose}>Cerrar</button>
                 </Modal.Footer>
