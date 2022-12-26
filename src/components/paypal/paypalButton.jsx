@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from "react-dom";
+//import { ModalNewReservation } from "../reservation/modalNewReservation";
 
 const PaypalButton = ({precio}) => {
     const PayPalButton = window.paypal.Buttons.driver("react", { React, ReactDOM });
