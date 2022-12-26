@@ -129,6 +129,7 @@ const House = () => {
                                 setEndDate = {setEndDate}
                                 valueCapacity = {valueCapacity}
                                 setValueCapacity = {setValueCapacity}
+                            
                             />
                             <ModalConfirmationReservation
                                 house = {house}

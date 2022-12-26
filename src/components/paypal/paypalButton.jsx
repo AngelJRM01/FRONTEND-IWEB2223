@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from "react-dom";
-//import { ModalNewReservation } from "../reservation/modalNewReservation";
 
-const PaypalButton = ({precio}) => {
+const PaypalButton = ({precio, setPaid}) => {
     const PayPalButton = window.paypal.Buttons.driver("react", { React, ReactDOM });
     const createOrder = (data, actions) => {
       return actions.order.create({
@@ -16,8 +15,12 @@ const PaypalButton = ({precio}) => {
       });
     };
     const onApprove = (data, actions) => {
-      return actions.order.capture();
+      return actions.order.capture(handlePay());
     };
+    function handlePay() {
+      console.log("pagado");
+      setPaid(true);
+    }
     return (
       <div>
         <PayPalButton

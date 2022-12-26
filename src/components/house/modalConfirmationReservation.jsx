@@ -3,10 +3,13 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { Global } from '../../helper/Global';
 import { useState } from "react";
 import { setUpHouse } from "../../helper/SetUpHouse";
+import PaypalButton from "../paypal/paypalButton";
+
 
 
 const ModalConfirmationReservation = ({house, confirmationReservationModal, setConfirmationReservationModal, startDate, endDate, valueCapacity, setStartDate, setEndDate, setValueCapacity, setHouse}) => {
 
+    const [paid, setPaid] = useState()
 
     const modalClose = () => setConfirmationReservationModal(false);
     const doReservationModalClose = () => setDoReservationModal(false);
@@ -19,6 +22,7 @@ const ModalConfirmationReservation = ({house, confirmationReservationModal, setC
 
     function hacerReserva() {
 
+        setPaid(false);
         const reserva = {
             estancia: {
                 fechaInicio: fechaInicio,
@@ -103,10 +107,12 @@ const ModalConfirmationReservation = ({house, confirmationReservationModal, setC
                     <h6>Número de huéspedes: <strong>{Number(valueCapacity.value)}</strong></h6>
                     <br/>
                     <h6>Cantidad a pagar: <strong>{Number(valueCapacity.value) * Number(house.precioNoche) * Math.max(Math.round((new Date(endDate).getTime() - new Date(startDate).getTime())/ (1000*60*60*24)) + 1,1)}€</strong></h6>
+                    <PaypalButton precio={Number(valueCapacity.value) * Number(house.precioNoche) * Math.max(Math.round((new Date(endDate).getTime() - new Date(startDate).getTime())/ (1000*60*60*24)) + 1,1)} 
+                              setPaid={setPaid}/>
                 </Modal.Body>
                 <Modal.Footer>
                     
-                    <button variant="primary" className="btn btn-outline-primary" onClick={() => hacerReserva()}>Hacer Reserva</button>
+                    <button variant="primary" className="btn btn-outline-primary" disabled={!paid} onClick={() => hacerReserva()}>Hacer Reserva</button>
                     <button variant="primary" className="btn btn-outline-secondary" onClick={modalClose}>Cerrar</button>
                 </Modal.Footer>
             </Modal>
