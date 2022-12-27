@@ -5,13 +5,16 @@
     color: white;
     outline: auto;
     outline-color: #1da1f2;
-    border: 1px;
+    border: 1px #1da1f2;
     /* padding: 7px; */
     /* border-radius: 20px; */
+    
 }
 
 #twitter:hover {
     color: #1da1f2;
     background: transparent;
-    border: #1da1f2;
+    /* border: #1da1f2; */
+    /* outline: auto;
+    outline-color: #1da1f2; */
 }
