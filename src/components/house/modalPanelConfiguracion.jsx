@@ -65,7 +65,7 @@ const ModalPanelConfiguracion = ({house, setShowModal, showModal, reservations, 
                             //     modalClose();
                             //     navigate(`/viviendas/propietario/${house.propietario._id}/vivienda/${house._id}/edit`)
                             // }else{
-                            //     setError("No eres el propietario de esta vivienda, por lo que no puedes editarla")
+                            //     setError("No eres el propietario de esta vivienda, por lo que no puedes editarla.")
                             // }
                             modalClose();
                             navigate(`/viviendas/propietario/${house.propietario._id}/vivienda/${house._id}/edit`)
@@ -81,9 +81,9 @@ const ModalPanelConfiguracion = ({house, setShowModal, showModal, reservations, 
                         onClick={() => {
                             // if(house.propietario.nombre === "owner.nombre"){
                             //     modalClose();
-                            //     navigate(`/viviendas/propietario/${house.propietario._id}/vivienda/${house._id}/edit`)
+                            //     handleDelete();
                             // }else{
-                            //     setError("No eres el propietario de esta vivienda, por lo que no puedes editarla")
+                            //     setError("No eres el propietario de esta vivienda, por lo que no puedes borrarla.")
                             // }
                             modalClose();
                             handleDelete();
