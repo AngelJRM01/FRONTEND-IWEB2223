@@ -138,45 +138,27 @@ const CreateHouse = () => {
   }
   const zoom = 13;
 
-  // function getDirCoordenates () {
   const getDirCoordenates = async (e) => {
     // e.preventDefault();
 
     const textDir = encodeURIComponent(direction);
-    const geocodingURL = `https://api.geoapify.com/v1/geocode/search?text=${textDir}&format=json&apiKey=${apiKey}`
+    const geocodingURL = `https://nominatim.openstreetmap.org/search.php?q=${direction}&accept-language=Spanish&format=jsonv2`
 
     const response = await fetch(geocodingURL);
     const data = await response.json();
-    const dataJSON = data.results;
-    
-    console.log(dataJSON);
 
-    // center.lat = 0;
-    // center.lon = 0;
-    if(dataJSON.length >= 1){
-      //   for(let i = 0; i < dataJSON.length; i++){
-      //     center.lat += dataJSON[i].lat;
-      //     center.lon += dataJSON[i].lon;
-      // }
-        
-      // center.lat /= dataJSON.length;
-      // center.lon /= dataJSON.length;
-      center.lat = dataJSON[0].lat;
-      center.lon = dataJSON[0].lon;
-      // direction = dataJSON[0].address_line1 + ". " + dataJSON[0].address_line2;
-      setDirection(dataJSON[0].address_line1 + ". " + dataJSON[0].address_line2);
+    if(data.length >= 1){
+
+      center.lat = data[0].lat;
+      center.lon = data[0].lon;
+
+      setDirection(data[0].display_name);
     }
 
     coordenates.latitud = center.lat;
     coordenates.longitud = center.lon;
     
     console.log(coordenates);
-    // console.log(direction);
-    // console.log(dataJSON[0].address_line1 + ". " + dataJSON[0].address_line2);
-
-    // const map = document.getElementById('map');
-
-    // Map(dataJSON, center);
 
   }
 
