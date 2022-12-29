@@ -10,11 +10,12 @@ import { Header } from '../components/header.jsx';
 import { Footer } from '../components/footer.jsx';
 import { setUpHouses } from '../helper/SetUpHouses.js';
 import { HouseCard } from '../components/houses/houseCard';
-
+import { useAuth0 } from "@auth0/auth0-react";
  
 
 
 const List = () => {
+  const { getAccessTokenSilently } = useAuth0();
 
   const [houses, setHouses] = useState([]);
   const { id } = useParams();
@@ -41,12 +42,18 @@ const List = () => {
   const crearViviendaURL = `http://localhost:3000/viviendas/propietario/${id}/nuevaVivienda`;  
 
   useEffect( () => {
+    async function fetchData() {
+      const accessToken = await getAccessTokenSilently();
+      console.log(accessToken);
+      console.log(accessToken);
 
-    setUpHouses( id, setHouses );
+      setUpHouses( id, setHouses, accessToken );
+    }
+    fetchData();
 
     document.title = 'Mis viviendas';
 
-  }, [id]);
+  }, [id, getAccessTokenSilently]);
 
   function createHouse () {
     window.location.href = crearViviendaURL;
