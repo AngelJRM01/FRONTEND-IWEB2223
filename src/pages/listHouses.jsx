@@ -45,9 +45,6 @@ const List = () => {
   useEffect( () => {
     async function fetchData() {
       const accessToken = await getAccessTokenSilently();
-      console.log(accessToken);
-      console.log(accessToken);
-
       setUpHouses( id, setHouses, accessToken );
     }
     fetchData();
