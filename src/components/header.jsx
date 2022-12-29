@@ -1,14 +1,30 @@
 import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { Filter } from './home/houseFilter';
+import { useAuth0 } from "@auth0/auth0-react";
 
 import logo from '../static/swishHouseLogo.png';
 
 export const Header = ({ setFilter = 0 }) => {
+  const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
 
   const backgroud = {
     background: '#f5f5f5'
   }
+
+  const handleLogin = async () => {
+    await loginWithRedirect({
+      appState: {
+        returnTo: window.location.pathname,
+      },
+    });
+  };
+
+  const handleLogout = () => {
+    logout({
+      returnTo: window.location.origin,
+    });
+  };
 
   return (
 
@@ -42,7 +58,10 @@ export const Header = ({ setFilter = 0 }) => {
       </Dropdown>
 
       <div className="col-4 col-sm-3 pe-4 text-end">
-        <button type="button" className="btn btn-outline-primary">Acceder</button>
+        { !isAuthenticated ?
+          <button type="button" className="btn btn-outline-primary" onClick={handleLogin}><i class="fa-solid fa-right-to-bracket"></i> Acceder</button> :
+          <button type="button" className="btn btn-outline-secondary" onClick={handleLogout}><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
+        }
       </div>
 
       {setFilter ? <Filter setFilter={setFilter} /> : <div className='col-12'></div>}
