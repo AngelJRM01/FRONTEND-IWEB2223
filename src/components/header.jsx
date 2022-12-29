@@ -20,13 +20,21 @@ export const Header = ({ setFilter = 0 }) => {
     });
   };
 
+  function getId( sub) {
+    let id = sub.split('|')[1];
+    while(id.length < 24) {
+      id = '0' + id;
+    }
+    return id;
+  }
+
   const handleLogout = () => {
     logout({
       returnTo: window.location.origin,
     });
   };
-  const urlViviendas = '/viviendas/propietario/' + user.sub.split('|')[1];
-  const urlReservas = '/reservas/usuario/' + user.sub.split('|')[1];
+  const urlViviendas = '/viviendas/propietario/' + ((user === undefined) ? '636a2ebb353e6b6d0e281d9c' : getId(user.sub));
+  const urlReservas = '/reservas/usuario/' + ((user === undefined) ? '636a2ebb353e6b6d0e281d9c' : getId(user.sub));
   return (
 
     <header className="fixed-top col-12 d-flex flex-wrap align-items-center justify-content-between py-3 border-bottom"
@@ -60,8 +68,8 @@ export const Header = ({ setFilter = 0 }) => {
 
       <div className="col-4 col-sm-3 pe-4 text-end">
         { !isAuthenticated ?
-          <button type="button" className="btn btn-outline-primary" onClick={handleLogin}><i class="fa-solid fa-right-to-bracket"></i> Acceder</button> :
-          <button type="button" className="btn btn-outline-secondary" onClick={handleLogout}><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
+          <button type="button" className="btn btn-outline-primary" onClick={handleLogin}><i className="fa-solid fa-right-to-bracket"></i> Acceder</button> :
+          <button type="button" className="btn btn-outline-secondary" onClick={handleLogout}><i className="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
         }
       </div>
 

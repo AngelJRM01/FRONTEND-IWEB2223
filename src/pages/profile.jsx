@@ -13,7 +13,6 @@ const Profile = () => {
             <Header/>
                 <img src={user.picture} alt={user.name}/>
                 <h2>{user.name}</h2>
-                <h3>{user.sub.split('|')[1]}</h3>
                 <p>Email: {user.email}</p>
             <Footer/>
         </div>

@@ -10,5 +10,9 @@ export const setUpHouses = ( propietarioId, setHouses ) => {
       
       setHouses( data );
     })
+    .catch( err =>
+      console.log("No va"),
+      setHouses( [])
+      );
     
 };
