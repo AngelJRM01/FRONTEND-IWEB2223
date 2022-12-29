@@ -2,6 +2,7 @@ import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { Filter } from './home/houseFilter';
 import { useAuth0 } from "@auth0/auth0-react";
+import { getId } from '../helper/userId.js';
 
 import logo from '../static/swishHouseLogo.png';
 
@@ -19,14 +20,6 @@ export const Header = ({ setFilter = 0 }) => {
       },
     });
   };
-
-  function getId( sub) {
-    let id = sub.split('|')[1];
-    while(id.length < 24) {
-      id = '0' + id;
-    }
-    return id;
-  }
 
   const handleLogout = () => {
     logout({

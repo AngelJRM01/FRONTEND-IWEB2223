@@ -10,7 +10,7 @@ export const Auth0ProviderWithHistory = ({ children }) => {
   const redirectUri = process.env.REACT_APP_AUTH0_CALLBACK_URL;
 
   const onRedirectCallback = (appState) => {
-    navigate(appState?.returnTo || '/');
+    navigate( '/');
   };
 
   if (!(domain && clientId)) {
