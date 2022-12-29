@@ -4,12 +4,17 @@ import { Global } from '../../helper/Global';
 import { useState } from "react";
 import { setUpHouse } from "../../helper/SetUpHouse";
 import PaypalButton from "../paypal/paypalButton";
+import emailjs, { init } from '@emailjs/browser';
+import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
 
 
+init( 'WznRYXdNmfA-nSsG0' );
 
 const ModalConfirmationReservation = ({house, confirmationReservationModal, setConfirmationReservationModal, startDate, endDate, valueCapacity, setStartDate, setEndDate, setValueCapacity, setHouse}) => {
 
     const [paid, setPaid] = useState()
+    const { user } = useAuth0();
+
 
     const modalClose = () => setConfirmationReservationModal(false);
     const doReservationModalClose = () => setDoReservationModal(false);
@@ -82,6 +87,17 @@ const ModalConfirmationReservation = ({house, confirmationReservationModal, setC
         setEndDate(null)
         setValueCapacity({value: 1, label: 1})
         setUpHouse(house._id, setHouse);
+        
+        emailjs.send( 'service_b05hnvr', 'template_7qaav4t', { email: user.email, to_name: user.name }, 'WznRYXdNmfA-nSsG0' )
+          .then( ( result ) => {
+
+            console.log( result.text );
+
+          }, ( error ) => {
+
+            console.log( error.text );
+
+          });
 
     }
 
