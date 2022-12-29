@@ -6,7 +6,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import logo from '../static/swishHouseLogo.png';
 
 export const Header = ({ setFilter = 0 }) => {
-  const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
+  const { user, loginWithRedirect, logout, isAuthenticated } = useAuth0();
 
   const backgroud = {
     background: '#f5f5f5'
@@ -25,7 +25,8 @@ export const Header = ({ setFilter = 0 }) => {
       returnTo: window.location.origin,
     });
   };
-
+  const urlViviendas = '/viviendas/propietario/' + user.sub.split('|')[1];
+  const urlReservas = '/reservas/usuario/' + user.sub.split('|')[1];
   return (
 
     <header className="fixed-top col-12 d-flex flex-wrap align-items-center justify-content-between py-3 border-bottom"
@@ -41,8 +42,8 @@ export const Header = ({ setFilter = 0 }) => {
 
       <ul className="nav d-none d-sm-flex col-6 mb-0 justify-content-center">
         <li><a href="/home" className="nav-link px-2 link-secondary">Inicio</a></li>
-        <li><a href="/viviendas/propietario/636a2eba353e6b6d0e281d7a" className="nav-link px-2 link-dark">Mis Viviendas</a></li>
-        <li><a href="/reservas/usuario/636a2ebb353e6b6d0e281d9c" className="nav-link px-2 link-dark">Mis Reservas</a></li>
+        <li><a href={urlViviendas} className="nav-link px-2 link-dark">Mis Viviendas</a></li>
+        <li><a href={urlReservas} className="nav-link px-2 link-dark">Mis Reservas</a></li>
       </ul>
 
       <Dropdown className='d-sm-none col-4 d-flex justify-content-center'>
@@ -52,8 +53,8 @@ export const Header = ({ setFilter = 0 }) => {
 
         <Dropdown.Menu>
           <Dropdown.Item href="/home">Inicio</Dropdown.Item>
-          <Dropdown.Item href="/viviendas/propietario/636a2eba353e6b6d0e281d7a">Mis Viviendas</Dropdown.Item>
-          <Dropdown.Item href="/reservas/usuario/636a2ebb353e6b6d0e281d9c">Mis Reservas</Dropdown.Item>
+          <Dropdown.Item href={urlViviendas}>Mis Viviendas</Dropdown.Item>
+          <Dropdown.Item href={urlReservas}>Mis Reservas</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
 
