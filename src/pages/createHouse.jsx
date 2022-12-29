@@ -34,7 +34,7 @@ const CreateHouse = () => {
     latitud: 40.41831,
     longitud: -3.70275,
   });
-  const [owner, setOwner] = useState({_id: id, nombre:user.name, foto:"https://www.w3schools.com/howto/img_avatar.png"});
+  const [owner, setOwner] = useState({_id: id, nombre: user.name, foto:"https://www.w3schools.com/howto/img_avatar.png"});
   const [src, setSrc] = useState([]);
   let aux = [];
   const [done, setDone] = useState(false);
@@ -73,7 +73,8 @@ const CreateHouse = () => {
                 setCargando(false);
             }
             console.log(aux);
-        });
+        })
+        .catch(err => console.log(err));
     }
     setSrc(aux);
     console.log(src);
@@ -237,7 +238,7 @@ const CreateHouse = () => {
                         type="text" className="form-control" id="descriptionInput" rows="4"></textarea>
                     </p>
                     <p className="form-group">
-                        <label htmlfor="state">Estado</label>
+                        <label htmlFor="state">Estado</label>
                         <select className="form-control" name="stateInput" id="stateInput" defaultValue={state}
                         value={state}
                         onChange={ (e)=> setState(e.target.value)}>
