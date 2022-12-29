@@ -11,7 +11,6 @@ import { Header } from '../components/header.jsx';
 import { Footer } from '../components/footer.jsx';
 import { setUpHouses } from '../helper/SetUpHouses.js';
 import { HouseCard } from '../components/houses/houseCard';
-import { useAuth0 } from "@auth0/auth0-react";
  
 
 
