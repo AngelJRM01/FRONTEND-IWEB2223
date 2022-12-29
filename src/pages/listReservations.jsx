@@ -29,7 +29,27 @@ const List = () => {
   return (
     
     reservations.length === 0
-      ? <div> { }</div>
+      ? <div>
+      <Header
+      />
+      <main className="row justify-content-center main"
+        id="main-content">
+        <h1 className='col-sm-6'>Mis reservas</h1>
+        <div className="col-sm-8 list-group"
+          data-bs-spy="scroll">
+          {
+            <div className="container">
+              <div className="row gy-1 my-3">
+                <div className="col-sm-12"> 
+                  <h2 className="card-title">No tienes reservas</h2>   
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+        </main>
+        <Footer/>                        
+      </div>
       : <div>
         <Header
         />
