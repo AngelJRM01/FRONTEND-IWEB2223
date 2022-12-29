@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import '../styles/main.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { withAuthenticationRequired } from '@auth0/auth0-react';
 
 import { Header } from '../components/header.jsx';
 import { Footer } from '../components/footer.jsx';
@@ -15,7 +16,6 @@ const List = () => {
 
   const [reservations, setReservations] = useState([]);
   const { userId } = useParams();
-
 
   useEffect( () => {
 
@@ -61,4 +61,7 @@ const List = () => {
 
 };
 
-export default List;
+export default withAuthenticationRequired(List, { 
+  onRedirecting: () => "Loading..." ,
+  returnTo: () => window.location.pathname
+});

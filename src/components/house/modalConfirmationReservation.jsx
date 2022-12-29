@@ -5,7 +5,7 @@ import { useState } from "react";
 import { setUpHouse } from "../../helper/SetUpHouse";
 import PaypalButton from "../paypal/paypalButton";
 import emailjs, { init } from '@emailjs/browser';
-import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
+import { useAuth0 } from '@auth0/auth0-react';
 
 
 init( 'WznRYXdNmfA-nSsG0' );

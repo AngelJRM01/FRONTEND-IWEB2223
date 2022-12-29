@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
 import L from 'leaflet';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import '../styles/main.css';
@@ -18,12 +19,13 @@ const List = () => {
 
   const [houses, setHouses] = useState([]);
   const { id } = useParams();
+  const { user } = useAuth0();
 
   const iconMarker = L.icon({
     iconUrl: require('../static/marker.png'),
     iconSize: [48,48],
     iconAnchor: [32, 64],
-});
+  });
 
   const houseMarkers = houses.map((house) => (
     <Marker position={[house.coordenadas.latitud, house.coordenadas.longitud]} key={house._id} icon={iconMarker}>
@@ -37,10 +39,11 @@ const List = () => {
             </Popup>
         </Marker>
   ));
- 
+
   const crearViviendaURL = `http://localhost:3000/viviendas/propietario/${id}/nuevaVivienda`;  
 
   useEffect( () => {
+
 
     setUpHouses( id, setHouses );
 
@@ -54,16 +57,39 @@ const List = () => {
 
   return (
     houses.length === 0
-      ? <div>{ }</div>
+      ? <div>
+        <Header
+        />
+        <main className="row justify-content-center main"
+          id="main-content">
+          <h1 className='col-sm-6'>Mis viviendas</h1>
+          <div className='col-sm-2'>
+              <button type="button" onClick={createHouse} className="btn btn-primary">Crear vivienda</button>
+            </div>
+          <div className="col-sm-8 list-group"
+            data-bs-spy="scroll">
+            {
+              <div className="container">
+                <div className="row gy-1 my-3">
+                  <div className="col-sm-12"> 
+                    <h2 className="card-title">No tienes viviendas</h2>   
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+          </main>
+          <Footer/>                        
+        </div>
       : <div>
         <Header
         />
         <main className="row justify-content-center main"
           id="main-content">
           <h1 className='col-sm-6'>Mis viviendas</h1>
-          <a className='col-sm-2'>
+          <div className='col-sm-2'>
               <button type="button" onClick={createHouse} className="btn btn-primary">Crear vivienda</button>
-            </a>
+            </div>
           <div className="col-sm-8 list-group"
             data-bs-spy="scroll">
             {
@@ -94,4 +120,8 @@ const List = () => {
 
 };
 
-export default List;
+export default withAuthenticationRequired(List, { 
+  onRedirecting: () => "Loading..." ,
+  returnTo: () => window.location.pathname
+});
+
