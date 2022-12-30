@@ -15,6 +15,7 @@ import { Global } from '../helper/Global';
 // import '../styles/style.css';
 
 const CreateHouse = () => {
+  const { getAccessTokenSilently } = useAuth0();
 
   const { id } = useParams();
   const { user } = useAuth0();
@@ -114,11 +115,12 @@ const CreateHouse = () => {
       vivienda.imagenes = imagenes;
     }
 
-    
-    const response = await fetch( URI, {
+    const accessToken = await getAccessTokenSilently();
+    await fetch( URI, {
       method: "POST",
       headers: {
         "Content-Type": "Application/json",
+        'Authorization': `Bearer ${accessToken}`
       },
       body: JSON.stringify(vivienda),
     }).then( res => res.json())
