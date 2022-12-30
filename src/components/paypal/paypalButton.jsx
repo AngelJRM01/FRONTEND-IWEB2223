@@ -18,7 +18,6 @@ const PaypalButton = ({precio, setPaid}) => {
       return actions.order.capture(handlePay());
     };
     function handlePay() {
-      console.log("pagado");
       setPaid(true);
     }
     return (

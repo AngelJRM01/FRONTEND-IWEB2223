@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet'
+import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
 import '../styles/main.css';
 import L from 'leaflet';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -16,7 +17,7 @@ import { Global } from '../helper/Global';
 const CreateHouse = () => {
 
   const { id } = useParams();
-
+  const { user } = useAuth0();
   //const now = Date.now();
   //const today = new Date (now);
   //const fechaInicio = today.toISOString();
@@ -33,7 +34,7 @@ const CreateHouse = () => {
     latitud: 40.41831,
     longitud: -3.70275,
   });
-  const [owner, setOwner] = useState({_id: id, nombre:"Pepe", foto:"https://www.w3schools.com/howto/img_avatar.png"});
+  const [owner, setOwner] = useState({_id: id, nombre: user.name, foto:"https://www.w3schools.com/howto/img_avatar.png"});
   const [src, setSrc] = useState([]);
   let aux = [];
   const [done, setDone] = useState(false);
@@ -47,8 +48,6 @@ const CreateHouse = () => {
   //636a2eba353e6b6d0e281d7a = idPropietario
   // const misViviendas = `http://localhost:3000/viviendas/propietario/${id}`;
   let misViviendas = "";
-  const apiKey = "0ab94b07fa6043a491f0050f801c58c2";
-
 
   function addFiles(files) {
     aux = [];
@@ -74,7 +73,8 @@ const CreateHouse = () => {
                 setCargando(false);
             }
             console.log(aux);
-        });
+        })
+        .catch(err => console.log(err));
     }
     setSrc(aux);
     console.log(src);
@@ -238,7 +238,7 @@ const CreateHouse = () => {
                         type="text" className="form-control" id="descriptionInput" rows="4"></textarea>
                     </p>
                     <p className="form-group">
-                        <label for="state">Estado</label>
+                        <label htmlFor="state">Estado</label>
                         <select className="form-control" name="stateInput" id="stateInput" defaultValue={state}
                         value={state}
                         onChange={ (e)=> setState(e.target.value)}>
