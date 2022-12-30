@@ -34,7 +34,7 @@ const EditHouse = () => {
   const [endDate, setEndDate] = useState(null);
   const [src, setSrc] = useState([]);
   let aux = [];
-  const [done, setDone] = useState(false);
+  const [done, setDone] = useState(true);
   const [cargando, setCargando] = useState(false);
 
   const baseUrl = Global.baseUrl;
@@ -411,7 +411,7 @@ const EditHouse = () => {
                         </Carousel>
                     </div>
                       {cargando ? <p>Cargando...</p> : <p></p>}
-                      <button type="submit" disabled={!done} className="btn btn-primary">Actualizar</button>
+                      <button type="submit" disabled={!done } className="btn btn-primary">Actualizar</button>
                 </form>
             </div>      
         </main>
