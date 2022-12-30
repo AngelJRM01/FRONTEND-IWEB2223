@@ -20,6 +20,7 @@ import { setUpTourist } from "../helper/setUpTourist";
 import ModalConfirmationReservation from "../components/house/modalConfirmationReservation";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Global } from '../helper/Global';
+import Comments from '../components/house/comments'
 
 const House = () => {
 
@@ -39,16 +40,19 @@ const House = () => {
     const [valueCapacity, setValueCapacity] = useState({value: 1, label: 1});
     const baseUrl = Global.baseUrl
     const URIVivienda = `${baseUrl}viviendas/`+id
+    let numCommentsToView = 5
+    const [addCommentsToView, setAddCommentsToView] = useState(false)
+    const [ comentarios, setComentarios ] = useState([])
 
     useEffect( () => {
 
-        setUpHouse(id, setHouse);
+        setUpHouse(id, setHouse, setComentarios);
 
     }, [id])
 
     useEffect( () => {
         
-        if(house !== undefined){
+        if(house !== undefined && comentarios !== undefined){
             document.title = house.titulo
             async function fetchData() {
                 const accessToken = await getAccessTokenSilently();
@@ -57,9 +61,13 @@ const House = () => {
             fetchData();
             setUpGasStation(house.coordenadas.latitud, house.coordenadas.longitud, 20, setGasStation)
             setUpTourist(house.coordenadas.latitud, house.coordenadas.longitud, setTourist)
+            setAddCommentsToView(comentarios < numCommentsToView)
+            house.comentarios = []
+            for(let i = numCommentsToView - 5; i < numCommentsToView; i++){
+                house.comentarios.push(comentarios[i])
+            }
         }
-
-    }, [house, getAccessTokenSilently])
+    }, [house, getAccessTokenSilently, comentarios])
 
     const iconMarker = L.icon({
         iconUrl: require('../static/marker.png'),
@@ -111,6 +119,7 @@ const House = () => {
             respuestas: []
         };
 
+        house.comentarios = comentarios
         house.comentarios.push(comentario)
 
         fetch(URIVivienda, {
@@ -124,6 +133,14 @@ const House = () => {
                     console.log(data)
                 })
             .catch(err => console.log(err));
+    }
+
+    function add5CommentsToView(){
+        numCommentsToView = numCommentsToView + 5
+        setAddCommentsToView(house.comentarios.length < numCommentsToView)
+        for(let i = numCommentsToView - 5; i < numCommentsToView && i < comentarios.length; i++){
+            house.comentarios.push(comentarios[i])
+        }
     }
 
     const textURL = "Mirad esta vivienda tan guay que podéis reservar en";
@@ -282,8 +299,11 @@ const House = () => {
                                 </div>
                                 :
                                 <div>
-                                    <h5>Comentarios ({house.comentarios.length})</h5>
-                                    
+                                    <h5>Comentarios ({comentarios.length})</h5>
+                                    {house.comentarios.map( (comentario, index) => {
+                                        return <div key={index}><Comments comentario={comentario}/></div>
+                                    })}
+                                    <button hidden={addCommentsToView} className="btn mt-3" onClick={add5CommentsToView}>Ver más comentarios</button>
                                 </div>
                             }
                             
