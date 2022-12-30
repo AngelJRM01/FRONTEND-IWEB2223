@@ -6,6 +6,7 @@ import DatePicker from "react-datepicker";
 import '../styles/main.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "leaflet/dist/leaflet.css";
+import { useAuth0 } from '@auth0/auth0-react';
 
 import { Header } from '../components/header.jsx';
 import { Footer } from '../components/footer.jsx';
@@ -13,6 +14,7 @@ import { Global } from '../helper/Global';
 import { setUpHouse } from '../helper/SetUpHouse.js';
 
 const EditHouse = () => {
+  const { getAccessTokenSilently } = useAuth0();
 
   const { id, idVivienda } = useParams();
   const [ house, setHouse ] = useState();
@@ -161,11 +163,12 @@ const EditHouse = () => {
         console.log("a insertar: " + vivienda.imagenes)
       }
   
-      
-      const response = await fetch( URI, {
+      const accessToken = await getAccessTokenSilently();
+      await fetch( URI, {
         method: "PUT",
         headers: {
           "Content-Type": "Application/json",
+          'Authorization': `Bearer ${accessToken}`
         },
         body: JSON.stringify(vivienda),
       }).then( res => res.json())
