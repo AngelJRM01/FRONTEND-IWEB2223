@@ -19,7 +19,7 @@ import { setUpGasStation } from "../helper/SetUpGasStation";
 import { setUpTourist } from "../helper/setUpTourist";
 import ModalConfirmationReservation from "../components/house/modalConfirmationReservation";
 import { useAuth0 } from "@auth0/auth0-react";
-import { Global } from '../../helper/Global';
+import { Global } from '../helper/Global';
 
 const House = () => {
 
