@@ -8,6 +8,7 @@ import { getId } from '../../helper/userId.js';
 
 const ModalPanelConfiguracion = ({house, setShowModal, showModal, reservations, modalShowNewReservation}) => {
 
+    const { getAccessTokenSilently } = useAuth0();
     const navigate = useNavigate();
     const [error, setError] = useState("")
     const { user, isAuthenticated, isLoading } = useAuth0();
@@ -17,7 +18,7 @@ const ModalPanelConfiguracion = ({house, setShowModal, showModal, reservations, 
     const baseUrl = Global.baseUrl;
     const URI = `${baseUrl}viviendas/${house._id}`;
 
-    function handleDelete() {
+    async function handleDelete() {
         const id = house.propietario._id;
         
         // fetch( URI, {
@@ -31,7 +32,8 @@ const ModalPanelConfiguracion = ({house, setShowModal, showModal, reservations, 
         //     console.log(data);
         //   }).catch(err => console.log(err));
     
-        fetch(URI, {method: 'DELETE'});
+        const accessToken = await getAccessTokenSilently();
+        fetch(URI, {method: 'DELETE', headers: { 'Authorization': `Bearer ${accessToken}` }});
 
         // navigate(`/viviendas/propietario/${owner._id}`);
         navigate(`/viviendas/propietario/${id}`);
