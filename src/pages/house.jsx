@@ -23,6 +23,7 @@ import { Global } from '../helper/Global';
 
 const House = () => {
 
+    const { getAccessTokenSilently } = useAuth0();
     const { id } = useParams();
     const [ house, setHouse ] = useState();
     const [ showModal, setShowModal ] = useState(false);
@@ -49,13 +50,17 @@ const House = () => {
         
         if(house !== undefined){
             document.title = house.titulo
-            setUpReservationsOfAHouse( house._id, setReservations );
+            async function fetchData() {
+                const accessToken = await getAccessTokenSilently();
+                setUpReservationsOfAHouse( house._id, setReservations, accessToken );
+            }
+            fetchData();
             setUpGasStation(house.coordenadas.latitud, house.coordenadas.longitud, 20, setGasStation)
             setUpTourist(house.coordenadas.latitud, house.coordenadas.longitud, setTourist)
             URIVivienda = `${baseUrl}viviendas/`+house._id
         }
 
-    }, [house])
+    }, [house, getAccessTokenSilently])
 
     const iconMarker = L.icon({
         iconUrl: require('../static/marker.png'),
