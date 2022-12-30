@@ -34,8 +34,6 @@ export const setUpHome = async (filter, setHouses) => {
 
     const response = await fetch(request);
 
-    console.log(request);
-
     const data = await response.json();
 
     let houses = data.map((house) => {

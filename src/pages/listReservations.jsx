@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import '../styles/main.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { withAuthenticationRequired } from '@auth0/auth0-react';
+import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
 
 import { Header } from '../components/header.jsx';
 import { Footer } from '../components/footer.jsx';
@@ -13,17 +13,21 @@ import { ReservationCard } from '../components/reservations/reservationCard.jsx'
 
 
 const List = () => {
+  const { getAccessTokenSilently } = useAuth0();
 
   const [reservations, setReservations] = useState([]);
   const { userId } = useParams();
 
   useEffect( () => {
-
-    setUpReservations( userId, setReservations );
+    async function fetchData() {
+      const accessToken = await getAccessTokenSilently();
+      setUpReservations( userId, setReservations, accessToken );
+    }
+    fetchData();
 
     document.title = 'Mis reservas';
     
-  }, [userId]);
+  }, [userId, getAccessTokenSilently]);
 
 
   return (

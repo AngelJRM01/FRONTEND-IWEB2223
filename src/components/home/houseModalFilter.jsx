@@ -258,7 +258,7 @@ export const ModalFilter = ({ setFilter }) => {
         <div className='d-flex mt-2 justify-content-center col-12'>
 
             <Button variant="primary" onClick={() => setModalShow(true)}>
-                <i class="fa-solid fa-magnifying-glass me-2"></i>
+                <i className="fa-solid fa-magnifying-glass me-2"></i>
                 Aplicar filtro
             </Button>
 

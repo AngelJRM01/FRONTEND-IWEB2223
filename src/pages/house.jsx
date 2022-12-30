@@ -19,9 +19,14 @@ import { setUpGasStation } from "../helper/SetUpGasStation";
 import { setUpTourist } from "../helper/setUpTourist";
 import ModalConfirmationReservation from "../components/house/modalConfirmationReservation";
 import { HouseRating } from "../components/house/houseRating";
+import { useAuth0 } from "@auth0/auth0-react";
+import { Global } from '../helper/Global';
+import Comments from '../components/house/comments'
+
 
 const House = () => {
 
+    const { getAccessTokenSilently } = useAuth0();
     const { id } = useParams();
     const [ house, setHouse ] = useState();
     const [ showModal, setShowModal ] = useState(false);
@@ -32,25 +37,39 @@ const House = () => {
     const [ tourist, setTourist ] = useState([]);
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
-
+    const [ comment, setComment ] = useState('');
+    const { user, isAuthenticated } = useAuth0();
     const [valueCapacity, setValueCapacity] = useState({value: 1, label: 1});
+    const baseUrl = Global.baseUrl
+    const URIVivienda = `${baseUrl}viviendas/`+id
+    let numCommentsToView = 5
+    const [addCommentsToView, setAddCommentsToView] = useState(false)
+    const [ comentarios, setComentarios ] = useState([])
 
     useEffect( () => {
 
-        setUpHouse(id, setHouse);
+        setUpHouse(id, setHouse, setComentarios);
 
     }, [id])
 
     useEffect( () => {
         
-        if(house !== undefined){
+        if(house !== undefined && comentarios !== undefined){
             document.title = house.titulo
-            setUpReservationsOfAHouse( house._id, setReservations );
+            async function fetchData() {
+                const accessToken = await getAccessTokenSilently();
+                setUpReservationsOfAHouse( house._id, setReservations, accessToken );
+            }
+            fetchData();
             setUpGasStation(house.coordenadas.latitud, house.coordenadas.longitud, 20, setGasStation)
             setUpTourist(house.coordenadas.latitud, house.coordenadas.longitud, setTourist)
+            setAddCommentsToView(comentarios < numCommentsToView)
+            house.comentarios = []
+            for(let i = numCommentsToView - 5; i < numCommentsToView; i++){
+                house.comentarios.push(comentarios[i])
+            }
         }
-
-    }, [house])
+    }, [house, getAccessTokenSilently, comentarios])
 
     const iconMarker = L.icon({
         iconUrl: require('../static/marker.png'),
@@ -92,6 +111,40 @@ const House = () => {
         }
     }
 
+    const handleSubmit = () => {
+        let comentario = {
+            vivienda: house._id,
+            usuario: user.name,
+            likes: [],
+            dislikes: [],
+            mensaje: comment,
+            respuestas: []
+        };
+
+        house.comentarios = comentarios
+        house.comentarios.push(comentario)
+
+        fetch(URIVivienda, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "Application/json",
+            },
+            body: JSON.stringify(house)})
+            .then( res => res.json())
+            .then( data => {
+                    console.log(data)
+                })
+            .catch(err => console.log(err));
+    }
+
+    function add5CommentsToView(){
+        numCommentsToView = numCommentsToView + 5
+        setAddCommentsToView(house.comentarios.length < numCommentsToView)
+        for(let i = numCommentsToView - 5; i < numCommentsToView && i < comentarios.length; i++){
+            house.comentarios.push(comentarios[i])
+        }
+    }
+
     const textURL = "Mirad esta vivienda tan guay que podéis reservar en";
     const URL = `http://localhost:3000/vivienda/${id}`;
     const via = "SwishHouse";
@@ -119,11 +172,11 @@ const House = () => {
                             </h6>
                             <button variant="primary" className="btn btn-outline-primary" onClick={modalShow}>Panel de Configuración</button>
                             <a className="btn btn-primary" id="twitter" target="_blank"  //si no pongo el elemento de esa clase no está centrado con el botón de arriba
-                            href={twitterURL}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-twitter" viewBox="0 1 16 16">
+                            href={twitterURL} rel="noreferrer">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-twitter" viewBox="0 1 16 16">
                                 <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
                                 </svg>
-                                <i class="bi bi-twitter"> Compartir por Twitter</i>
+                                <i className="bi bi-twitter"> Compartir por Twitter</i>
                             </a>
                             {/* <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> */}
                             <ModalPanelConfiguracion
@@ -240,6 +293,39 @@ const House = () => {
                                 <p>El mes de <strong className="breakSpaces">{conversionMes(tourist["2"].month)}</strong> ha sido en el que menos turistas han venido a esta comunidad autónoma con un total de <strong className="breakSpaces">{tourist["2"].value}</strong> turistas.</p>
                                 <p>El mes de <strong className="breakSpaces">{conversionMes(tourist["3"].month)}</strong> ha sido el segundo mes en el que menos turistas han venido a esta comunidad autónoma con un total de <strong className="breakSpaces">{tourist["3"].value}</strong> turistas.</p>
                             </div>}
+                        <br/>
+                        <br/>
+                        <div>
+                            {house.comentarios.length === 0 ?
+                                <div>
+                                    <h5>No hay comentarios</h5>
+                                </div>
+                                :
+                                <div>
+                                    <h5>Comentarios ({comentarios.length})</h5>
+                                    {house.comentarios.map( (comentario, index) => {
+                                        return <div key={index}><Comments comentario={comentario}/></div>
+                                    })}
+                                    <button hidden={addCommentsToView} className="btn mt-3" onClick={add5CommentsToView}>Ver más comentarios</button>
+                                </div>
+                            }
+                            
+                            {isAuthenticated ?
+                                <div>
+                                    <form className="mt-4" onSubmit={handleSubmit}>
+                                        <label>Añade un comentario</label>
+                                        <input  type="text" 
+                                                className="form-control mt-1"
+                                                value={comment}
+                                                onChange={e => setComment(e.target.value)}></input>
+                                        <button className="btn btn-primary mt-3" type="submit">Comentar</button>
+                                    </form>
+                                </div>
+                                :
+                                <div></div>
+                            }
+                            
+                        </div>
                     </div>
                 </main>
                 <Footer/>

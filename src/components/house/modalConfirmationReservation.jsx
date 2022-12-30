@@ -6,6 +6,7 @@ import { setUpHouse } from "../../helper/SetUpHouse";
 import PaypalButton from "../paypal/paypalButton";
 import emailjs, { init } from '@emailjs/browser';
 import { useAuth0 } from '@auth0/auth0-react';
+import { getId } from '../../helper/userId.js';
 
 
 init( 'WznRYXdNmfA-nSsG0' );
@@ -33,7 +34,7 @@ const ModalConfirmationReservation = ({house, confirmationReservationModal, setC
                 fechaInicio: fechaInicio,
                 fechaFinal: fechaFin
             },
-            huesped: '636a2ebb353e6b6d0e281d9c',
+            huesped: getId(user.sub),
             ocupantes: Number(valueCapacity.value),
             vivienda: {
                 titulo: house.titulo,
