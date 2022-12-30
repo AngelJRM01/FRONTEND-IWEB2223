@@ -18,9 +18,11 @@ import { setUpReservationsOfAHouse } from '../helper/setUpReservationOfAHouse.js
 import { setUpGasStation } from "../helper/SetUpGasStation";
 import { setUpTourist } from "../helper/setUpTourist";
 import ModalConfirmationReservation from "../components/house/modalConfirmationReservation";
+import { HouseRating } from "../components/house/houseRating";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Global } from '../helper/Global';
 import Comments from '../components/house/comments'
+
 
 const House = () => {
 
@@ -252,6 +254,7 @@ const House = () => {
                                 {house.descripcion}
                             </h6>                        
                         </div>
+                        <HouseRating house={id}></HouseRating>
                         <br/>
                         <br/>
                         <h4>Mapa de las 20 gasolineras más cercanas</h4>
