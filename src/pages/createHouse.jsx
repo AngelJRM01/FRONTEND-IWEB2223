@@ -57,7 +57,6 @@ const CreateHouse = () => {
     let cnt=0;
     
     for(let i = 0; i < files.length; i++) {
-        console.log(files[i])
         const formData = new FormData();
         formData.append('image', files[i]);
         fetch(`${baseUrl}images/uploadImage`, {
