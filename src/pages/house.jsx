@@ -18,6 +18,8 @@ import { setUpReservationsOfAHouse } from '../helper/setUpReservationOfAHouse.js
 import { setUpGasStation } from "../helper/SetUpGasStation";
 import { setUpTourist } from "../helper/setUpTourist";
 import ModalConfirmationReservation from "../components/house/modalConfirmationReservation";
+import { useAuth0 } from "@auth0/auth0-react";
+import { Global } from '../../helper/Global';
 
 const House = () => {
 
@@ -31,8 +33,11 @@ const House = () => {
     const [ tourist, setTourist ] = useState([]);
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
-
+    const [ comment, setComment ] = useState('');
+    const { user, isAuthenticated } = useAuth0();
     const [valueCapacity, setValueCapacity] = useState({value: 1, label: 1});
+    const baseUrl = Global.baseUrl
+    let URIVivienda = ''
 
     useEffect( () => {
 
@@ -47,6 +52,7 @@ const House = () => {
             setUpReservationsOfAHouse( house._id, setReservations );
             setUpGasStation(house.coordenadas.latitud, house.coordenadas.longitud, 20, setGasStation)
             setUpTourist(house.coordenadas.latitud, house.coordenadas.longitud, setTourist)
+            URIVivienda = `${baseUrl}viviendas/`+house._id
         }
 
     }, [house])
@@ -89,6 +95,31 @@ const House = () => {
             case 'M12' : return "diciembre"
             default : return "mes no válido"
         }
+    }
+
+    const handleSubmit = () => {
+        let comentario = {
+            vivienda: house._id,
+            usuario: user.email,
+            likes: [],
+            dislikes: [],
+            mensaje: comment,
+            respuestas: []
+        };
+
+        house.comentarios.push(comentario)
+
+        fetch(URIVivienda, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "Application/json",
+            },
+            body: JSON.stringify(house)})
+            .then( res => res.json())
+            .then( data => {
+                    console.log(data)
+                })
+            .catch(err => console.log(err));
     }
 
     const textURL = "Mirad esta vivienda tan guay que podéis reservar en";
@@ -238,6 +269,34 @@ const House = () => {
                                 <p>El mes de <strong className="breakSpaces">{conversionMes(tourist["2"].month)}</strong> ha sido en el que menos turistas han venido a esta comunidad autónoma con un total de <strong className="breakSpaces">{tourist["2"].value}</strong> turistas.</p>
                                 <p>El mes de <strong className="breakSpaces">{conversionMes(tourist["3"].month)}</strong> ha sido el segundo mes en el que menos turistas han venido a esta comunidad autónoma con un total de <strong className="breakSpaces">{tourist["3"].value}</strong> turistas.</p>
                             </div>}
+                        <br/>
+                        <br/>
+                        <div>
+                            {house.comentarios.length === 0 ?
+                                <div>
+                                    <h5>No hay comentarios</h5>
+                                </div>
+                                :
+                                <div>
+                                    <h5>Comentarios ({house.comentarios.length})</h5>
+                                    
+                                </div>
+                            }
+                            
+                            {isAuthenticated ?
+                                <form className="mt-4" onSubmit={handleSubmit}>
+                                    <label>Añade un comentario</label>
+                                    <input  type="text" 
+                                            className="form-control mt-1"
+                                            value={comment}
+                                            onChange={e => setComment(e.target.value)}></input>
+                                    <button className="btn btn-primary mt-3" type="submit">Comentar</button>
+                                </form>
+                                :
+                                <div></div>
+                            }
+                            
+                        </div>
                     </div>
                 </main>
                 <Footer/>
