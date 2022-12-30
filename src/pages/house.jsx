@@ -37,7 +37,7 @@ const House = () => {
     const { user, isAuthenticated } = useAuth0();
     const [valueCapacity, setValueCapacity] = useState({value: 1, label: 1});
     const baseUrl = Global.baseUrl
-    let URIVivienda = ''
+    const URIVivienda = `${baseUrl}viviendas/`+id
 
     useEffect( () => {
 
@@ -52,7 +52,6 @@ const House = () => {
             setUpReservationsOfAHouse( house._id, setReservations );
             setUpGasStation(house.coordenadas.latitud, house.coordenadas.longitud, 20, setGasStation)
             setUpTourist(house.coordenadas.latitud, house.coordenadas.longitud, setTourist)
-            URIVivienda = `${baseUrl}viviendas/`+house._id
         }
 
     }, [house])
@@ -100,7 +99,7 @@ const House = () => {
     const handleSubmit = () => {
         let comentario = {
             vivienda: house._id,
-            usuario: user.email,
+            usuario: user.name,
             likes: [],
             dislikes: [],
             mensaje: comment,
@@ -284,14 +283,16 @@ const House = () => {
                             }
                             
                             {isAuthenticated ?
-                                <form className="mt-4" onSubmit={handleSubmit}>
-                                    <label>Añade un comentario</label>
-                                    <input  type="text" 
-                                            className="form-control mt-1"
-                                            value={comment}
-                                            onChange={e => setComment(e.target.value)}></input>
-                                    <button className="btn btn-primary mt-3" type="submit">Comentar</button>
-                                </form>
+                                <div>
+                                    <form className="mt-4" onSubmit={handleSubmit}>
+                                        <label>Añade un comentario</label>
+                                        <input  type="text" 
+                                                className="form-control mt-1"
+                                                value={comment}
+                                                onChange={e => setComment(e.target.value)}></input>
+                                        <button className="btn btn-primary mt-3" type="submit">Comentar</button>
+                                    </form>
+                                </div>
                                 :
                                 <div></div>
                             }
