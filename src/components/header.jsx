@@ -1,9 +1,8 @@
 import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { Filter } from './home/houseFilter';
 import { useAuth0 } from "@auth0/auth0-react";
-
 import logo from '../static/swishHouseLogo.png';
+import { ModalFilter } from './home/houseModalFilter';
 
 export const Header = ({ setFilter = 0 }) => {
   const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
@@ -40,7 +39,7 @@ export const Header = ({ setFilter = 0 }) => {
       </a>
 
       <ul className="nav d-none d-sm-flex col-6 mb-0 justify-content-center">
-        <li><a href="/home" className="nav-link px-2 link-secondary">Inicio</a></li>
+        <li><a href="/home" className="nav-link px-2 link-dark">Inicio</a></li>
         <li><a href="/viviendas/propietario/636a2eba353e6b6d0e281d7a" className="nav-link px-2 link-dark">Mis Viviendas</a></li>
         <li><a href="/reservas/usuario/636a2ebb353e6b6d0e281d9c" className="nav-link px-2 link-dark">Mis Reservas</a></li>
       </ul>
@@ -58,13 +57,13 @@ export const Header = ({ setFilter = 0 }) => {
       </Dropdown>
 
       <div className="col-4 col-sm-3 pe-4 text-end">
-        { !isAuthenticated ?
-          <button type="button" className="btn btn-outline-primary" onClick={handleLogin}><i class="fa-solid fa-right-to-bracket"></i> Acceder</button> :
-          <button type="button" className="btn btn-outline-secondary" onClick={handleLogout}><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
+        {!isAuthenticated ?
+          <button type="button" className="btn btn-outline-primary" onClick={handleLogin}><i className="fa-solid fa-right-to-bracket"></i> Acceder</button> :
+          <button type="button" className="btn btn-outline-secondary" onClick={handleLogout}><i className="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
         }
       </div>
 
-      {setFilter ? <Filter setFilter={setFilter} /> : <div className='col-12'></div>}
+      {setFilter ? <ModalFilter setFilter={setFilter}></ModalFilter> : <div className='col-12'></div>}
 
     </header>
 
