@@ -11,10 +11,7 @@ const Home = () => {
 
     document.title = 'Inicio'
 
-    const [filter, setFilter] = useState({
-        value: 0,
-        type: ""
-    });
+    const [filter, setFilter] = useState({});
 
     const [houses, setHouses] = useState([]);
     const [map, setMap] = useState(false);
