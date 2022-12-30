@@ -18,6 +18,7 @@ import { setUpReservationsOfAHouse } from '../helper/setUpReservationOfAHouse.js
 import { setUpGasStation } from "../helper/SetUpGasStation";
 import { setUpTourist } from "../helper/setUpTourist";
 import ModalConfirmationReservation from "../components/house/modalConfirmationReservation";
+import { HouseRating } from "../components/house/houseRating";
 
 const House = () => {
 
@@ -200,6 +201,7 @@ const House = () => {
                                 {house.descripcion}
                             </h6>                        
                         </div>
+                        <HouseRating house={id}></HouseRating>
                         <br/>
                         <br/>
                         <h4>Mapa de las 20 gasolineras más cercanas</h4>
