@@ -1,10 +1,9 @@
 import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { Filter } from './home/houseFilter';
 import { useAuth0 } from "@auth0/auth0-react";
 import { getId } from '../helper/userId.js';
-
 import logo from '../static/swishHouseLogo.png';
+import { ModalFilter } from './home/houseModalFilter';
 
 export const Header = ({ setFilter = 0 }) => {
   const { user, loginWithRedirect, logout, isAuthenticated } = useAuth0();
@@ -60,13 +59,13 @@ export const Header = ({ setFilter = 0 }) => {
       </Dropdown>
 
       <div className="col-4 col-sm-3 pe-4 text-end">
-        { !isAuthenticated ?
+        {!isAuthenticated ?
           <button type="button" className="btn btn-outline-primary" onClick={handleLogin}><i className="fa-solid fa-right-to-bracket"></i> Acceder</button> :
           <button type="button" className="btn btn-outline-secondary" onClick={handleLogout}><i className="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
         }
       </div>
 
-      {setFilter ? <Filter setFilter={setFilter} /> : <div className='col-12'></div>}
+      {setFilter ? <ModalFilter setFilter={setFilter}></ModalFilter> : <div className='col-12'></div>}
 
     </header>
 

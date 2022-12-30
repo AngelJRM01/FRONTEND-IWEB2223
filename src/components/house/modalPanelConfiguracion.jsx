@@ -4,6 +4,7 @@ import { Modal } from "react-bootstrap";
 import { ReservationCard } from '../reservations/reservationCard.jsx';
 import { Global } from '../../helper/Global';
 import { useAuth0 } from "@auth0/auth0-react";
+import { getId } from '../../helper/userId.js';
 
 const ModalPanelConfiguracion = ({house, setShowModal, showModal, reservations, modalShowNewReservation}) => {
 
@@ -64,9 +65,9 @@ const ModalPanelConfiguracion = ({house, setShowModal, showModal, reservations, 
                 <button variant="primary" 
                         className="btn btn-outline-primary" 
                         onClick={() => {
-                            // console.log(user)
+                            console.log(user)
                             // user.given_name devuelve el nombre del usuario, mientras que user.name devuelve el nombre completo (nombre y apellidos)
-                            if(isAuthenticated && house.propietario.nombre === user.given_name){
+                            if(isAuthenticated && house.propietario._id === getId(user.sub)){
                                 modalClose();
                                 navigate(`/viviendas/propietario/${house.propietario._id}/vivienda/${house._id}/edit`)
                             }else{
@@ -84,7 +85,7 @@ const ModalPanelConfiguracion = ({house, setShowModal, showModal, reservations, 
                                         }}>Hacer Reserva</button>
                 <button variant="primary" className="btn btn-outline-danger" 
                         onClick={() => {
-                            if(isAuthenticated && house.propietario.nombre === user.given_name){
+                            if(isAuthenticated && house.propietario._id === getId(user.sub)){
                                 modalClose();
                                 handleDelete();
                             }else{

@@ -8,12 +8,13 @@ export const Auth0ProviderWithHistory = ({ children }) => {
   const domain = process.env.REACT_APP_AUTH0_DOMAIN;
   const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
   const redirectUri = process.env.REACT_APP_AUTH0_CALLBACK_URL;
+  const audience = process.env.REACT_APP_AUTH0_AUDIENCE;
 
   const onRedirectCallback = (appState) => {
     navigate( '/');
   };
 
-  if (!(domain && clientId)) {
+  if (!(domain && clientId && audience)) {
     return null;
   }
 
@@ -23,6 +24,7 @@ export const Auth0ProviderWithHistory = ({ children }) => {
       clientId={clientId}
       redirectUri={redirectUri}
       onRedirectCallback={onRedirectCallback}
+      audience={audience}
     >
       {children}
     </Auth0Provider>
