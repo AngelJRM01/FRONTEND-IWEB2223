@@ -24,6 +24,7 @@ import Comments from '../components/house/comments'
 
 const House = () => {
 
+    const { getAccessTokenSilently } = useAuth0();
     const { id } = useParams();
     const [ house, setHouse ] = useState();
     const [ showModal, setShowModal ] = useState(false);
@@ -53,7 +54,11 @@ const House = () => {
         
         if(house !== undefined && comentarios !== undefined){
             document.title = house.titulo
-            setUpReservationsOfAHouse( house._id, setReservations );
+            async function fetchData() {
+                const accessToken = await getAccessTokenSilently();
+                setUpReservationsOfAHouse( house._id, setReservations, accessToken );
+            }
+            fetchData();
             setUpGasStation(house.coordenadas.latitud, house.coordenadas.longitud, 20, setGasStation)
             setUpTourist(house.coordenadas.latitud, house.coordenadas.longitud, setTourist)
             setAddCommentsToView(comentarios < numCommentsToView)
@@ -62,8 +67,7 @@ const House = () => {
                 house.comentarios.push(comentarios[i])
             }
         }
-
-    }, [house, comentarios])
+    }, [house, getAccessTokenSilently, comentarios])
 
     const iconMarker = L.icon({
         iconUrl: require('../static/marker.png'),

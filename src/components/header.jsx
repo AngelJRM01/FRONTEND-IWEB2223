@@ -58,8 +58,11 @@ export const Header = ({ setFilter = 0 }) => {
         </Dropdown.Menu>
       </Dropdown>
 
-      <div className="col-4 col-sm-3 pe-4 text-end">
-        {!isAuthenticated ?
+      <div className="col-8 col-sm-3 pe-4 text-end">
+      
+        {(user.email === "pruebaparaingweb@gmail.com" || user.email === "galomax639@gmail.com") ? <div className='col-4'>Admin</div> : <div></div> }
+
+        {!isAuthenticated ? 
           <button type="button" className="btn btn-outline-primary" onClick={handleLogin}><i className="fa-solid fa-right-to-bracket"></i> Acceder</button> :
           <button type="button" className="btn btn-outline-secondary" onClick={handleLogout}><i className="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
         }
