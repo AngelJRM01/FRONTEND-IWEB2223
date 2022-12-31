@@ -50,19 +50,21 @@ const CreateHouse = () => {
   // const misViviendas = `http://localhost:3000/viviendas/propietario/${id}`;
   let misViviendas = "";
 
-  function addFiles(files) {
+  async function addFiles(files) {
     aux = [];
     setSrc([]);
     setDone(false);
     setCargando(true);
     let cnt=0;
     
+    const accessToken = await getAccessTokenSilently();
     for(let i = 0; i < files.length; i++) {
         const formData = new FormData();
         formData.append('image', files[i]);
         fetch(`${baseUrl}images/uploadImage`, {
             method: 'POST',
-            body: formData
+            body: formData,
+            headers: { 'Authorization': `Bearer ${accessToken}` }
         })
         .then(res => res.json())
         .then(data => {

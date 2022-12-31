@@ -14,16 +14,24 @@ import CarouselItem from "../components/reservation/carouselItem";
 import styles from '../styles/reservation.module.css';
 import { setUpReservation } from "../helper/SetUpReservation";
 import { print } from "../helper/Print";
+import { useAuth0 } from '@auth0/auth0-react';
 
 const Reservation = () => {
 
+    const { getAccessTokenSilently } = useAuth0();
     const { id } = useParams();
     const [ reservation, setReservation ] = useState();
     const [ position, setPosition ] = useState();
     const [ showModal, setShowModal ] = useState(false);
     const [ showModal2, setShowModal2 ] = useState(false);
 
-    useEffect( () => { setUpReservation(id, setReservation); }, [id]);
+    useEffect( () => { 
+        async function fetchData() {
+            const accessToken = await getAccessTokenSilently();
+            setUpReservation(id, setReservation, accessToken);
+        }
+        fetchData();
+    }, [id, getAccessTokenSilently]);
     
     useEffect( () => { 
         document.title = "Información general de tu viaje - SwishHouses"; 
