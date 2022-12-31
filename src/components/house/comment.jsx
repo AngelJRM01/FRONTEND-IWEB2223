@@ -137,6 +137,8 @@ const Comment = ({comentario, user, house, comentarios}) => {
                 console.log(data)
             })
             .catch(err => console.log(err));
+
+        window.location.reload()
     }
 
     function addAllRepliesToView() {
@@ -173,14 +175,12 @@ const Comment = ({comentario, user, house, comentarios}) => {
             }
 
             <div hidden={!poderResponder}>
-                <form className="mt-4" onSubmit={handleSubmit}>
-                    <label>Añade una respuesta</label>
-                    <input type="text"
-                        className="form-control mt-1"
-                        value={reply}
-                        onChange={e => setReply(e.target.value)}></input>
-                    <button className="btn btn-primary mt-3" type="submit">Responder</button>
-                </form>
+                <label className='mt-4'>Añade una respuesta</label>
+                <input type="text"
+                    className="form-control mt-1"
+                    value={reply}
+                    onChange={e => setReply(e.target.value)}></input>
+                <button className="btn btn-primary mt-3" onClick={handleSubmit}>Responder</button>
             </div>
             <hr/>
         </div>
