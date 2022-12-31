@@ -20,7 +20,10 @@ const ModalConfirmationReservation = ({house, confirmationReservationModal, setC
 
 
     const modalClose = () => setConfirmationReservationModal(false);
-    const doReservationModalClose = () => setDoReservationModal(false);
+    const doReservationModalClose = () => {
+        setDoReservationModal(false);
+        window.location.reload();
+    }
     const fechaInicio = new Date(startDate)
     const fechaFin = new Date(endDate)
     const baseUrl = Global.baseUrl
@@ -105,7 +108,8 @@ const ModalConfirmationReservation = ({house, confirmationReservationModal, setC
             console.log( error.text );
 
           });
-
+        
+        // window.location.reload();
     }
 
     return (

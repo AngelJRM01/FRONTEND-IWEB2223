@@ -7,7 +7,7 @@ import Reply from './reply';
 
 const Comment = ({comentario, user, house, comentarios}) => {
 
-    const { getAccessTokenSilently } = useAuth0();
+    const { getAccessTokenSilently, isAuthenticated } = useAuth0();
     const baseUrl = Global.baseUrl
     const URIVivienda = `${baseUrl}viviendas/` + house._id
     const [poderResponder, setPoderResponder] = useState(false)
@@ -147,9 +147,9 @@ const Comment = ({comentario, user, house, comentarios}) => {
         <div>
             <p><img className="imagenComments" alt={`Imagen de ${comentario.usuario}`} src={comentario.imagenUsuario}/> <b className='mx-2'>{comentario.usuario}</b> <small>{fechaComentario()}</small></p>
             <div className="row px-5"><p className='breakSpaces'>{comentario.mensaje}</p></div>
-            <button onClick={votarLike} disabled={comentario.likes.includes(user.name)} className={comentario.likes.includes(user.name) ? 'votado' : 'like'}><i className="fa-solid fa-thumbs-up"></i> {comentario.likes.length}</button>
-            <button onClick={votarDislike} disabled={comentario.dislikes.includes(user.name)} className={comentario.dislikes.includes(user.name) ? 'votado mx-2' : 'dislike mx-2'}><i className="fa-sharp fa-solid fa-thumbs-down"></i> {comentario.dislikes.length}</button>
-            <button onClick={() => setPoderResponder(!poderResponder)} className='btnViewMoreComments'>{poderResponder ? 'No responder' : 'Responder'}</button>
+            {isAuthenticated ? <button onClick={votarLike} disabled={comentario.likes.includes(user.name)} className={comentario.likes.includes(user.name) ? 'votado' : 'like'}><i className="fa-solid fa-thumbs-up"></i> {comentario.likes.length}</button> : null }
+            {isAuthenticated ? <button onClick={votarDislike} disabled={comentario.dislikes.includes(user.name)} className={comentario.dislikes.includes(user.name) ? 'votado mx-2' : 'dislike mx-2'}><i className="fa-sharp fa-solid fa-thumbs-down"></i> {comentario.dislikes.length}</button> : null }
+            {isAuthenticated ? <button onClick={() => setPoderResponder(!poderResponder)} className='btnViewMoreComments'>{poderResponder ? 'No responder' : 'Responder'}</button> : null }
             <br/>
             {comentario.respuestas.length > 0 ?
                 <div>
