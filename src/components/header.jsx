@@ -41,7 +41,7 @@ export const Header = ({ setFilter = 0 }) => {
       </a>
 
       <ul className="nav d-none d-sm-flex col-6 mb-0 justify-content-center">
-        <li><a href="/home" className="nav-link px-2 link-secondary">Inicio</a></li>
+        <li><a href="/home" className="nav-link px-2 link-dark">Inicio</a></li>
         <li><a href={urlViviendas} className="nav-link px-2 link-dark">Mis Viviendas</a></li>
         <li><a href={urlReservas} className="nav-link px-2 link-dark">Mis Reservas</a></li>
       </ul>
@@ -58,9 +58,9 @@ export const Header = ({ setFilter = 0 }) => {
         </Dropdown.Menu>
       </Dropdown>
 
-      <div className="col-8 col-sm-3 pe-4 text-end">
-      
-        {(user.email === "pruebaparaingweb@gmail.com" || user.email === "galomax639@gmail.com") ? <div className='col-4'>Admin</div> : <div></div> }
+      <div className="col-4 col-sm-3 pe-4 text-end">
+
+        {(user && (user.email === "pruebaparaingweb@gmail.com" || user.email === "galomax639@gmail.com")) ? <div className='col-4'>Admin</div> : <div></div>}
 
         {!isAuthenticated ? 
           <button type="button" className="btn btn-outline-primary" onClick={handleLogin}><i className="fa-solid fa-right-to-bracket"></i> Acceder</button> :

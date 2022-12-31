@@ -13,12 +13,17 @@ init( 'WznRYXdNmfA-nSsG0' );
 
 const ModalConfirmationReservation = ({house, confirmationReservationModal, setConfirmationReservationModal, startDate, endDate, valueCapacity, setStartDate, setEndDate, setValueCapacity, setHouse}) => {
 
+    const { getAccessTokenSilently } = useAuth0();
+
     const [paid, setPaid] = useState()
     const { user } = useAuth0();
 
 
     const modalClose = () => setConfirmationReservationModal(false);
-    const doReservationModalClose = () => setDoReservationModal(false);
+    const doReservationModalClose = () => {
+        setDoReservationModal(false);
+        window.location.reload();
+    }
     const fechaInicio = new Date(startDate)
     const fechaFin = new Date(endDate)
     const baseUrl = Global.baseUrl
@@ -26,7 +31,7 @@ const ModalConfirmationReservation = ({house, confirmationReservationModal, setC
     const URIVivienda = `${baseUrl}viviendas/`+house._id
     const [ doReservationModal, setDoReservationModal ] = useState(false);
 
-    function hacerReserva() {
+    async function hacerReserva() {
 
         setPaid(false);
         const reserva = {
@@ -48,10 +53,13 @@ const ModalConfirmationReservation = ({house, confirmationReservationModal, setC
             fecha: new Date()
         }
 
+        const accessToken = await getAccessTokenSilently();
+
         fetch(URIReservas, {
             method: "POST",
             headers: {
               "Content-Type": "Application/json",
+              'Authorization': `Bearer ${accessToken}`
             },
             body: JSON.stringify(reserva)})
             .then( res => res.json())
@@ -74,6 +82,7 @@ const ModalConfirmationReservation = ({house, confirmationReservationModal, setC
             method: "PUT",
             headers: {
                 "Content-Type": "Application/json",
+                'Authorization': `Bearer ${accessToken}`
             },
             body: JSON.stringify(house)})
             .then( res => res.json())
@@ -99,7 +108,8 @@ const ModalConfirmationReservation = ({house, confirmationReservationModal, setC
             console.log( error.text );
 
           });
-
+        
+        // window.location.reload();
     }
 
     return (
@@ -118,8 +128,8 @@ const ModalConfirmationReservation = ({house, confirmationReservationModal, setC
                 </Modal.Header>
                 <Modal.Body>
                     <h5 className="mb-4">Haz tu reserva:</h5>
-                    <h6>Fecha inicio: <strong>{fechaInicio.getDate()}/{fechaInicio.getMonth()}/{fechaInicio.getFullYear()}</strong></h6>
-                    <h6>Fecha fin: <strong>{fechaFin.getDate()}/{fechaFin.getMonth()}/{fechaFin.getFullYear()}</strong></h6>
+                    <h6>Fecha inicio: <strong>{fechaInicio.getDate()}/{fechaInicio.getMonth()+1}/{fechaInicio.getFullYear()}</strong></h6>
+                    <h6>Fecha fin: <strong>{fechaFin.getDate()}/{fechaFin.getMonth()+1}/{fechaFin.getFullYear()}</strong></h6>
                     <br/>
                     <h6>Número de huéspedes: <strong>{Number(valueCapacity.value)}</strong></h6>
                     <br/>
