@@ -9,17 +9,25 @@ import '../../styles/stars.css'
 
 export const HouseRating = ({ house }) => {
 
-    const { user, isAuthenticated, isLoading } = useAuth0();
+    const { user, isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
 
     const [rate, setRate] = useState(0);
     const [modalShow, setModalShow] = React.useState(false);
 
     useEffect(() => {
-        getHouseRate(house, getId(user.sub), setRate);
-    }, [])
+        async function fetchData() {
+            const accessToken = await getAccessTokenSilently();
+            getHouseRate(house, getId(user.sub), setRate, accessToken);
+        }
+        fetchData();
+    }, [getAccessTokenSilently])
 
     const rateHouse = () => {
-        addHouseRate(house, getId(user.sub), rate);
+        async function fetchData() {
+            const accessToken = await getAccessTokenSilently();
+            addHouseRate(house, getId(user.sub), rate, accessToken);
+        }
+        fetchData();
     }
 
     function Confirmation({ show, onHide }) {
