@@ -6,7 +6,7 @@ import { Global } from '../../helper/Global';
 import { useAuth0 } from "@auth0/auth0-react";
 import { getId } from '../../helper/userId.js';
 
-const ModalPanelConfiguracion = ({house, setShowModal, showModal, reservations, modalShowNewReservation}) => {
+const ModalPanelConfiguracion = ({ house, setShowModal, showModal, reservations, modalShowNewReservation }) => {
 
     const { getAccessTokenSilently } = useAuth0();
     const navigate = useNavigate();
@@ -20,22 +20,9 @@ const ModalPanelConfiguracion = ({house, setShowModal, showModal, reservations, 
 
     async function handleDelete() {
         const id = house.propietario._id;
-        
-        // fetch( URI, {
-        //   method: "DELETE",
-        //   headers: {
-        //     "Content-Type": "Application/json",
-        //   },
-        //   body: JSON.stringify(house),
-        // }).then( res => res.json())
-        //   .then( data => {
-        //     console.log(data);
-        //   }).catch(err => console.log(err));
-    
-        const accessToken = await getAccessTokenSilently();
-        fetch(URI, {method: 'DELETE', headers: { 'Authorization': `Bearer ${accessToken}` }});
 
-        // navigate(`/viviendas/propietario/${owner._id}`);
+        const accessToken = await getAccessTokenSilently();
+        fetch(URI, { method: 'DELETE', headers: { 'Authorization': `Bearer ${accessToken}` } });
         navigate(`/viviendas/propietario/${id}`);
         window.location.reload();
     }
@@ -51,53 +38,57 @@ const ModalPanelConfiguracion = ({house, setShowModal, showModal, reservations, 
             centered
         >
             <Modal.Header closeButton>
-                <Modal.Title id="contained-modal-title-vcenter">Panel de Configuración</Modal.Title>
+                <Modal.Title id="contained-modal-title-vcenter">Panel de Acciones</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <h5 className="mb-4">Lista de Reservas hechas por mis clientes:</h5>
+                {(isAuthenticated && house.propietario._id === getId(user.sub)) ?
+                    <p className="mb-4 fs-5">Lista de Reservas hechas por mis clientes:</p> :
+                    <div className="d-flex justify-content-center"><p className="fs-5">Haz tu reserva en esta vivienda</p></div>}
+
                 {reservations.map((reservation, index) => (
-                <ReservationCard key={index}
-                    reservation={ reservation }
-                />
+                    <ReservationCard key={index}
+                        reservation={reservation}
+                    />
                 ))}
-                <br/>
+                <br />
                 <h6 className="textRed">{error}</h6>
             </Modal.Body>
             <Modal.Footer>
-                <button variant="primary" 
-                        className="btn btn-outline-primary" 
+
+                {(isAuthenticated && house.propietario._id === getId(user.sub)) ?
+                    <button variant="primary"
+                        className="btn btn-outline-primary"
                         onClick={() => {
                             console.log(user)
-                            // user.given_name devuelve el nombre del usuario, mientras que user.name devuelve el nombre completo (nombre y apellidos)
-                            if(isAuthenticated && house.propietario._id === getId(user.sub)){
+                            if (isAuthenticated && house.propietario._id === getId(user.sub)) {
                                 modalClose();
                                 navigate(`/viviendas/propietario/${house.propietario._id}/vivienda/${house._id}/edit`)
-                            }else{
+                            } else {
                                 setError("No eres el propietario de esta vivienda, por lo que no puedes editarla.")
                             }
-                            // modalClose();
-                            // navigate(`/viviendas/propietario/${house.propietario._id}/vivienda/${house._id}/edit`)
                         }}>
-                            Editar Vivienda
-                </button>
-                <button variant="primary" className="btn btn-outline-primary" 
+                        Editar Vivienda
+                    </button> : <div></div>}
+
+                <button variant="primary" className="btn btn-outline-primary"
+                    onClick={() => {
+                        modalClose();
+                        modalShowNewReservation()
+                    }}>Hacer Reserva</button>
+                {(isAuthenticated && house.propietario._id === getId(user.sub)) ?
+                    <button variant="primary" className="btn btn-outline-danger"
                         onClick={() => {
-                                            modalClose(); 
-                                            modalShowNewReservation()
-                                        }}>Hacer Reserva</button>
-                <button variant="primary" className="btn btn-outline-danger" 
-                        onClick={() => {
-                            if(isAuthenticated && house.propietario._id === getId(user.sub)){
+                            if (isAuthenticated && house.propietario._id === getId(user.sub)) {
                                 modalClose();
                                 handleDelete();
-                            }else{
+                            } else {
                                 setError("No eres el propietario de esta vivienda, por lo que no puedes borrarla.")
                             }
-                            // modalClose();
-                            // handleDelete();
                         }}>
-                            Borrar Vivienda
-                </button>
+                        Borrar Vivienda
+                    </button>
+                    : <div></div>}
+
                 <button variant="primary" className="btn btn-outline-secondary" onClick={modalClose}>Cerrar</button>
             </Modal.Footer>
         </Modal>
