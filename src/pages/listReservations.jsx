@@ -38,7 +38,7 @@ const List = () => {
       />
       <main className="row justify-content-center main"
         id="main-content">
-        <h1 className='col-sm-6'>Mis reservas</h1>
+        <h1 className='col-sm-8'>Mis reservas</h1>
         <div className="col-sm-8 list-group"
           data-bs-spy="scroll">
           {
