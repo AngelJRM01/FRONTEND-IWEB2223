@@ -5,7 +5,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 const Comments = ({comentario, user, house, comentarios}) => {
 
-    const { getAccessTokenSilently } = useAuth0();
+    const { getAccessTokenSilently, isAuthenticated } = useAuth0();
     const baseUrl = Global.baseUrl
     const URIVivienda = `${baseUrl}viviendas/` + house._id
 
@@ -105,8 +105,8 @@ const Comments = ({comentario, user, house, comentarios}) => {
         <div>
             <p><img className="imagenComments" alt={`Imagen de ${comentario.usuario}`} src={comentario.imagenUsuario}/> <b className='mx-2'>{comentario.usuario}</b> <small>{fechaComentario()}</small></p>
             <div className="row px-5"><p className='breakSpaces'>{comentario.mensaje}</p></div>
-            <button onClick={votarLike} disabled={comentario.likes.includes(user.name)} className={comentario.likes.includes(user.name) ? 'votado' : 'like'}><i className="fa-solid fa-thumbs-up"></i> {comentario.likes.length}</button>
-            <button onClick={votarDislike} disabled={comentario.dislikes.includes(user.name)} className={comentario.dislikes.includes(user.name) ? 'votado mx-2' : 'dislike mx-2'}><i className="fa-sharp fa-solid fa-thumbs-down"></i> {comentario.dislikes.length}</button>
+            {isAuthenticated ? <button onClick={votarLike} disabled={comentario.likes.includes(user.name)} className={comentario.likes.includes(user.name) ? 'votado' : 'like'}><i className="fa-solid fa-thumbs-up"></i> {comentario.likes.length}</button> : null }
+            {isAuthenticated ? <button onClick={votarDislike} disabled={comentario.dislikes.includes(user.name)} className={comentario.dislikes.includes(user.name) ? 'votado mx-2' : 'dislike mx-2'}><i className="fa-sharp fa-solid fa-thumbs-down"></i> {comentario.dislikes.length}</button> : null }
             <hr/>
         </div>
     )
