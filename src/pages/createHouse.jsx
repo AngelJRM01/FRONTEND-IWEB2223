@@ -65,12 +65,10 @@ const CreateHouse = () => {
             setDone(true);
             setCargando(false);
           }
-          console.log(aux);
         })
         .catch(err => console.log(err));
     }
     setSrc(aux);
-    console.log(src);
   }
 
   const handleSubmit = async (e) => {
@@ -137,8 +135,6 @@ const CreateHouse = () => {
 
     coordenates.latitud = center.lat;
     coordenates.longitud = center.lon;
-
-    console.log(coordenates);
   }
 
   const iconMarker = L.icon({
@@ -154,7 +150,6 @@ const CreateHouse = () => {
         map.flyTo([coordenates.latitud, coordenates.longitud], zoom);
       },
       locationfound(e) {
-        console.log(e)
         coordenates.latitud = e.latitude;
         coordenates.longitud = e.longitude;
       },

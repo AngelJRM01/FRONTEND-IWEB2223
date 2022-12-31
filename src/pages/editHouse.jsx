@@ -84,11 +84,9 @@ const EditHouse = () => {
             setDone(true);
             setCargando(false);
           }
-          console.log(aux);
         });
     }
     setSrc(aux);
-    console.log(src);
 
   }
 
@@ -123,7 +121,6 @@ const EditHouse = () => {
           return imagenes.push(s);
         });
         vivienda.imagenes = imagenes;
-        console.log("a insertar: " + vivienda.imagenes)
       }
 
       const accessToken = await getAccessTokenSilently();
@@ -156,8 +153,6 @@ const EditHouse = () => {
       fechasDisponibles: dates,
       imagenes: images,
     };
-
-    console.log(image);
 
     let imagenes = vivienda.imagenes;
     imagenes = imagenes.filter((imagen) => imagen !== image);

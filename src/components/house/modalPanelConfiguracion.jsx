@@ -68,7 +68,6 @@ const ModalPanelConfiguracion = ({ house, setShowModal, showModal, reservations,
                     <button variant="primary"
                         className="btn btn-outline-primary"
                         onClick={() => {
-                            console.log(user)
                             if (isAuthenticated && house.propietario._id === getId(user.sub)) {
                                 modalClose();
                                 navigate(`/viviendas/propietario/${house.propietario._id}/vivienda/${house._id}/edit`)

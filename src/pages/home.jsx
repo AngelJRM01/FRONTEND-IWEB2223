@@ -8,9 +8,7 @@ import '../styles/button.css'
 import '../styles/map.css'
 
 const Home = () => {
-
-    console.log(process.env.REACT_APP_API_SERVER_URL)
-    console.log(process.env.REACT_APP_API_DATOS_ABIERTOS_URL)
+    
     document.title = 'Inicio'
 
     const [filter, setFilter] = useState({});

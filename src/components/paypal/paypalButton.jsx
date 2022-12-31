@@ -33,7 +33,6 @@ const PaypalButton = ({precio, setPaid}) => {
 export default PaypalButton;
 
 /* export function PaypalButton({precio}) {
-   console.log("hola" + precio);
     const createOrder = (data, actions) => {
       return actions.order.create({
         purchase_units: [
