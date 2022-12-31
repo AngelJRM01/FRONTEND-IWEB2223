@@ -230,13 +230,41 @@
     z-index: 1;
 }
 
-.btnViewMoreComments {
+.btnViewMoreComments, .votado {
     color: blue;
     background-color: transparent;
     border-radius: 15px;
     border-color: transparent;
 }
 
-.btnViewMoreComments:hover {
+.btnViewMoreComments:hover, .votado:hover {
     background-color: rgb(198, 222, 255);
+}
+
+.like {
+    color: green;
+    background-color: transparent;
+    border-radius: 15px;
+    border-color: transparent;
+}
+
+.like:hover {
+    background-color: rgb(180, 251, 164);
+}
+
+.dislike {
+    color: red;
+    background-color: transparent;
+    border-radius: 15px;
+    border-color: transparent;
+}
+
+.dislike:hover {
+    background-color: rgb(231, 161, 161);
+}
+
+.imagenComments {
+    width: 36px;
+    height: 36px;
+    border-radius: 25px;
 }
