@@ -3,41 +3,51 @@ import '../../styles/texto.css'
 import { Global } from '../../helper/Global';
 import { useAuth0 } from "@auth0/auth0-react";
 
-const Comments = ({comentario, user, house, comentarios}) => {
+const Reply = ({respuesta, user, house, comentario}) => {
 
     const { getAccessTokenSilently, isAuthenticated } = useAuth0();
     const baseUrl = Global.baseUrl
     const URIVivienda = `${baseUrl}viviendas/` + house._id
 
     function fechaComentario(){
-        const fecha = new Date(comentario.fecha)
+        const fecha = new Date(respuesta.fecha)
         return (fecha.getDate() +"/"+(fecha.getMonth()+1)+"/"+fecha.getFullYear())
     }
 
     async function votarLike(){
-        let comentariosAux = []
+        let respuestasAux = []
 
-        comentarios.forEach((c) => {
-            if(c === comentario){
-                comentario.likes.push(user.name)
-                if(comentario.dislikes.includes(user.name)){
+        comentario.respuestas.forEach((r) => {
+            if(r === respuesta){
+                respuesta.likes.push(user.name)
+                if(respuesta.dislikes.includes(user.name)){
                     let dislikesAux = []
-                    comentario.dislikes.forEach((d) => {
+                    respuesta.dislikes.forEach((d) => {
                         if(d !== user.name){
                             dislikesAux.push(d)
                         }
                     })
-                    comentario.dislikes = dislikesAux
+                    respuesta.dislikes = dislikesAux
                 }
+                respuestasAux.push(respuesta)
+            } else {
+                respuestasAux.push(r)
+            }
+        })
+
+        comentario.respuestas = respuestasAux
+
+        let comentariosAux = []
+
+        house.comentarios.forEach((c) => {
+            if(c._id === comentario._id){
                 comentariosAux.push(comentario)
             } else {
                 comentariosAux.push(c)
             }
-        })
+        })     
 
         house.comentarios = comentariosAux
-
-        console.log(house.comentarios)
 
         const accessToken = await getAccessTokenSilently();
         await fetch(URIVivienda, {
@@ -59,29 +69,39 @@ const Comments = ({comentario, user, house, comentarios}) => {
 
 
     async function votarDislike(){
-        let comentariosAux = []
+        let respuestasAux = []
 
-        comentarios.forEach((c) => {
-            if(c === comentario){
-                comentario.dislikes.push(user.name)
-                if(comentario.likes.includes(user.name)){
+        comentario.respuestas.forEach((r) => {
+            if(r === respuesta){
+                respuesta.dislikes.push(user.name)
+                if(respuesta.likes.includes(user.name)){
                     let likesAux = []
-                    comentario.likes.forEach((d) => {
+                    respuesta.likes.forEach((d) => {
                         if(d !== user.name){
                             likesAux.push(d)
                         }
                     })
-                    comentario.likes = likesAux
+                    respuesta.likes = likesAux
                 }
+                respuestasAux.push(respuesta)
+            } else {
+                respuestasAux.push(r)
+            }
+        })
+
+        comentario.respuestas = respuestasAux
+
+        let comentariosAux = []
+
+        house.comentarios.forEach((c) => {
+            if(c._id === comentario._id){
                 comentariosAux.push(comentario)
             } else {
                 comentariosAux.push(c)
             }
-        })
+        })     
 
         house.comentarios = comentariosAux
-
-        console.log(house.comentarios)
 
         const accessToken = await getAccessTokenSilently();
         await fetch(URIVivienda, {
@@ -103,13 +123,13 @@ const Comments = ({comentario, user, house, comentarios}) => {
 
     return (
         <div>
-            <p><img className="imagenComments" alt={`Imagen de ${comentario.usuario}`} src={comentario.imagenUsuario}/> <b className='mx-2'>{comentario.usuario}</b> <small>{fechaComentario()}</small></p>
-            <div className="row px-5"><p className='breakSpaces text-break'>{comentario.mensaje}</p></div>
-            {isAuthenticated ? <button onClick={votarLike} disabled={comentario.likes.includes(user.name)} className={comentario.likes.includes(user.name) ? 'votado' : 'like'}><i className="fa-solid fa-thumbs-up"></i> {comentario.likes.length}</button> : null }
-            {isAuthenticated ? <button onClick={votarDislike} disabled={comentario.dislikes.includes(user.name)} className={comentario.dislikes.includes(user.name) ? 'votado mx-2' : 'dislike mx-2'}><i className="fa-sharp fa-solid fa-thumbs-down"></i> {comentario.dislikes.length}</button> : null }
+            <p><img className="imagenComments" alt={`Imagen de ${respuesta.usuario}`} src={respuesta.imagenUsuario}/> <b className='mx-2'>{respuesta.usuario}</b> <small>{fechaComentario()}</small></p>
+            <div className="row px-5"><p className='breakSpaces'>{respuesta.mensaje}</p></div>
+            {isAuthenticated ? <button onClick={votarLike} disabled={respuesta.likes.includes(user.name)} className={respuesta.likes.includes(user.name) ? 'votado' : 'like'}><i className="fa-solid fa-thumbs-up"></i> {respuesta.likes.length}</button> : null }
+            {isAuthenticated ? <button onClick={votarDislike} disabled={respuesta.dislikes.includes(user.name)} className={respuesta.dislikes.includes(user.name) ? 'votado mx-2' : 'dislike mx-2'}><i className="fa-sharp fa-solid fa-thumbs-down"></i> {respuesta.dislikes.length}</button> : null }
             <hr/>
         </div>
     )
 }
 
-export default Comments
+export default Reply
