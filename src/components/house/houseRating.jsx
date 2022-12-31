@@ -52,7 +52,7 @@ export const HouseRating = ({ house }) => {
 
     return (
         <div>
-            <div id="rate">
+            <div id="rate" className='px-0'>
 
                 <input type="radio"
                     id="star5"
