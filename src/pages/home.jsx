@@ -8,7 +8,7 @@ import '../styles/button.css'
 import '../styles/map.css'
 
 const Home = () => {
-
+    
     document.title = 'Inicio'
 
     const [filter, setFilter] = useState({});

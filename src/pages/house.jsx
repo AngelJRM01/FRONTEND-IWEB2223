@@ -141,8 +141,6 @@ const House = () => {
                 console.log(data)
             })
             .catch(err => console.log(err));
-
-        console.log("Hola")
     }
 
     function addAllCommentsToView() {

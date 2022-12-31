@@ -48,7 +48,6 @@ const addressSearchControl = L.control.addressSearch(apiKey, {
         map.setView([address.lat, address.lon], 17);
         center.latitud = address.lat;
         center.longitud = address.lon;
-        // console.log(center);
     }
 });
 

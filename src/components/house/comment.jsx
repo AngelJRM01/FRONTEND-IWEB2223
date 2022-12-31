@@ -146,7 +146,7 @@ const Comment = ({comentario, user, house, comentarios}) => {
     return (
         <div>
             <p><img className="imagenComments" alt={`Imagen de ${comentario.usuario}`} src={comentario.imagenUsuario}/> <b className='mx-2'>{comentario.usuario}</b> <small>{fechaComentario()}</small></p>
-            <div className="row px-5"><p className='breakSpaces'>{comentario.mensaje}</p></div>
+            <div className="row px-5"><p className='breakSpaces text-break'>{comentario.mensaje}</p></div>
             {isAuthenticated ? <button onClick={votarLike} disabled={comentario.likes.includes(user.name)} className={comentario.likes.includes(user.name) ? 'votado' : 'like'}><i className="fa-solid fa-thumbs-up"></i> {comentario.likes.length}</button> : null }
             {isAuthenticated ? <button onClick={votarDislike} disabled={comentario.dislikes.includes(user.name)} className={comentario.dislikes.includes(user.name) ? 'votado mx-2' : 'dislike mx-2'}><i className="fa-sharp fa-solid fa-thumbs-down"></i> {comentario.dislikes.length}</button> : null }
             {isAuthenticated ? <button onClick={() => setPoderResponder(!poderResponder)} className='btnViewMoreComments'>{poderResponder ? 'No responder' : 'Responder'}</button> : null }
