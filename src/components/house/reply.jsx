@@ -124,7 +124,7 @@ const Reply = ({respuesta, user, house, comentario}) => {
     return (
         <div>
             <p><img className="imagenComments" alt={`Imagen de ${respuesta.usuario}`} src={respuesta.imagenUsuario}/> <b className='mx-2'>{respuesta.usuario}</b> <small>{fechaComentario()}</small></p>
-            <div className="row px-5"><p className='breakSpaces'>{respuesta.mensaje}</p></div>
+            <div className="row px-5"><p className='breakSpaces text-break'>{respuesta.mensaje}</p></div>
             {isAuthenticated ? <button onClick={votarLike} disabled={respuesta.likes.includes(user.name)} className={respuesta.likes.includes(user.name) ? 'votado' : 'like'}><i className="fa-solid fa-thumbs-up"></i> {respuesta.likes.length}</button> : null }
             {isAuthenticated ? <button onClick={votarDislike} disabled={respuesta.dislikes.includes(user.name)} className={respuesta.dislikes.includes(user.name) ? 'votado mx-2' : 'dislike mx-2'}><i className="fa-sharp fa-solid fa-thumbs-down"></i> {respuesta.dislikes.length}</button> : null }
             <hr/>
