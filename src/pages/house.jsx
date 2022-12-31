@@ -42,8 +42,8 @@ const House = () => {
     const [valueCapacity, setValueCapacity] = useState({ value: 1, label: 1 });
     const baseUrl = Global.baseUrl
     const URIVivienda = `${baseUrl}viviendas/` + id
-    let numCommentsToView = 5
-    const [addCommentsToView, setAddCommentsToView] = useState(false)
+    let numCommentsToView = 10
+    const [allCommentsToView, setAllCommentsToView] = useState(false)
     const [comentarios, setComentarios] = useState([])
 
     useEffect(() => {
@@ -63,10 +63,12 @@ const House = () => {
             fetchData();
             setUpGasStation(house.coordenadas.latitud, house.coordenadas.longitud, 20, setGasStation)
             setUpTourist(house.coordenadas.latitud, house.coordenadas.longitud, setTourist)
-            setAddCommentsToView(comentarios < numCommentsToView)
-            house.comentarios = []
-            for (let i = numCommentsToView - 5; i < numCommentsToView; i++) {
-                house.comentarios.push(comentarios[i])
+            if(comentarios.length > 0){
+                setAllCommentsToView(comentarios.length < numCommentsToView)
+                house.comentarios = []
+                for (let i = numCommentsToView - 10; i < numCommentsToView; i++) {
+                    house.comentarios.push(comentarios[i])
+                }
             }
         }
     }, [house, getAccessTokenSilently, comentarios])
@@ -138,12 +140,9 @@ const House = () => {
             .catch(err => console.log(err));
     }
 
-    function add5CommentsToView() {
-        numCommentsToView = numCommentsToView + 5
-        setAddCommentsToView(house.comentarios.length < numCommentsToView)
-        for (let i = numCommentsToView - 5; i < numCommentsToView && i < comentarios.length; i++) {
-            house.comentarios.push(comentarios[i])
-        }
+    function addAllCommentsToView() {
+        setAllCommentsToView(true)
+        house.comentarios = comentarios
     }
 
     const textURL = "Mirad esta vivienda tan guay que podéis reservar en";
@@ -341,7 +340,7 @@ const House = () => {
 
                     <div className="row px-5 pt-4">
                         <div>
-                            {0 === 0 ?
+                            {house.comentarios.length === 0 ?
                                 <div>
                                     <p className="fs-4">No hay comentarios</p>
                                 </div>
@@ -351,7 +350,7 @@ const House = () => {
                                     {house.comentarios.map((comentario, index) => {
                                         return <div key={index}><Comments comentario={comentario} /></div>
                                     })}
-                                    <button hidden={addCommentsToView} className="btn mt-3" onClick={add5CommentsToView}>Ver más comentarios</button>
+                                    <button hidden={allCommentsToView} className="mt-3 btnViewMoreComments" onClick={addAllCommentsToView}><i className="fa-solid fa-caret-down"></i> Ver el resto de comentarios</button>
                                 </div>
                             }
 

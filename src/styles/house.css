@@ -229,3 +229,14 @@
     height: 50vh;
     z-index: 1;
 }
+
+.btnViewMoreComments {
+    color: blue;
+    background-color: transparent;
+    border-radius: 15px;
+    border-color: transparent;
+}
+
+.btnViewMoreComments:hover {
+    background-color: rgb(198, 222, 255);
+}
