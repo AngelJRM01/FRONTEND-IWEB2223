@@ -220,9 +220,9 @@ const House = () => {
                                 setHouse={setHouse}
                             />
                             <a className="btn btn-primary" id="twitter"
-                                href={twitterURL} rel="noreferrer">
+                                href={twitterURL} rel="noreferrer" target="_blank">
                                 <i className="fa-brands fa-twitter"></i>
-                                <i className="bi bi-twitter">Compartir por Twitter</i>
+                                <i className="bi bi-twitter"> Compartir por Twitter</i>
                             </a>
                         </div>
                     </div>
