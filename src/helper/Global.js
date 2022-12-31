@@ -1,7 +1,7 @@
 export const Global = {
 
-    baseUrl: "http://localhost:4000/",
-    datosAbiertosUrl: "http://localhost:5000/"
+    baseUrl: process.env.REACT_APP_API_SERVER_URL,
+    datosAbiertosUrl: process.env.REACT_APP_API_DATOS_ABIERTOS_URL
 
   };
   

@@ -2,7 +2,7 @@ import { Global } from './Global';
 
 const baseUrl = Global.baseUrl;
 
-export const setUpHouse = ( id, setHouse, setComentarios ) => {
+export const setUpHouse = ( id, setHouse, setComentarios = () => {} ) => {
   
   fetch( `${baseUrl}viviendas/${id}` )
     .then(res => {
