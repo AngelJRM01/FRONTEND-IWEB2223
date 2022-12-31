@@ -11,7 +11,7 @@ const ModalPanelConfiguracion = ({ house, setShowModal, showModal, reservations,
     const { getAccessTokenSilently } = useAuth0();
     const navigate = useNavigate();
     const [error, setError] = useState("")
-    const { user, isAuthenticated, isLoading } = useAuth0();
+    const { user, isAuthenticated, loginWithRedirect } = useAuth0();
 
     const modalClose = () => setShowModal(false);
 
@@ -26,6 +26,14 @@ const ModalPanelConfiguracion = ({ house, setShowModal, showModal, reservations,
         navigate(`/viviendas/propietario/${id}`);
         window.location.reload();
     }
+
+    const handleLogin = async () => {
+        await loginWithRedirect({
+          appState: {
+            returnTo: window.location.pathname,
+          },
+        });
+      };
 
     return (
         <Modal
@@ -73,7 +81,11 @@ const ModalPanelConfiguracion = ({ house, setShowModal, showModal, reservations,
                 <button variant="primary" className="btn btn-outline-primary"
                     onClick={() => {
                         modalClose();
-                        modalShowNewReservation()
+                        if (isAuthenticated) {
+                            modalShowNewReservation();
+                        } else {
+                            handleLogin();
+                        }
                     }}>Hacer Reserva</button>
                 {(isAuthenticated && house.propietario._id === getId(user.sub)) ?
                     <button variant="primary" className="btn btn-outline-danger"
