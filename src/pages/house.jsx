@@ -21,7 +21,7 @@ import ModalConfirmationReservation from "../components/house/modalConfirmationR
 import { HouseRating } from "../components/house/houseRating";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Global } from '../helper/Global';
-import Comments from '../components/house/comments'
+import Comment from '../components/house/comment'
 
 
 const House = () => {
@@ -355,7 +355,7 @@ const House = () => {
                                     <hr/>
                                     {house.comentarios.map((comentario, index) => {
                                         return <div key={index}>
-                                                    <Comments   comentario={comentario} 
+                                                    <Comment    comentario={comentario} 
                                                                 user={user} 
                                                                 house={house}
                                                                 comentarios={comentarios} />
