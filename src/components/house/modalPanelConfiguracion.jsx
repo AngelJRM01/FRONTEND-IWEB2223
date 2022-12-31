@@ -50,14 +50,15 @@ const ModalPanelConfiguracion = ({ house, setShowModal, showModal, reservations,
             </Modal.Header>
             <Modal.Body>
                 {(isAuthenticated && house.propietario._id === getId(user.sub)) ?
-                    <p className="mb-4 fs-5">Lista de Reservas hechas por mis clientes:</p> :
+                    <div>
+                        <div className="d-flex justify-content-center"><p className="fs-5">Lista de Reservas hechas por mis clientes</p></div>
+                        {reservations.map((reservation, index) => (
+                        <ReservationCard key={index}
+                            reservation={reservation}
+                        />
+                        ))}
+                    </div> :
                     <div className="d-flex justify-content-center"><p className="fs-5">Haz tu reserva en esta vivienda</p></div>}
-
-                {reservations.map((reservation, index) => (
-                    <ReservationCard key={index}
-                        reservation={reservation}
-                    />
-                ))}
                 <br />
                 <h6 className="textRed">{error}</h6>
             </Modal.Body>
@@ -76,17 +77,20 @@ const ModalPanelConfiguracion = ({ house, setShowModal, showModal, reservations,
                             }
                         }}>
                         Editar Vivienda
-                    </button> : <div></div>}
+                    </button> : null}
 
-                <button variant="primary" className="btn btn-outline-primary"
-                    onClick={() => {
-                        modalClose();
-                        if (isAuthenticated) {
-                            modalShowNewReservation();
-                        } else {
-                            handleLogin();
-                        }
-                    }}>Hacer Reserva</button>
+                {((isAuthenticated && house.propietario._id !== getId(user.sub)) || !isAuthenticated) ?
+                    <button variant="primary" className="btn btn-outline-primary"
+                        onClick={() => {
+                            modalClose();
+                            if (isAuthenticated) {
+                                modalShowNewReservation();
+                            } else {
+                                handleLogin();
+                            }
+                        }}>Hacer Reserva
+                    </button>
+                : null}
                 {(isAuthenticated && house.propietario._id === getId(user.sub)) ?
                     <button variant="primary" className="btn btn-outline-danger"
                         onClick={() => {
@@ -99,7 +103,7 @@ const ModalPanelConfiguracion = ({ house, setShowModal, showModal, reservations,
                         }}>
                         Borrar Vivienda
                     </button>
-                    : <div></div>}
+                    : null}
 
                 <button variant="primary" className="btn btn-outline-secondary" onClick={modalClose}>Cerrar</button>
             </Modal.Footer>
