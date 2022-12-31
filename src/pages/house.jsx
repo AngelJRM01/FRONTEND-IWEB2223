@@ -354,7 +354,12 @@ const House = () => {
                                     <h5>Comentarios ({comentarios.length})</h5>
                                     <hr/>
                                     {house.comentarios.map((comentario, index) => {
-                                        return <div key={index}><Comments comentario={comentario} /></div>
+                                        return <div key={index}>
+                                                    <Comments   comentario={comentario} 
+                                                                user={user} 
+                                                                house={house}
+                                                                comentarios={comentarios} />
+                                                </div>
                                     })}
                                     <button hidden={allCommentsToView} className="mt-3 btnViewMoreComments" onClick={addAllCommentsToView}><i className="fa-solid fa-caret-down"></i> Ver el resto de comentarios</button>
                                 </div>
