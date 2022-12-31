@@ -40,7 +40,7 @@ const List = () => {
         </Marker>
   ));
 
-  const crearViviendaURL = `http://localhost:3000/viviendas/propietario/${id}/nuevaVivienda`;  
+  const crearViviendaURL = `${process.env.REACT_APP_API_FRONTEND_URL}viviendas/propietario/${id}/nuevaVivienda`;  
 
   useEffect( () => {
     async function fetchData() {
@@ -55,6 +55,7 @@ const List = () => {
 
   function createHouse () {
     window.location.href = crearViviendaURL;
+    console.log(process.env.REACT_APP_API_FRONTEND_URL)
   }
 
   return (

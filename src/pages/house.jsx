@@ -114,6 +114,7 @@ const House = () => {
     }
 
     const handleSubmit = async () => {
+
         let comentario = {
             vivienda: house._id,
             usuario: user.name,
@@ -126,6 +127,7 @@ const House = () => {
 
         house.comentarios = comentarios
         house.comentarios.push(comentario)
+
 
         const accessToken = await getAccessTokenSilently();
         await fetch(URIVivienda, {
@@ -141,6 +143,8 @@ const House = () => {
                 console.log(data)
             })
             .catch(err => console.log(err));
+
+        window.location.reload()
     }
 
     function addAllCommentsToView() {
@@ -149,7 +153,7 @@ const House = () => {
     }
 
     const textURL = "Mirad esta vivienda tan guay que podéis reservar en";
-    const URL = `http://localhost:3000/vivienda/${id}`;
+    const URL = `${process.env.REACT_APP_API_FRONTEND_URL}vivienda/${id}`;
     const via = "SwishHouse";
     const hashtags = "reservar,alquilar_viviendas"
     const twitterURL = `https://twitter.com/intent/tweet?text=${textURL}&url=${URL}&via=${via}&hashtags=${hashtags}`;
@@ -365,14 +369,12 @@ const House = () => {
 
                             {isAuthenticated ?
                                 <div>
-                                    <form className="mt-4" onSubmit={handleSubmit}>
-                                        <label>Añade un comentario</label>
-                                        <input type="text"
-                                            className="form-control mt-1"
-                                            value={comment}
-                                            onChange={e => setComment(e.target.value)}></input>
-                                        <button className="btn btn-primary mt-3" type="submit">Comentar</button>
-                                    </form>
+                                    <label className="mt-4">Añade un comentario</label>
+                                    <input type="text"
+                                        className="form-control mt-1"
+                                        value={comment}
+                                        onChange={e => setComment(e.target.value)}></input>
+                                    <button className="btn btn-primary mt-3" onClick={handleSubmit}>Comentar</button>
                                 </div>
                                 :
                                 <div></div>

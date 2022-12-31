@@ -96,7 +96,7 @@ const Reservation = () => {
                         </div>
 
                         <div className={"list-group " + styles.bottonss}>
-                            <a href={"http://localhost:3000/vivienda/" + reservation.vivienda._id} className={"list-group-item list-group-item-action " + styles.house}>
+                            <a href={process.env.REACT_APP_API_FRONTEND_URL+"vivienda/" + reservation.vivienda._id} className={"list-group-item list-group-item-action " + styles.house}>
                                 <i className="fa-solid fa-pager">
                                 </i>&emsp;Mostrar anuncio
                                 <i className={"fa-sharp fa-solid fa-chevron-right " + styles.arrow}></i>

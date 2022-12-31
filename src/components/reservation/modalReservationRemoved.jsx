@@ -12,7 +12,7 @@ const ModalReservationRemoved = ({setShowModal, showModal}) => {
           <Modal.Title>¡La reserva se ha cancelado con éxito!</Modal.Title>
         </Modal.Header>
         <Modal.Footer className={styles.modalCentered}>
-            <a href='http://localhost:3000/'>
+            <a href={process.env.REACT_APP_API_FRONTEND_URL}>
                 <Button variant="primary" onClick={handleClose}>
                     Ir a la página de inicio
                 </Button>
