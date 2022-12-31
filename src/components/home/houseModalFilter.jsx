@@ -22,19 +22,19 @@ const today = new Date();
 
 function Filter({ show, onHide, setFilter }) {
 
-    const [price, setPrice] = useState();
-    const [capacity, setCapacity] = useState();
+    const [price, setPrice] = useState(0);
+    const [capacity, setCapacity] = useState(0);
     const [rating, setRating] = useState(0);
-    const [address, setAddress] = useState();
-    const [state, setState] = useState();
+    const [address, setAddress] = useState("");
+    const [state, setState] = useState("");
 
-    const [owner, setOwner] = useState();
+    const [owner, setOwner] = useState("");
     const [owners, setOwners] = useState();
 
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState();
 
-    const [location, setLocation] = useState();
+    const [location, setLocation] = useState("");
     const [prox, setProx] = useState(0);
     const [lat, setLat] = useState();
     const [lon, setLon] = useState();
@@ -83,14 +83,14 @@ function Filter({ show, onHide, setFilter }) {
     };
 
     const clean = () => {
-        setPrice(undefined);
-        setCapacity(undefined);
+        setPrice(0);
+        setCapacity(0);
         setRating(0);
         setAddress("");
         setState("");
         setOwner("");
-        setStartDate(undefined);
-        setEndDate(undefined);
+        setStartDate("");
+        setEndDate("");
         setLocation("");
         setProx(0);
         setLat(undefined);
@@ -195,7 +195,7 @@ function Filter({ show, onHide, setFilter }) {
 
                                 {owners === undefined || owners.length === 0 ?
                                     <option disabled value="" >No hay propietarios</option> :
-                                    owners.map((owner) => (<option value={owner.nombre} key={owner._id} >{owner.nombre}</option>))}
+                                    owners.map((owner, index) => (<option value={owner.nombre} key={index} >{owner.nombre}</option>))}
                             </select>
                         </div>
 
@@ -215,7 +215,7 @@ function Filter({ show, onHide, setFilter }) {
                             </div>
                         </div>
 
-                        <div className="col-10">
+                        <div className="col-8 col-lg-10">
                             <label htmlFor="prox" className="form-label">Proximidad a una dirección</label>
                             <div className="input-group">
                                 <a className="btn btn-primary" onClick={handleSearch}>Buscar</a>
@@ -224,7 +224,7 @@ function Filter({ show, onHide, setFilter }) {
                             </div>
                         </div>
 
-                        <div className="col-2">
+                        <div className="col-4 col-lg-2">
                             <label htmlFor="price" className="form-label">Proximidad</label>
                             <input type="number" className="form-control" id="price" min="0"
                                 value={prox} onChange={(e) => setProx(e.target.value)} required />

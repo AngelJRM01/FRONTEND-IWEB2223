@@ -101,15 +101,6 @@ body {
     }
     
 }
-
-/**::-webkit-scrollbar {
-    width: 5px;
-
-}*/
-
-/**::-webkit-scrollbar-track {
-    background: transparent;
-}*/
   
 *::-webkit-scrollbar-thumb {
     background-color: rgb(211, 53, 53) !important;

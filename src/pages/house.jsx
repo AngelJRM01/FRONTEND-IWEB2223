@@ -63,7 +63,7 @@ const House = () => {
             fetchData();
             setUpGasStation(house.coordenadas.latitud, house.coordenadas.longitud, 20, setGasStation)
             setUpTourist(house.coordenadas.latitud, house.coordenadas.longitud, setTourist)
-            if(comentarios.length > 0){
+            if (comentarios.length > 0) {
                 setAllCommentsToView(comentarios.length < numCommentsToView)
                 house.comentarios = []
                 for (let i = numCommentsToView - 10; i < numCommentsToView && i < comentarios.length; i++) {
@@ -352,14 +352,14 @@ const House = () => {
                                 :
                                 <div>
                                     <h5>Comentarios ({comentarios.length})</h5>
-                                    <hr/>
+                                    <hr />
                                     {house.comentarios.map((comentario, index) => {
                                         return <div key={index}>
-                                                    <Comments   comentario={comentario} 
-                                                                user={user} 
-                                                                house={house}
-                                                                comentarios={comentarios} />
-                                                </div>
+                                            <Comments comentario={comentario}
+                                                user={user}
+                                                house={house}
+                                                comentarios={comentarios} />
+                                        </div>
                                     })}
                                     <button hidden={allCommentsToView} className="mt-3 btnViewMoreComments" onClick={addAllCommentsToView}><i className="fa-solid fa-caret-down"></i> Ver el resto de comentarios</button>
                                 </div>
