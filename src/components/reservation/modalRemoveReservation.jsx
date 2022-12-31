@@ -1,16 +1,23 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { useAuth0 } from '@auth0/auth0-react';
 
 import styles from '../../styles/reservation.module.css';
 import { removeReservation } from "../../helper/RemoveReservation";
 import { removeNotAvalaibleDates } from "../../helper/RemoveNotAvalaibleDates";
 
 const ModalRemoveReservation = ({id, idVivienda, fechaInicio, setShowModal, showModal, modalShow2}) => {
+  const { getAccessTokenSilently } = useAuth0();
+
   const handleClose = () => setShowModal(false);
 
   const cancelReservation = () => {
-    removeNotAvalaibleDates(idVivienda, fechaInicio);
-    removeReservation(id);
+    async function fetchData() {
+      const accessToken = await getAccessTokenSilently();
+      removeNotAvalaibleDates(idVivienda, fechaInicio, accessToken);
+      removeReservation(id, accessToken);
+    }
+    fetchData();
     handleClose();
     modalShow2();
   };

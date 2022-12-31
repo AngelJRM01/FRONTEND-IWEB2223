@@ -2,7 +2,7 @@ import { Global } from './Global';
 
 const baseUrl = Global.baseUrl;
 
-export const removeNotAvalaibleDates = (id, date) => {
+export const removeNotAvalaibleDates = (id, date, accessToken) => {
     fetch( `${ baseUrl }viviendas/${id}` )
     .then(res => {
         if (res.ok) {
@@ -17,7 +17,7 @@ export const removeNotAvalaibleDates = (id, date) => {
                 }
 
                 fetch(`${ baseUrl }viviendas/${ id }`, {method: 'PUT', 
-                                                        headers: { "Content-Type": "Application/json" }, 
+                                                        headers: { "Content-Type": "Application/json", 'Authorization': `Bearer ${accessToken}` }, 
                                                         body: JSON.stringify(data)});
 
             });
