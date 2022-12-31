@@ -355,7 +355,7 @@ const House = () => {
                                     <hr/>
                                     {house.comentarios.map((comentario, index) => {
                                         return <div key={index}>
-                                                    <Comment   comentario={comentario} 
+                                                    <Comment    comentario={comentario} 
                                                                 user={user} 
                                                                 house={house}
                                                                 comentarios={comentarios} />

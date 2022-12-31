@@ -3,6 +3,7 @@ import '../../styles/texto.css'
 import { Global } from '../../helper/Global';
 import { useAuth0 } from "@auth0/auth0-react";
 import { useState } from 'react';
+import Reply from './reply';
 
 const Comment = ({comentario, user, house, comentarios}) => {
 
@@ -152,10 +153,16 @@ const Comment = ({comentario, user, house, comentarios}) => {
             <br/>
             {comentario.respuestas.length > 0 ?
                 <div>
-                    <button hidden={allRepliesToView} className="mt-3 btnViewMoreComments" onClick={addAllRepliesToView}><i className="fa-solid fa-caret-down"></i> Ver las respuestas</button>
+                    <button hidden={allRepliesToView} className="mt-3 btnViewMoreComments" onClick={addAllRepliesToView}><i className="fa-solid fa-caret-down"></i> Ver las respuestas ({comentario.respuestas.length})</button>
                     {allRepliesToView ? 
                         <div>
-                            
+                            <hr/>
+                            {comentario.respuestas.map((respuesta, index) => {
+                                return <div key={index} className="mx-5"><Reply     respuesta={respuesta} 
+                                                                                    user={user} 
+                                                                                    house={house}
+                                                                                    comentario={comentario}/></div>
+                            })}
                         </div>
                         :
                         <div></div>
