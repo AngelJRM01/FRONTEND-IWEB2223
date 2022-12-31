@@ -107,7 +107,7 @@ const CreateHouse = () => {
     }).then(res => res.json())
       .then(data => {
         console.log(data);
-        misViviendas = `http://localhost:3000/vivienda/${data._id}`;
+        misViviendas = `${process.env.REACT_APP_API_FRONTEND_URL}vivienda/${data._id}`;
       }).catch(err => console.log(err));
 
     window.location.href = misViviendas;

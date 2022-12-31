@@ -149,7 +149,7 @@ const House = () => {
     }
 
     const textURL = "Mirad esta vivienda tan guay que podéis reservar en";
-    const URL = `http://localhost:3000/vivienda/${id}`;
+    const URL = `${process.env.REACT_APP_API_FRONTEND_URL}vivienda/${id}`;
     const via = "SwishHouse";
     const hashtags = "reservar,alquilar_viviendas"
     const twitterURL = `https://twitter.com/intent/tweet?text=${textURL}&url=${URL}&via=${via}&hashtags=${hashtags}`;
