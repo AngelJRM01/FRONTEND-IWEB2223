@@ -66,7 +66,7 @@ const House = () => {
             if(comentarios.length > 0){
                 setAllCommentsToView(comentarios.length < numCommentsToView)
                 house.comentarios = []
-                for (let i = numCommentsToView - 10; i < numCommentsToView; i++) {
+                for (let i = numCommentsToView - 10; i < numCommentsToView && i < comentarios.length; i++) {
                     house.comentarios.push(comentarios[i])
                 }
             }
@@ -113,10 +113,11 @@ const House = () => {
         }
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         let comentario = {
             vivienda: house._id,
             usuario: user.name,
+            imagenUsuario: user.picture,
             likes: [],
             dislikes: [],
             mensaje: comment,
@@ -126,10 +127,12 @@ const House = () => {
         house.comentarios = comentarios
         house.comentarios.push(comentario)
 
-        fetch(URIVivienda, {
+        const accessToken = await getAccessTokenSilently();
+        await fetch(URIVivienda, {
             method: "PUT",
             headers: {
                 "Content-Type": "Application/json",
+                'Authorization': `Bearer ${accessToken}`
             },
             body: JSON.stringify(house)
         })
@@ -138,6 +141,8 @@ const House = () => {
                 console.log(data)
             })
             .catch(err => console.log(err));
+
+        console.log("Hola")
     }
 
     function addAllCommentsToView() {
@@ -347,6 +352,7 @@ const House = () => {
                                 :
                                 <div>
                                     <h5>Comentarios ({comentarios.length})</h5>
+                                    <hr/>
                                     {house.comentarios.map((comentario, index) => {
                                         return <div key={index}><Comments comentario={comentario} /></div>
                                     })}
